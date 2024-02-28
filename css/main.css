@@ -149,7 +149,6 @@ a:active, a:focus, a:hover {
 
 @media screen and (max-width: 1199px) {
   #content, #preamble, #postamble {
-    margin: 0 auto;
     font-size: 24px;
     padding: 3em;
   }
@@ -159,14 +158,11 @@ a:active, a:focus, a:hover {
   #content, #preamble, #postamble {
     font-size: 18px;
     padding: 1em;
-    margin: 0;
   }
-}
 
-tt, .verbatim {
-  font-family: 'Victor Mono', monospace;
-  font-weight: 500;
-  font-size: 90%;
+  .org-svg {
+      scale: 100%;
+  }
 }
 
 pre {
@@ -175,6 +171,9 @@ pre {
   border: 1px solid #d9d9d9;
   padding: 15px;
   margin: 0.35em -15px;
+  font-family: 'Victor Mono', monospace;
+  font-weight: 500;
+  font-size: 90%;
 }
 
 /* Result of a code block */
@@ -270,13 +269,9 @@ strong, b {
 /* Latex math */
 
 
-.org-svg {
-  font-size: 110%;
-}
-
 p > .org-svg:only-child {
   text-align: center;
   display: block;
   margin: 0 auto;
-  scale: 135%;
+  scale: 120%;
 }

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-02-28 Wed 20:46 -->
+<!-- 2024-02-28 Wed 21:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -47,7 +47,7 @@ My new needs
 <li>Chapter one: Wordpress</li>
 <li>Chapter two: Jekyll</li>
 <li>Chapter three: TeXmacs</li>
-<li>Settlings on Emacs</li>
+<li>Settling on Emacs</li>
 </ol>
 
 <div id="outline-container-org4b9cdf3" class="outline-2">
@@ -65,11 +65,13 @@ I don't care&#x2026; I'll still do it
 is the fix operator.
 </p>
 
+<blockquote>
 <p>
 ‘Reading’ means parsing an expression in textual form and producing a lisp
 object. E.g., this is a way to load a lisp file. ‘Printing’ a lisp object mean
 producing a textual representation. These operations, in lisp, are inverses.
 </p>
+</blockquote>
 
 <p>
 Also, check out this OCaml snippet
@@ -92,6 +94,62 @@ let () =
 double 145 = 290
 </pre>
 
+
+<p>
+Literate programming is a programming paradigm introduced in 1984 by Donald
+Knuth in which a computer program is given as an explanation of how it works in
+a natural language, such as English, interspersed (embedded) with snippets of
+macros and traditional source code, from which compilable source code can be
+generated.[1] The approach is used in scientific computing and in data science
+routinely for reproducible research and open access purposes.[2] Literate
+programming tools are used by millions of programmers today.[3]
+</p>
+
+<p>
+The literate programming paradigm, as conceived by Donald Knuth, represents a
+move away from writing computer programs in the manner and order imposed by the
+compiler, and instead gives programmers macros to develop programs in the order
+demanded by the logic and flow of their thoughts.[4] Literate programs are
+written as an exposition of logic in more natural language in which macros are
+used to hide abstractions and traditional source code, more like the text of an
+essay.
+</p>
+
+<p>
+Literate programming (LP) tools are used to obtain two representations from a
+source file: one understandable by a compiler or interpreter, the "tangled"
+code, and another for viewing as formatted documentation, which is said to be
+"woven" from the literate source.[5] While the first generation of literate
+programming tools were computer language-specific, the later ones are
+language-agnostic and exist beyond the individual programming languages.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">-- Naïve solution that does not scale well
+-- naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat
+
+-- Counts the number of 'a's given a string
+countAs :: String -&gt; Int
+countAs = sum . map (\c -&gt; fromEnum $ c == 'a')
+
+-- Count the rest of a's
+countRest :: Int -&gt; String -&gt; Int
+countRest sub = countAs . take sub
+
+solution :: Int -&gt; String -&gt; Int
+solution n s =
+  a * (n `div` l) + countRest r s
+  where a = countAs s
+        l = length s
+        r = n `mod` l
+
+main :: IO ()
+main = do s &lt;- getLine
+          secondLine &lt;- getLine
+          let n = read secondLine
+          putStrLn $ show $ solution n s
+</pre>
+</div>
 
 <p>
 It is astonishing that one can do literate programming inside Org-mode.
