@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-02-28 Wed 21:27 -->
+<!-- 2024-02-28 Wed 21:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -21,7 +21,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4b9cdf3">1. Appendix: <i>is blogging dead?</i></a></li>
+<li><a href="#org79e41da">1. Appendix: <i>is blogging dead?</i></a></li>
 </ul>
 </div>
 </div>
@@ -49,16 +49,15 @@ My new needs
 <li>Chapter three: TeXmacs</li>
 <li>Settling on Emacs</li>
 </ol>
-
-<div id="outline-container-org4b9cdf3" class="outline-2">
-<h2 id="org4b9cdf3"><span class="section-number-2">1.</span> Appendix: <i>is blogging dead?</i></h2>
+<div id="outline-container-org79e41da" class="outline-2">
+<h2 id="org79e41da"><span class="section-number-2">1.</span> Appendix: <i>is blogging dead?</i></h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I don't care&#x2026; I'll still do it
+I don&rsquo;t care&#x2026; I&rsquo;ll still do it
 </p>
 
 <p>
-<img src="/blogging_1ce658a3b67eb026c0214b9cf322b8190ca2bea2.svg" alt="blogging_1ce658a3b67eb026c0214b9cf322b8190ca2bea2.svg" class="org-svg" />
+<img src="/blogging_67aacc89102c1979d894926389f9b2d1810abbed.svg" alt="blogging_67aacc89102c1979d894926389f9b2d1810abbed.svg" class="org-svg" />
 </p>
 
 <p>
@@ -78,15 +77,15 @@ Also, check out this OCaml snippet
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ocaml">open Printf
-;;
-(* type 'a ghostype *)
+<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #00688b;">Printf</span>
+<span style="color: #ff4500;">;;</span>
+<span style="color: #7f7f7f;">(* </span><span style="color: #7f7f7f;">type 'a ghostype</span><span style="color: #7f7f7f;"> *)</span>
 
-let double n = 2*n
-;;
-let () =
-  let n = 145
-  in printf "double %d = %d\n" n (double n)
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #cd9b1d;">double</span> <span style="color: #2e8b57;">n</span> = <span style="color: #6e8b3d;">2</span>*n
+<span style="color: #ff4500;">;;</span>
+<span style="color: #000000; font-weight: bold;">let</span> () =
+  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #2e8b57;">n</span> = <span style="color: #6e8b3d;">145</span>
+  <span style="color: #000000; font-weight: bold;">in</span> printf <span style="color: #8b7355;">"double %d = %d\n"</span> n (double n)
 </pre>
 </div>
 
@@ -117,37 +116,37 @@ essay.
 
 <p>
 Literate programming (LP) tools are used to obtain two representations from a
-source file: one understandable by a compiler or interpreter, the "tangled"
+source file: one understandable by a compiler or interpreter, the &ldquo;tangled&rdquo;
 code, and another for viewing as formatted documentation, which is said to be
-"woven" from the literate source.[5] While the first generation of literate
+&ldquo;woven&rdquo; from the literate source.[5] While the first generation of literate
 programming tools were computer language-specific, the later ones are
 language-agnostic and exist beyond the individual programming languages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">-- Naïve solution that does not scale well
--- naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat
+<pre class="src src-haskell"><span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">Na&#239;ve solution that does not scale well</span>
+<span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
 
--- Counts the number of 'a's given a string
-countAs :: String -&gt; Int
-countAs = sum . map (\c -&gt; fromEnum $ c == 'a')
+<span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">Counts the number of 'a's given a string</span>
+<span style="color: #cd9b1d;">countAs</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">String</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">Int</span>
+<span style="color: #cd9b1d;">countAs</span> <span style="color: #2e8b57;">=</span> sum <span style="color: #2e8b57;">.</span> map (<span style="color: #2e8b57;">\</span>c <span style="color: #2e8b57;">-&gt;</span> fromEnum <span style="color: #2e8b57;">$</span> c <span style="color: #2e8b57;">==</span> <span style="color: #8b7355;">'a'</span>)
 
--- Count the rest of a's
-countRest :: Int -&gt; String -&gt; Int
-countRest sub = countAs . take sub
+<span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">Count the rest of a's</span>
+<span style="color: #cd9b1d;">countRest</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">Int</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">String</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">Int</span>
+<span style="color: #cd9b1d;">countRest</span> sub <span style="color: #2e8b57;">=</span> countAs <span style="color: #2e8b57;">.</span> take sub
 
-solution :: Int -&gt; String -&gt; Int
-solution n s =
-  a * (n `div` l) + countRest r s
-  where a = countAs s
-        l = length s
-        r = n `mod` l
+<span style="color: #cd9b1d;">solution</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">Int</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">String</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">Int</span>
+<span style="color: #cd9b1d;">solution</span> n s <span style="color: #2e8b57;">=</span>
+  a <span style="color: #2e8b57;">*</span> (n <span style="color: #2e8b57;">`div`</span> l) <span style="color: #2e8b57;">+</span> countRest r s
+  <span style="color: #1c86ee;">where</span> a <span style="color: #2e8b57;">=</span> countAs s
+        l <span style="color: #2e8b57;">=</span> length s
+        r <span style="color: #2e8b57;">=</span> n <span style="color: #2e8b57;">`mod`</span> l
 
-main :: IO ()
-main = do s &lt;- getLine
-          secondLine &lt;- getLine
-          let n = read secondLine
-          putStrLn $ show $ solution n s
+<span style="color: #cd9b1d;">main</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">IO</span> <span style="color: #00688b;">()</span>
+<span style="color: #cd9b1d;">main</span> <span style="color: #2e8b57;">=</span> <span style="color: #1c86ee;">do</span> s <span style="color: #2e8b57;">&lt;-</span> getLine
+          secondLine <span style="color: #2e8b57;">&lt;-</span> getLine
+          <span style="color: #1c86ee;">let</span> n <span style="color: #2e8b57;">=</span> read secondLine
+          putStrLn <span style="color: #2e8b57;">$</span> show <span style="color: #2e8b57;">$</span> solution n s
 </pre>
 </div>
 
