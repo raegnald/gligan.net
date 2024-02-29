@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-02-28 Wed 21:33 -->
+<!-- 2024-02-29 Thu 02:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -129,7 +129,7 @@ language-agnostic and exist beyond the individual programming languages.
 
 <span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">Counts the number of 'a's given a string</span>
 <span style="color: #cd9b1d;">countAs</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">String</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">Int</span>
-<span style="color: #cd9b1d;">countAs</span> <span style="color: #2e8b57;">=</span> sum <span style="color: #2e8b57;">.</span> map (<span style="color: #2e8b57;">\</span>c <span style="color: #2e8b57;">-&gt;</span> fromEnum <span style="color: #2e8b57;">$</span> c <span style="color: #2e8b57;">==</span> <span style="color: #8b7355;">'a'</span>)
+<span style="color: #cd9b1d;">countAs</span> <span style="color: #2e8b57;">=</span> length <span style="color: #2e8b57;">.</span> filter (<span style="color: #2e8b57;">==</span> <span style="color: #8b7355;">'a'</span>)
 
 <span style="color: #7f7f7f;">-- </span><span style="color: #7f7f7f;">Count the rest of a's</span>
 <span style="color: #cd9b1d;">countRest</span> <span style="color: #2e8b57;">::</span> <span style="color: #00688b;">Int</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">String</span> <span style="color: #2e8b57;">-&gt;</span> <span style="color: #00688b;">Int</span>
