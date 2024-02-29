@@ -1,0 +1,21 @@
+                            ________________
+
+                                SITEMAP
+
+                             Ronaldo Gligan
+                            ________________
+
+
+Table of Contents
+_________________
+
+
+
+
+- [Ronaldo's blog]
+- [The journey of finding a good way to do blogging]
+
+
+[Ronaldo's blog] <file:index.org>
+
+[The journey of finding a good way to do blogging] <file:blogging.org>
