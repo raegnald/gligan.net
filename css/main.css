@@ -173,6 +173,10 @@ pre, code {
   font-family: 'Iosevka', 'Iosevka Web', monospace;
 }
 
+code {
+  font-size: 85%;
+}
+
 pre {
   text-align: left !important;
   white-space: pre-wrap;

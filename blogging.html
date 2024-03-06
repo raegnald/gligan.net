@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-06 Wed 14:32 -->
+<!-- 2024-03-06 Wed 14:45 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -124,20 +124,14 @@ language-agnostic and exist beyond the individual programming languages.
 <pre class="src src-haskell"><span style="color: #505050;">-- </span><span style="color: #505050;">Na&#239;ve solution that does not scale well</span>
 <span style="color: #505050;">-- </span><span style="color: #505050;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
 
-<span style="color: #505050;">-- </span><span style="color: #505050;">Counts the number of 'a's given a string</span>
-<span style="color: #721045;">countAs</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
-<span style="color: #721045;">countAs</span> <span style="color: #00538b;">=</span> length <span style="color: #00538b;">.</span> filter (<span style="color: #00538b;">==</span> <span style="color: #2544bb;">'a'</span>)
-
-<span style="color: #505050;">-- </span><span style="color: #505050;">Count the rest of a's</span>
-<span style="color: #721045;">countRest</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
-<span style="color: #721045;">countRest</span> sub <span style="color: #00538b;">=</span> countAs <span style="color: #00538b;">.</span> take sub
-
 <span style="color: #721045;">solution</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
 <span style="color: #721045;">solution</span> n s <span style="color: #00538b;">=</span>
   a <span style="color: #00538b;">*</span> (n <span style="color: #00538b;">`div`</span> l) <span style="color: #00538b;">+</span> countRest r s
   <span style="color: #5317ac;">where</span> a <span style="color: #00538b;">=</span> countAs s
         l <span style="color: #00538b;">=</span> length s
         r <span style="color: #00538b;">=</span> n <span style="color: #00538b;">`mod`</span> l
+        countAs <span style="color: #00538b;">=</span> length <span style="color: #00538b;">.</span> filter (<span style="color: #00538b;">==</span> <span style="color: #2544bb;">'a'</span>)
+        countRest sub <span style="color: #00538b;">=</span> countAs <span style="color: #00538b;">.</span> take sub
 
 <span style="color: #721045;">main</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">IO</span> <span style="color: #005a5f;">()</span>
 <span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> <span style="color: #5317ac;">do</span> s <span style="color: #00538b;">&lt;-</span> getLine
