@@ -1,6 +1,6 @@
 
 @import url('/fonts/linux-biolinum.css')
-/* @import url('https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css') */
+@import url('/fonts/iosevka.css')
 
 html, body  {
   border: 0px;
