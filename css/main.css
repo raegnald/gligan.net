@@ -206,7 +206,8 @@ pre.example {
 }
 
 #table-of-contents > h2 {
-  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 @media screen and (min-width: 1600px) {
