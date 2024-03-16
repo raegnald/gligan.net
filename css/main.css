@@ -169,6 +169,24 @@ a:active, a:focus, a:hover {
   }
 }
 
+.note::before {
+  content: "Note";
+}
+
+.warning::before {
+  content: "Warning";
+}
+
+.note::before, .warning::before {
+  font-variant: small-caps;
+}
+
+.note, .warning {
+  margin: 0.35em -15px;
+  border: 1px solid #d9d9d9;
+  padding: 15px;
+}
+
 pre, code {
   font-family: 'Iosevka', 'Iosevka Web', monospace;
 }
@@ -296,5 +314,13 @@ hr {
 }
 
 .org-center p {
-    text-align: center;
+  text-align: center;
+}
+
+.todo, .TODO {
+  font-family: Iosevka Web;
+  font-size: 75%;
+  background: #ffb5b5;
+  padding: 2px 7px;
+  color: #8f2929;
 }

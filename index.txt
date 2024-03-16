@@ -26,6 +26,10 @@ Works
 
   ----------------------------------------------------------------------
 
+  Take a look at my [Emacs literate config file].
+
+  ----------------------------------------------------------------------
+
   This website is proudly
 
   - Ad–, cookie– and tracker–free.
@@ -34,3 +38,5 @@ Works
 
 [Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
 para hallar $f_\textrm{máx}$] <./redes-de-flujo.pdf>
+
+[Emacs literate config file] <./emacs-config.org>

@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-03-16 Sat 19:21 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ronaldo's Emacs config file</title>
+<meta name="author" content="Ronaldo Gligan" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="preamble" class="status">
+<span id="site-name">Ronaldo Gligan</span><span id="home-link"><a href="/">Home</a></span>
+</div>
+<div id="content" class="content">
+<h1 class="title">Ronaldo's Emacs config file</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org1b8eaad">1. Personal</a></li>
+<li><a href="#org10a94a9">2. Packages</a></li>
+<li><a href="#org9847eda">3. Emacs window</a>
+<ul>
+<li><a href="#orge7a2c2b">3.1. Early</a></li>
+<li><a href="#orge72c5a0">3.2. Main window properties</a></li>
+<li><a href="#orgcb97e3e">3.3. Modeline</a></li>
+<li><a href="#org3217d7b">3.4. Fonts</a></li>
+<li><a href="#org2de59c9">3.5. Theme</a></li>
+</ul>
+</li>
+<li><a href="#org82d3e9f">4. Languages</a>
+<ul>
+<li><a href="#orgbc7ac7e">4.1. Tools</a>
+<ul>
+<li><a href="#org39d85b3">4.1.1. Company</a></li>
+<li><a href="#orgfdaf38a">4.1.2. Flycheck</a></li>
+<li><a href="#org44a28ee">4.1.3. LSP</a></li>
+</ul>
+</li>
+<li><a href="#org42ccb88">4.2. OCaml</a></li>
+<li><a href="#org78e24d3">4.3. Haskell</a></li>
+<li><a href="#orgd37270b">4.4. C</a></li>
+<li><a href="#org5249970">4.5. Zig</a></li>
+<li><a href="#orga0e35fe">4.6. <span class="todo TODO">TODO</span> Scheme/Guile/Geiser</a></li>
+</ul>
+</li>
+<li><a href="#org248d9bc">5. Org mode</a>
+<ul>
+<li><a href="#org99d05fe">5.1. <code>org-journal</code></a></li>
+<li><a href="#orgfc98d35">5.2. Skeletons for <code>org-mode</code></a></li>
+<li><a href="#org92bea61">5.3. <span class="todo TODO">TODO</span> Auto tangle (<code>org-auto-tangle</code>)</a></li>
+<li><a href="#org0c41ae8">5.4. Org modern (<code>org-modern</code>)</a></li>
+<li><a href="#orgd96b5ce">5.5. Zen mode (<code>olivetti</code>)</a></li>
+<li><a href="#org676fcfd">5.6. Exporting</a>
+<ul>
+<li><a href="#orgb2c0574">5.6.1. to LaTeX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1c05d92">6. Nicities</a>
+<ul>
+<li><a href="#org117de09">6.1. Save the session</a></li>
+<li><a href="#org2c988c7">6.2. Auto close parentheses, brackets, et c. (<code>electric-pair-mode</code>)</a></li>
+<li><a href="#orgeea708d">6.3. Ligatures</a></li>
+<li><a href="#org413f03d">6.4. <code>TODO, NOTE, FIXME, BUG, ...</code> (<code>hl-todo</code>)</a></li>
+<li><a href="#org44a030e">6.5. Change names of modes (<code>delight</code>)</a></li>
+<li><a href="#org06b3796">6.6. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+This is my vanilla Emacs literate configuration file.
+</p>
+
+<hr />
+
+<div id="outline-container-org1b8eaad" class="outline-2">
+<h2 id="org1b8eaad"><span class="section-number-2">1.</span> Personal</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><p>
+My personal information
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> user-full-name <span style="color: #2544bb;">"Ronaldo Gligan"</span>
+      user-mail-address <span style="color: #2544bb;">"ronaldogligan@outlook.com"</span>)
+</pre>
+</div></li>
+<li><p>
+Insert today's date
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">defun</span> <span style="color: #721045;">gligan/today</span> () (<span style="color: #5317ac;">interactive</span>)
+  (format-time-string <span style="color: #2544bb;">"%Y-%m-%d"</span>))
+(global-set-key (kbd <span style="color: #2544bb;">"M-g d"</span>) 'gligan/today)
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org10a94a9" class="outline-2">
+<h2 id="org10a94a9"><span class="section-number-2">2.</span> Packages</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">require</span> '<span style="color: #0000c0;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #2544bb;">"gnu"</span>   . <span style="color: #2544bb;">"https://elpa.gnu.org/packages/"</span>))
+(add-to-list 'package-archives '(<span style="color: #2544bb;">"melpa"</span> . <span style="color: #2544bb;">"https://melpa.org/packages/"</span>))
+(package-initialize)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9847eda" class="outline-2">
+<h2 id="org9847eda"><span class="section-number-2">3.</span> Emacs window</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orge7a2c2b" class="outline-3">
+<h3 id="orge7a2c2b"><span class="section-number-3">3.1.</span> Early</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">Title</span>
+(<span style="color: #5317ac;">setq</span> frame-title-format <span style="color: #2544bb;">"%b - Emacs"</span>)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">Minimal window without buttons or scrollbars</span>
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge72c5a0" class="outline-3">
+<h3 id="orge72c5a0"><span class="section-number-3">3.2.</span> Main window properties</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-elisp">
+<span style="color: #505050;">;; </span><span style="color: #505050;">Maximise window at start up</span>
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">Window transparency</span>
+(set-frame-parameter (selected-frame) 'alpha-background 95)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">No window decorations</span>
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">Use two spaces</span>
+(<span style="color: #5317ac;">setq-default</span> tab-width 2)
+(<span style="color: #5317ac;">setq-default</span> indent-tabs-mode nil)
+(delete-selection-mode 1)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">Use a small bar as a cursor</span>
+(<span style="color: #5317ac;">setq-default</span> cursor-type 'bar)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">I don't like line numbers</span>
+(<span style="color: #5317ac;">setq</span> display-line-numbers-type nil)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">No welcome message; no scratch buffer message</span>
+(<span style="color: #5317ac;">setq</span> inhibit-startup-message t)
+(<span style="color: #5317ac;">setq</span> initial-scratch-message nil)
+
+<span style="color: #505050;">;; </span><span style="color: #505050;">Auto-save &amp; back up files</span>
+(<span style="color: #5317ac;">setq</span> auto-save-default t
+      make-backup-files t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb97e3e" class="outline-3">
+<h3 id="orgcb97e3e"><span class="section-number-3">3.3.</span> Modeline</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">Show line and column</span>
+(column-number-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3217d7b" class="outline-3">
+<h3 id="org3217d7b"><span class="section-number-3">3.4.</span> Fonts</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-elisp">(set-frame-font <span style="color: #2544bb;">"Iosevka 12"</span> nil t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2de59c9" class="outline-3">
+<h3 id="org2de59c9"><span class="section-number-3">3.5.</span> Theme</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> gligan/dark-theme 'monokate)
+(<span style="color: #5317ac;">setq</span> gligan/light-theme 'modus-operandi)
+
+(<span style="color: #5317ac;">setq</span> gligan/current-theme gligan/dark-theme)
+
+(load-theme gligan/current-theme t)
+
+(<span style="color: #5317ac;">defun</span> <span style="color: #721045;">gligan/toggle-theme</span> () (<span style="color: #5317ac;">interactive</span>)
+       (disable-theme gligan/current-theme)
+       (<span style="color: #5317ac;">setq</span> next-theme (<span style="color: #5317ac;">if</span> (equal gligan/current-theme gligan/light-theme)
+                            gligan/dark-theme
+                            gligan/light-theme))
+       (<span style="color: #5317ac;">setq</span> gligan/current-theme next-theme)
+       (load-theme next-theme t))
+
+(global-set-key (kbd <span style="color: #2544bb;">"M-g t"</span>) 'gligan/toggle-theme)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org82d3e9f" class="outline-2">
+<h2 id="org82d3e9f"><span class="section-number-2">4.</span> Languages</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgbc7ac7e" class="outline-3">
+<h3 id="orgbc7ac7e"><span class="section-number-3">4.1.</span> Tools</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org39d85b3" class="outline-4">
+<h4 id="org39d85b3"><span class="section-number-4">4.1.1.</span> Company</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">company</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (global-company-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfdaf38a" class="outline-4">
+<h4 id="orgfdaf38a"><span class="section-number-4">4.1.2.</span> Flycheck</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (global-flycheck-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44a28ee" class="outline-4">
+<h4 id="org44a28ee"><span class="section-number-4">4.1.3.</span> LSP</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-ui</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:after</span> lsp-mode
+  <span style="color: #8f0075;">:commands</span> lsp-ui-mode
+  <span style="color: #8f0075;">:custom</span>
+  (lsp-ui-peek-enable t)
+  (lsp-ui-peek-show-directory t)
+  (lsp-ui-doc-enable t)
+  <span style="color: #505050;">;; </span><span style="color: #505050;">You might want this:</span>
+  <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-ui-doc-show-with-cursor nil)</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">Also this because isearch gets broken otherwise</span>
+  <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-ui-doc-show-with-mouse nil)</span>
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-imenu-window-width 20))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-mode</span>
+  <span style="color: #8f0075;">:commands</span> lsp
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:init</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">You need to restart emacs for keymap prefix to take effect</span>
+  <span style="color: #505050;">; </span><span style="color: #505050;">(setq lsp-keymap-prefix "M-L")</span>
+
+  <span style="color: #8f0075;">:config</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">so that dir-locals have effect:</span>
+  <span style="color: #505050;">;;   </span><span style="color: #505050;">https://github.com/emacs-lsp/lsp-mode/issues/405</span>
+  (add-hook 'hack-local-variables-hook (<span style="color: #5317ac;">lambda</span> () (<span style="color: #5317ac;">when</span> lsp-mode (lsp))))
+
+  <span style="color: #8f0075;">:hook</span> ((haskell-mode . lsp-deferred)
+         (haskell-literate-mode . lsp-deferred)
+         (lsp-managed-mode . lsp-modeline-diagnostics-mode)
+         <span style="color: #505050;">;; </span><span style="color: #505050;">if you want which-key integration</span>
+         <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-mode . (lambda () (lsp-enable-which-key-integration t)))</span>
+         )
+
+  <span style="color: #8f0075;">:custom</span>
+  (lsp-progress-via-spinner nil) <span style="color: #505050;">;; </span><span style="color: #505050;">spinner seems to cause problems</span>
+  (lsp-restart 'ignore)
+  (lsp-keep-workspace-alive nil)
+  (lsp-headerline-breadcrumb-enable t)
+  (lsp-headerline-breadcrumb-segments '(symbols))
+  (lsp-enable-snippet nil)
+
+  <span style="color: #505050;">;; </span><span style="color: #505050;">:global/:workspace/:file</span>
+  (lsp-modeline-diagnostics-scope <span style="color: #8f0075;">:workspace</span>)
+  (lsp-file-watch-threshold 2000)
+  <span style="color: #505050;">; </span><span style="color: #505050;">(setq lsp-idle-delay 0.500)</span>
+  (lsp-completion-provider <span style="color: #8f0075;">:capf</span>))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org42ccb88" class="outline-3">
+<h3 id="org42ccb88"><span class="section-number-3">4.2.</span> OCaml</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">tuareg</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:delight</span> <span style="color: #2544bb;">"&#128043;"</span>)
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">dune</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t)
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">merlin</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'merlin-mode-hook #'company-mode)
+  (<span style="color: #5317ac;">setq</span> merlin-error-after-save nil))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">merlin-eldoc</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:hook</span> (tuareg . merlin-eldoc-setup))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-ocaml</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (flycheck-ocaml-setup))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">utop</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org78e24d3" class="outline-3">
+<h3 id="org78e24d3"><span class="section-number-3">4.3.</span> Haskell</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Haskell code checking is <i>very</i> slow, so I'm only activating it on file save.
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">haskell-mode</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:delight</span> <span style="color: #2544bb;">"&#955;"</span>
+  <span style="color: #8f0075;">:config</span>)
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-haskell</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (<span style="color: #5317ac;">setq</span> flycheck-check-syntax-automatically '(mode-enabled save)))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-haskell</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:after</span> (haskell-mode lsp-mode)
+  <span style="color: #8f0075;">:config</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">Comment/uncomment this line to see interactions between lsp client/server.</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">(setq lsp-log-io t)</span>
+  <span style="color: #8f0075;">:custom</span>
+  <span style="color: #505050;">;</span><span style="color: #505050;">(lsp-haskell-process-args-hie '("-d" "-l" "/tmp/hie.log"))</span>
+  <span style="color: #505050;">;</span><span style="color: #505050;">(lsp-haskell-server-args ())</span>
+  (lsp-haskell-server-path <span style="color: #2544bb;">"haskell-language-server"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd37270b" class="outline-3">
+<h3 id="orgd37270b"><span class="section-number-3">4.4.</span> C</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">company-irony</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t)
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">irony-eldoc</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t)
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-irony</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5249970" class="outline-3">
+<h3 id="org5249970"><span class="section-number-3">4.5.</span> Zig</h3>
+<div class="outline-text-3" id="text-4-5">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">zig-mode</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga0e35fe" class="outline-3">
+<h3 id="orga0e35fe"><span class="section-number-3">4.6.</span> <span class="todo TODO">TODO</span> Scheme/Guile/Geiser</h3>
+</div>
+</div>
+
+
+
+<div id="outline-container-org248d9bc" class="outline-2">
+<h2 id="org248d9bc"><span class="section-number-2">5.</span> Org mode</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> org-directory <span style="color: #2544bb;">"~/org/"</span>)
+
+(<span style="color: #5317ac;">setq</span> org-hide-emphasis-markers t)
+(<span style="color: #5317ac;">setq</span> org-startup-folded 'fold)
+(<span style="color: #5317ac;">setq</span> org-startup-indented t)
+
+(<span style="color: #5317ac;">setq</span> org-preview-latex-default-process 'dvipng)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org99d05fe" class="outline-3">
+<h3 id="org99d05fe"><span class="section-number-3">5.1.</span> <code>org-journal</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> journal-dir <span style="color: #2544bb;">"~/org/journal/"</span>)
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-journal</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+   (<span style="color: #5317ac;">setq</span> org-journal-date-format <span style="color: #2544bb;">"%A, %d %B %Y"</span>) <span style="color: #505050;">; </span><span style="color: #505050;">e.g. "Friday, 8 March 2024"</span>
+   (global-set-key (kbd <span style="color: #2544bb;">"M-g j"</span>) 'org-journal-new-entry))
+
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc98d35" class="outline-3">
+<h3 id="orgfc98d35"><span class="section-number-3">5.2.</span> Skeletons for <code>org-mode</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">define-skeleton</span> <span style="color: #721045;">org-header-skeleton</span>
+  <span style="color: #2a486a;">"Header for my org files, mainly for blog posts"</span>
+  <span style="color: #2544bb;">"Document title: "</span> <span style="color: #2544bb;">"#+title: "</span> str <span style="color: #2544bb;">"\n"</span>
+                     <span style="color: #2544bb;">"#+author: "</span> user-full-name <span style="color: #2544bb;">"\n"</span>
+                     <span style="color: #505050;">;; </span><span style="color: #505050;">"#+EMAIL: " user-mail-address "\n"</span>
+                     <span style="color: #2544bb;">"#+date: "</span> (format-time-string <span style="color: #2544bb;">"%Y-%m-%d"</span>) <span style="color: #2544bb;">"\n"</span>
+                     <span style="color: #2544bb;">"#+setupfile: blog.config"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92bea61" class="outline-3">
+<h3 id="org92bea61"><span class="section-number-3">5.3.</span> <span class="todo TODO">TODO</span> Auto tangle (<code>org-auto-tangle</code>)</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-auto-tangle</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:hook</span> (org-mode . org-auto-tangle-mode)
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:config</span>
+  (<span style="color: #5317ac;">setq</span> org-auto-tangle-default t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c41ae8" class="outline-3">
+<h3 id="org0c41ae8"><span class="section-number-3">5.4.</span> Org modern (<code>org-modern</code>)</h3>
+<div class="outline-text-3" id="text-5-4">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-modern</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:hook</span> (org-mode . org-modern-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd96b5ce" class="outline-3">
+<h3 id="orgd96b5ce"><span class="section-number-3">5.5.</span> Zen mode (<code>olivetti</code>)</h3>
+<div class="outline-text-3" id="text-5-5">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">olivetti</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:defer</span> t
+  <span style="color: #8f0075;">:hook</span> (org-mode . olivetti-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org676fcfd" class="outline-3">
+<h3 id="org676fcfd"><span class="section-number-3">5.6.</span> Exporting</h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-orgb2c0574" class="outline-4">
+<h4 id="orgb2c0574"><span class="section-number-4">5.6.1.</span> to LaTeX</h4>
+<div class="outline-text-4" id="text-5-6-1">
+</div>
+<ol class="org-ol">
+<li><a id="org98feb56"></a><span class="todo TODO">TODO</span> A4 paper size<br />
+<div class="outline-text-5" id="text-5-6-1-1">
+<p>
+Why should I export my documents on inferior paper dimensions?
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org7e58941"></a>Syntax highlighting with <code>minted</code><br />
+<div class="outline-text-5" id="text-5-6-1-2">
+<p>
+Minted is a LaTeX package that adds syntax highlighting to code blocks.
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> org-latex-src-block-backend 'minted
+      org-latex-packages-alist '((<span style="color: #2544bb;">""</span> <span style="color: #2544bb;">"minted"</span>))
+      org-latex-pdf-process
+      '(<span style="color: #2544bb;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>
+        <span style="color: #2544bb;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org1c05d92" class="outline-2">
+<h2 id="org1c05d92"><span class="section-number-2">6.</span> Nicities</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org117de09" class="outline-3">
+<h3 id="org117de09"><span class="section-number-3">6.1.</span> Save the session</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">(desktop-save-mode 1)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c988c7" class="outline-3">
+<h3 id="org2c988c7"><span class="section-number-3">6.2.</span> Auto close parentheses, brackets, et c. (<code>electric-pair-mode</code>)</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(electric-pair-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeea708d" class="outline-3">
+<h3 id="orgeea708d"><span class="section-number-3">6.3.</span> Ligatures</h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">ligature</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">Enable all Iosevka ligatures in programming modes</span>
+  (ligature-set-ligatures 'prog-mode '(<span style="color: #2544bb;">"&lt;---"</span> <span style="color: #2544bb;">"&lt;--"</span>  <span style="color: #2544bb;">"&lt;&lt;-"</span> <span style="color: #2544bb;">"&lt;-"</span> <span style="color: #2544bb;">"-&gt;"</span> <span style="color: #2544bb;">"--&gt;"</span> <span style="color: #2544bb;">"---&gt;"</span> <span style="color: #2544bb;">"&lt;-&gt;"</span> <span style="color: #2544bb;">"&lt;--&gt;"</span> <span style="color: #2544bb;">"&lt;---&gt;"</span> <span style="color: #2544bb;">"&lt;----&gt;"</span> <span style="color: #2544bb;">"&lt;!--"</span>
+                                       <span style="color: #2544bb;">"&lt;=="</span> <span style="color: #2544bb;">"&lt;==="</span> <span style="color: #2544bb;">"&lt;="</span> <span style="color: #2544bb;">"=&gt;"</span> <span style="color: #2544bb;">"=&gt;&gt;"</span> <span style="color: #2544bb;">"==&gt;"</span> <span style="color: #2544bb;">"===&gt;"</span> <span style="color: #2544bb;">"&gt;="</span> <span style="color: #2544bb;">"&lt;=&gt;"</span> <span style="color: #2544bb;">"&lt;==&gt;"</span> <span style="color: #2544bb;">"&lt;===&gt;"</span> <span style="color: #2544bb;">"&lt;====&gt;"</span> <span style="color: #2544bb;">"&lt;!---"</span>
+                                       <span style="color: #2544bb;">"&lt;~~"</span> <span style="color: #2544bb;">"&lt;~"</span> <span style="color: #2544bb;">"~&gt;"</span> <span style="color: #2544bb;">"~~&gt;"</span> <span style="color: #2544bb;">"::"</span> <span style="color: #2544bb;">":::"</span> <span style="color: #2544bb;">"=="</span> <span style="color: #2544bb;">"!="</span> <span style="color: #2544bb;">"==="</span> <span style="color: #2544bb;">"!=="</span>
+                                       <span style="color: #2544bb;">":="</span> <span style="color: #2544bb;">":-"</span> <span style="color: #2544bb;">":+"</span> <span style="color: #2544bb;">"&lt;*"</span> <span style="color: #2544bb;">"&lt;*&gt;"</span> <span style="color: #2544bb;">"*&gt;"</span> <span style="color: #2544bb;">"&lt;|"</span> <span style="color: #2544bb;">"&lt;|&gt;"</span> <span style="color: #2544bb;">"|&gt;"</span> <span style="color: #2544bb;">"+:"</span> <span style="color: #2544bb;">"-:"</span> <span style="color: #2544bb;">"=:"</span> <span style="color: #2544bb;">"&lt;******&gt;"</span> <span style="color: #2544bb;">"++"</span> <span style="color: #2544bb;">"+++"</span>))
+  (global-ligature-mode t))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org413f03d" class="outline-3">
+<h3 id="org413f03d"><span class="section-number-3">6.4.</span> <code>TODO, NOTE, FIXME, BUG, ...</code> (<code>hl-todo</code>)</h3>
+<div class="outline-text-3" id="text-6-4">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">hl-todo</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  (global-hl-todo-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44a030e" class="outline-3">
+<h3 id="org44a030e"><span class="section-number-3">6.5.</span> Change names of modes (<code>delight</code>)</h3>
+<div class="outline-text-3" id="text-6-5">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">delight</span>
+  <span style="color: #8f0075;">:ensure</span> t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org06b3796" class="outline-3">
+<h3 id="org06b3796"><span class="section-number-3">6.6.</span> Better <code>M-x</code> completion (<code>vertico</code>)</h3>
+<div class="outline-text-3" id="text-6-6">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">vertico</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  (vertico-mode))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">savehist</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  (savehist-mode))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">orderless</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">Configure a custom style dispatcher (see the Consult wiki)</span>
+  <span style="color: #505050;">;; </span><span style="color: #505050;">(setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)</span>
+  <span style="color: #505050;">;;       </span><span style="color: #505050;">orderless-component-separator #'orderless-escapable-split-on-space)</span>
+  (<span style="color: #5317ac;">setq</span> completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ronaldo Gligan</p>
+<p class="date">Created: 2024-03-16 Sat 19:21</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
