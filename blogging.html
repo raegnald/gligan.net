@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-16 Sat 16:58 -->
+<!-- 2024-03-16 Sat 17:05 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -80,7 +80,7 @@ Also, check out this OCaml snippet
 <div class="org-src-container">
 <pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #8f0075;">Printf</span>
 <span style="color: #a0132f;">;;</span>
-<span style="color: #505050; font-style: italic;">(* </span><span style="color: #505050; font-style: italic;">type 'a ghostype</span><span style="color: #505050; font-style: italic;"> *)</span>
+<span style="color: #505050;">(* </span><span style="color: #505050;">type 'a ghostype</span><span style="color: #505050;"> *)</span>
 
 <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #721045;">double</span> <span style="color: #00538b;">n</span> = 2*n
 <span style="color: #a0132f;">;;</span>
@@ -124,8 +124,8 @@ language-agnostic and exist beyond the individual programming languages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">Na&#239;ve solution that does not scale well</span>
-<span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
+<pre class="src src-haskell"><span style="color: #505050;">-- </span><span style="color: #505050;">Na&#239;ve solution that does not scale well</span>
+<span style="color: #505050;">-- </span><span style="color: #505050;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
 
 <span style="color: #721045;">solution</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
 <span style="color: #721045;">solution</span> n s <span style="color: #00538b;">=</span>
@@ -150,7 +150,7 @@ It is astonishing that one can do literate programming inside Org-mode.
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #8f0075;">print</span>(<span style="color: #2544bb;">"hello"</span>)
-<span style="color: #505050; font-style: italic;"># </span><span style="color: #505050; font-style: italic;">print(fileName, "is!")</span>
+<span style="color: #505050;"># </span><span style="color: #505050;">print(fileName, "is!")</span>
 </pre>
 </div>
 
@@ -191,7 +191,7 @@ This is, obviously, centered
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> putStrLn <span style="color: #2544bb;">"hello"</span>
 
-<span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">From "The Genuine Sieve of Eratosthenes", page 11</span>
+<span style="color: #505050;">-- </span><span style="color: #505050;">From "The Genuine Sieve of Eratosthenes", page 11</span>
 <span style="color: #721045;">primes</span> <span style="color: #00538b;">::</span> [<span style="color: #005a5f;">Integer</span>]
 <span style="color: #721045;">primes</span> <span style="color: #00538b;">=</span> 2 <span style="color: #005a5f;">:</span> ([3<span style="color: #00538b;">..</span>] <span style="color: #00538b;">`minus`</span> composites)
 

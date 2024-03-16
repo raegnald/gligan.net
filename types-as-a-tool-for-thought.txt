@@ -1,0 +1,17 @@
+           __________________________________________________
+
+               TYPES AS A TOOL FOR THOUGHT: TYPES ARE NOT
+              RESTRICTIONS; THEY ARE EASE OF UNDERSTANDING
+
+                             Ronaldo Gligan
+           __________________________________________________
+
+
+Table of Contents
+_________________
+
+
+
+
+People tend to see types on statically typed languages as restrictions
+on the values functions take.

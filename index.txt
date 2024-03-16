@@ -1,0 +1,36 @@
+Welcome to my blog: a place where I write about topics that I find
+interesting and think should be shared — it is also a way for me to
+learn to express myself more eloquently.
+
+
+Posts
+=====
+
+  I invite you to explore my posts on mathematics, which I usually write
+  in Spanish, as it is the language I employ to study this
+  subject. Additionally, I also delve into programming topics, which
+  undoubtedly lend themselves more easily to expression in English.
+
+  [Journey of finding a decent CMS and how I gave up; not really]
+
+
+[Journey of finding a decent CMS and how I gave up; not really]
+<./blogging.org>
+
+
+Works
+=====
+
+  [Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
+  para hallar $f_\textrm{máx}$]
+
+  ----------------------------------------------------------------------
+
+  This website is proudly
+
+  - Ad–, cookie– and tracker–free.
+  - Written with Org-mode & managed using Emacs.
+
+
+[Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
+para hallar $f_\textrm{máx}$] <./redes-de-flujo.pdf>
