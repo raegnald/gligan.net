@@ -168,3 +168,6 @@ My new needs
   |           | otherwise = y : merge' (x:xs)   ys
   | 
   `----
+
+  \begin{equation} % arbitrary environments, x=\sqrt{b} % even tables,
+  figures \end{equation} % etc
