@@ -60,6 +60,12 @@ You can have a raw version of this file [here] (`init.el').
 ------------------------------------------------------------------------
 
 
+ Key binding  Function                                                            
+----------------------------------------------------------------------------------
+ `M-g t'      Toggles between themes `gligan/dark-theme' and `gligan/light-theme' 
+ `M-g d'      Inputs the current date                                             
+
+
 [here] <https://gligan.net/init.el>
 
 
