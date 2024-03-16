@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-16 Sat 16:52 -->
+<!-- 2024-03-16 Sat 16:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -78,15 +78,15 @@ Also, check out this OCaml snippet
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ocaml">open Printf
-;;
-(* type 'a ghostype *)
+<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #8f0075;">Printf</span>
+<span style="color: #a0132f;">;;</span>
+<span style="color: #505050; font-style: italic;">(* </span><span style="color: #505050; font-style: italic;">type 'a ghostype</span><span style="color: #505050; font-style: italic;"> *)</span>
 
-let double n = 2*n
-;;
-let () =
-  let n = 145
-  in printf "double %d = %d\n" n (double n)
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #721045;">double</span> <span style="color: #00538b;">n</span> = 2*n
+<span style="color: #a0132f;">;;</span>
+<span style="color: #000000; font-weight: bold;">let</span> () =
+  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #00538b;">n</span> = 145
+  <span style="color: #000000; font-weight: bold;">in</span> printf <span style="color: #2544bb;">"double %d = %d\n"</span> n (double n)
 </pre>
 </div>
 
@@ -124,23 +124,23 @@ language-agnostic and exist beyond the individual programming languages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">-- Naïve solution that does not scale well
--- naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat
+<pre class="src src-haskell"><span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">Na&#239;ve solution that does not scale well</span>
+<span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
 
-solution :: Int -&gt; String -&gt; Int
-solution n s =
-  a * (n `div` l) + countRest r s
-  where a = countAs s
-        l = length s
-        r = n `mod` l
-        countAs = length . filter (== 'a')
-        countRest sub = countAs . take sub
+<span style="color: #721045;">solution</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
+<span style="color: #721045;">solution</span> n s <span style="color: #00538b;">=</span>
+  a <span style="color: #00538b;">*</span> (n <span style="color: #00538b;">`div`</span> l) <span style="color: #00538b;">+</span> countRest r s
+  <span style="color: #5317ac;">where</span> a <span style="color: #00538b;">=</span> countAs s
+        l <span style="color: #00538b;">=</span> length s
+        r <span style="color: #00538b;">=</span> n <span style="color: #00538b;">`mod`</span> l
+        countAs <span style="color: #00538b;">=</span> length <span style="color: #00538b;">.</span> filter (<span style="color: #00538b;">==</span> <span style="color: #2544bb;">'a'</span>)
+        countRest sub <span style="color: #00538b;">=</span> countAs <span style="color: #00538b;">.</span> take sub
 
-main :: IO ()
-main = do s &lt;- getLine
-          secondLine &lt;- getLine
-          let n = read secondLine
-          putStrLn $ show $ solution n s
+<span style="color: #721045;">main</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">IO</span> <span style="color: #005a5f;">()</span>
+<span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> <span style="color: #5317ac;">do</span> s <span style="color: #00538b;">&lt;-</span> getLine
+          secondLine <span style="color: #00538b;">&lt;-</span> getLine
+          <span style="color: #5317ac;">let</span> n <span style="color: #00538b;">=</span> read secondLine
+          putStrLn <span style="color: #00538b;">$</span> show <span style="color: #00538b;">$</span> solution n s
 </pre>
 </div>
 
@@ -149,8 +149,8 @@ It is astonishing that one can do literate programming inside Org-mode.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">print("hello")
-# print(fileName, "is!")
+<pre class="src src-python"><span style="color: #8f0075;">print</span>(<span style="color: #2544bb;">"hello"</span>)
+<span style="color: #505050; font-style: italic;"># </span><span style="color: #505050; font-style: italic;">print(fileName, "is!")</span>
 </pre>
 </div>
 
@@ -189,28 +189,28 @@ This is, obviously, centered
 </div>
 
 <div class="org-src-container">
-<pre class="src src-haskell">main = putStrLn "hello"
+<pre class="src src-haskell"><span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> putStrLn <span style="color: #2544bb;">"hello"</span>
 
--- From "The Genuine Sieve of Eratosthenes", page 11
-primes :: [Integer]
-primes = 2 : ([3..] `minus` composites)
+<span style="color: #505050; font-style: italic;">-- </span><span style="color: #505050; font-style: italic;">From "The Genuine Sieve of Eratosthenes", page 11</span>
+<span style="color: #721045;">primes</span> <span style="color: #00538b;">::</span> [<span style="color: #005a5f;">Integer</span>]
+<span style="color: #721045;">primes</span> <span style="color: #00538b;">=</span> 2 <span style="color: #005a5f;">:</span> ([3<span style="color: #00538b;">..</span>] <span style="color: #00538b;">`minus`</span> composites)
 
-  where composites = union [multiples p | p &lt;- primes]
+  <span style="color: #5317ac;">where</span> composites <span style="color: #00538b;">=</span> union [multiples p <span style="color: #00538b;">|</span> p <span style="color: #00538b;">&lt;-</span> primes]
 
-        multiples n = map (*n) [n..]
+        multiples n <span style="color: #00538b;">=</span> map (<span style="color: #00538b;">*</span>n) [n<span style="color: #00538b;">..</span>]
 
-        (x:xs) `minus` (y:ys)
-          | x  &lt; y    =  x:(xs `minus` (y:ys))
-          | x == y    =     xs `minus` ys
-          | otherwise = (x:xs) `minus` ys
+        (x<span style="color: #005a5f;">:</span>xs) <span style="color: #00538b;">`minus`</span> (y<span style="color: #005a5f;">:</span>ys)
+          <span style="color: #00538b;">|</span> x  <span style="color: #00538b;">&lt;</span> y    <span style="color: #00538b;">=</span>  x<span style="color: #005a5f;">:</span>(xs <span style="color: #00538b;">`minus`</span> (y<span style="color: #005a5f;">:</span>ys))
+          <span style="color: #00538b;">|</span> x <span style="color: #00538b;">==</span> y    <span style="color: #00538b;">=</span>     xs <span style="color: #00538b;">`minus`</span> ys
+          <span style="color: #00538b;">|</span> otherwise <span style="color: #00538b;">=</span> (x<span style="color: #005a5f;">:</span>xs) <span style="color: #00538b;">`minus`</span> ys
 
-        union = foldr merge []
+        union <span style="color: #00538b;">=</span> foldr merge <span style="color: #005a5f;">[]</span>
 
-        merge (x:xs) ys = x : merge' xs ys
-        merge' (x:xs) (y:ys)
-          | x  &lt; y    = x : merge'    xs (y:ys)
-          | x == y    = x : merge'    xs    ys
-          | otherwise = y : merge' (x:xs)   ys
+        merge (x<span style="color: #005a5f;">:</span>xs) ys <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge' xs ys
+        merge' (x<span style="color: #005a5f;">:</span>xs) (y<span style="color: #005a5f;">:</span>ys)
+          <span style="color: #00538b;">|</span> x  <span style="color: #00538b;">&lt;</span> y    <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge'    xs (y<span style="color: #005a5f;">:</span>ys)
+          <span style="color: #00538b;">|</span> x <span style="color: #00538b;">==</span> y    <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge'    xs    ys
+          <span style="color: #00538b;">|</span> otherwise <span style="color: #00538b;">=</span> y <span style="color: #005a5f;">:</span> merge' (x<span style="color: #005a5f;">:</span>xs)   ys
 
 </pre>
 </div>
