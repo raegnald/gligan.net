@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-15 Fri 09:17 -->
+<!-- 2024-03-16 Sat 16:52 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -21,7 +21,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7f58165">1. Appendix: <i>is blogging dead?</i></a></li>
+<li><a href="#org833366a">1. Appendix: <i>is blogging dead?</i></a></li>
 </ul>
 </div>
 </div>
@@ -49,15 +49,16 @@ My new needs
 <li>Chapter three: TeXmacs</li>
 <li>Settling on Emacs</li>
 </ol>
-<div id="outline-container-org7f58165" class="outline-2">
-<h2 id="org7f58165"><span class="section-number-2">1.</span> Appendix: <i>is blogging dead?</i></h2>
+
+<div id="outline-container-org833366a" class="outline-2">
+<h2 id="org833366a"><span class="section-number-2">1.</span> Appendix: <i>is blogging dead?</i></h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I don&rsquo;t care&#x2026; I&rsquo;ll still do it
+I don't care&#x2026; I'll still do it
 </p>
 
 <p>
-<img src="/blogging_4f6452a0fb639a8b4e689c7d1eff4eb581cf4b1d.svg" alt="blogging_4f6452a0fb639a8b4e689c7d1eff4eb581cf4b1d.svg" class="org-svg">
+<img src="/blogging_fbfda7532ca37eca5e9dfc38f7339095d5cc6d16.svg" alt="blogging_fbfda7532ca37eca5e9dfc38f7339095d5cc6d16.svg" class="org-svg">
 </p>
 
 <p>
@@ -77,15 +78,15 @@ Also, check out this OCaml snippet
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #8f0075;">Printf</span>
-<span style="color: #a0132f;">;;</span>
-<span style="color: #505050;">(* </span><span style="color: #505050;">type 'a ghostype</span><span style="color: #505050;"> *)</span>
+<pre class="src src-ocaml">open Printf
+;;
+(* type 'a ghostype *)
 
-<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #721045;">double</span> <span style="color: #00538b;">n</span> = <span style="color: #0000c0;">2</span>*n
-<span style="color: #a0132f;">;;</span>
-<span style="color: #000000; font-weight: bold;">let</span> () =
-  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #00538b;">n</span> = <span style="color: #0000c0;">145</span>
-  <span style="color: #000000; font-weight: bold;">in</span> printf <span style="color: #2544bb;">"double %d = %d\n"</span> n (double n)
+let double n = 2*n
+;;
+let () =
+  let n = 145
+  in printf "double %d = %d\n" n (double n)
 </pre>
 </div>
 
@@ -115,31 +116,31 @@ essay.
 
 <p>
 Literate programming (LP) tools are used to obtain two representations from a
-source file: one understandable by a compiler or interpreter, the &ldquo;tangled&rdquo;
+source file: one understandable by a compiler or interpreter, the "tangled"
 code, and another for viewing as formatted documentation, which is said to be
-&ldquo;woven&rdquo; from the literate source.[5] While the first generation of literate
+"woven" from the literate source.[5] While the first generation of literate
 programming tools were computer language-specific, the later ones are
 language-agnostic and exist beyond the individual programming languages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #505050;">-- </span><span style="color: #505050;">Na&#239;ve solution that does not scale well</span>
-<span style="color: #505050;">-- </span><span style="color: #505050;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
+<pre class="src src-haskell">-- Naïve solution that does not scale well
+-- naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat
 
-<span style="color: #721045;">solution</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
-<span style="color: #721045;">solution</span> n s <span style="color: #00538b;">=</span>
-  a <span style="color: #00538b;">*</span> (n <span style="color: #00538b;">`div`</span> l) <span style="color: #00538b;">+</span> countRest r s
-  <span style="color: #5317ac;">where</span> a <span style="color: #00538b;">=</span> countAs s
-        l <span style="color: #00538b;">=</span> length s
-        r <span style="color: #00538b;">=</span> n <span style="color: #00538b;">`mod`</span> l
-        countAs <span style="color: #00538b;">=</span> length <span style="color: #00538b;">.</span> filter (<span style="color: #00538b;">==</span> <span style="color: #2544bb;">'a'</span>)
-        countRest sub <span style="color: #00538b;">=</span> countAs <span style="color: #00538b;">.</span> take sub
+solution :: Int -&gt; String -&gt; Int
+solution n s =
+  a * (n `div` l) + countRest r s
+  where a = countAs s
+        l = length s
+        r = n `mod` l
+        countAs = length . filter (== 'a')
+        countRest sub = countAs . take sub
 
-<span style="color: #721045;">main</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">IO</span> <span style="color: #005a5f;">()</span>
-<span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> <span style="color: #5317ac;">do</span> s <span style="color: #00538b;">&lt;-</span> getLine
-          secondLine <span style="color: #00538b;">&lt;-</span> getLine
-          <span style="color: #5317ac;">let</span> n <span style="color: #00538b;">=</span> read secondLine
-          putStrLn <span style="color: #00538b;">$</span> show <span style="color: #00538b;">$</span> solution n s
+main :: IO ()
+main = do s &lt;- getLine
+          secondLine &lt;- getLine
+          let n = read secondLine
+          putStrLn $ show $ solution n s
 </pre>
 </div>
 
@@ -148,8 +149,8 @@ It is astonishing that one can do literate programming inside Org-mode.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8f0075;">print</span>(<span style="color: #2544bb;">"hello"</span>)
-<span style="color: #505050;"># </span><span style="color: #505050;">print(fileName, "is!")</span>
+<pre class="src src-python">print("hello")
+# print(fileName, "is!")
 </pre>
 </div>
 
@@ -159,13 +160,13 @@ None
 
 
 <p>
-Think of <img src="/blogging_d5269097f946a707d1ee1c5831ecab3c7f259a59.svg" alt="blogging_d5269097f946a707d1ee1c5831ecab3c7f259a59.svg" class="org-svg"> as the set of all degree <img src="/blogging_59a33b3f1d9f90d09b6ebc2d4a5832fe9a1eb446.svg" alt="blogging_59a33b3f1d9f90d09b6ebc2d4a5832fe9a1eb446.svg" class="org-svg"> polynomials with an
-unknown <img src="/blogging_e7d1259b7ac2afe0d1ec33b7568308a7779a8417.svg" alt="blogging_e7d1259b7ac2afe0d1ec33b7568308a7779a8417.svg" class="org-svg"> and coefficients on <img src="/blogging_a61a4835b590b6eb1133cae417bbe92d07fbfe47.svg" alt="blogging_a61a4835b590b6eb1133cae417bbe92d07fbfe47.svg" class="org-svg">. Then, the application <img src="/blogging_0261f6ed876f2dbfefc643d0bd3339d747f27b16.svg" alt="blogging_0261f6ed876f2dbfefc643d0bd3339d747f27b16.svg" class="org-svg"> is a linear transformation and <img src="/blogging_1ae57f699ae2fa31fc5d2b22363a1e099c312887.svg" alt="blogging_1ae57f699ae2fa31fc5d2b22363a1e099c312887.svg" class="org-svg">. Furthermore, the derivative is also a
+Think of <img src="/blogging_e874b68d6cd5c86869ecaca9b53457c0f2031a1f.svg" alt="blogging_e874b68d6cd5c86869ecaca9b53457c0f2031a1f.svg" class="org-svg"> as the set of all degree <img src="/blogging_200a8b7c29a1ec4de4416fc4ff97d6538d170f57.svg" alt="blogging_200a8b7c29a1ec4de4416fc4ff97d6538d170f57.svg" class="org-svg"> polynomials with an
+unknown <img src="/blogging_dbb0e7dec5fc2ed3c5af3c4c79fb23299ade3de8.svg" alt="blogging_dbb0e7dec5fc2ed3c5af3c4c79fb23299ade3de8.svg" class="org-svg"> and coefficients on <img src="/blogging_bce21591d6797d2194862cf654c6b5f6063a9d0a.svg" alt="blogging_bce21591d6797d2194862cf654c6b5f6063a9d0a.svg" class="org-svg">. Then, the application <img src="/blogging_328ce88245357b7fe6d6e73b776dca85935030fe.svg" alt="blogging_328ce88245357b7fe6d6e73b776dca85935030fe.svg" class="org-svg"> is a linear transformation and <img src="/blogging_64b2cf54090e6c4dd0540e86e3a3db31d5b9ef56.svg" alt="blogging_64b2cf54090e6c4dd0540e86e3a3db31d5b9ef56.svg" class="org-svg">. Furthermore, the derivative is also a
 linear application.
 </p>
 
 <p>
-<img src="/blogging_e7785508cbc301be06a7fbe50023128d0b1ec435.svg" alt="blogging_e7785508cbc301be06a7fbe50023128d0b1ec435.svg" class="org-svg">
+<img src="/blogging_73812e3531625ae70764268389fdf1756eab2450.svg" alt="blogging_73812e3531625ae70764268389fdf1756eab2450.svg" class="org-svg">
 </p>
 
 <p>
@@ -188,7 +189,29 @@ This is, obviously, centered
 </div>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> putStrLn <span style="color: #2544bb;">"hello"</span>
+<pre class="src src-haskell">main = putStrLn "hello"
+
+-- From "The Genuine Sieve of Eratosthenes", page 11
+primes :: [Integer]
+primes = 2 : ([3..] `minus` composites)
+
+  where composites = union [multiples p | p &lt;- primes]
+
+        multiples n = map (*n) [n..]
+
+        (x:xs) `minus` (y:ys)
+          | x  &lt; y    =  x:(xs `minus` (y:ys))
+          | x == y    =     xs `minus` ys
+          | otherwise = (x:xs) `minus` ys
+
+        union = foldr merge []
+
+        merge (x:xs) ys = x : merge' xs ys
+        merge' (x:xs) (y:ys)
+          | x  &lt; y    = x : merge'    xs (y:ys)
+          | x == y    = x : merge'    xs    ys
+          | otherwise = y : merge' (x:xs)   ys
+
 </pre>
 </div>
 </div>
