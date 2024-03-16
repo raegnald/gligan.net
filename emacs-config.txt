@@ -45,6 +45,8 @@ _________________
 .. 4. TODO, NOTE, FIXME, BUG, ... (`hl-todo')
 .. 5. Change names of modes (`delight')
 .. 6. Better `M-x' completion (`vertico')
+.. 7. Search everything (`consult')
+.. 8. Custom modeline (`simple-modeline')
 
 
 This is my vanilla Emacs literate configuration file. You can skim
@@ -64,6 +66,7 @@ You can have a raw version of this file [here] (`init.el').
 ----------------------------------------------------------------------------------
  `M-g t'      Toggles between themes `gligan/dark-theme' and `gligan/light-theme' 
  `M-g d'      Inputs the current date                                             
+ `M-g o'      Open buffer, recent file, bookmark, ...                             
 
 
 [here] <https://gligan.net/init.el>
@@ -546,6 +549,7 @@ You can have a raw version of this file [here] (`init.el').
   | (use-package vertico
   |   :ensure t
   |   :config
+  |   (setq vertico-cycle t)
   |   (vertico-mode))
   | 
   | (use-package savehist
@@ -556,10 +560,35 @@ You can have a raw version of this file [here] (`init.el').
   | (use-package orderless
   |   :ensure t
   |   :config
-  |   ;; Configure a custom style dispatcher (see the Consult wiki)
-  |   ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
-  |   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   |   (setq completion-styles '(orderless basic)
   |         completion-category-defaults nil
   |         completion-category-overrides '((file (styles partial-completion)))))
+  | 
+  | (use-package marginalia
+  |   :ensure t
+  |   :config
+  |   (marginalia-mode))
+  `----
+
+
+6.7 Search everything (`consult')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Preview files, and search open buffers, recently opened files,
+  bookmarks, ... all in one place
+  ,----
+  | (use-package consult
+  |   :ensure t
+  |   :config
+  |   (global-set-key (kbd "M-g o") 'consult-buffer))
+  `----
+
+
+6.8 Custom modeline (`simple-modeline')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package simple-modeline
+  |   :ensure t
+  |   :hook (after-init . simple-modeline-mode))
   `----

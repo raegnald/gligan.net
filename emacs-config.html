@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-16 Sat 22:01 -->
+<!-- 2024-03-17 Sun 00:41 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -70,6 +70,8 @@
 <li><a href="#org7b82b37">6.4. TODO, NOTE, FIXME, BUG, &#x2026; (<code>hl-todo</code>)</a></li>
 <li><a href="#orga4800d2">6.5. Change names of modes (<code>delight</code>)</a></li>
 <li><a href="#orgfb2d72e">6.6. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
+<li><a href="#org8562d88">6.7. Search everything (<code>consult</code>)</a></li>
+<li><a href="#org4af13fe">6.8. Custom modeline (<code>simple-modeline</code>)</a></li>
 </ul>
 </li>
 </ul>
@@ -79,14 +81,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org41b0483">
+<div class="warning" id="org9d074eb">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="orge7b22a5">
+<div class="note" id="org1f19039">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -119,6 +121,11 @@ You can have a raw version of this file <a href="https://gligan.net/init.el">her
 <tr>
 <td class="org-left"><code>M-g d</code></td>
 <td class="org-left">Inputs the current date</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g o</code></td>
+<td class="org-left">Open buffer, recent file, bookmark, &#x2026;</td>
 </tr>
 </tbody>
 </table>
@@ -681,6 +688,7 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">vertico</span>
   <span style="color: #8f0075;">:ensure</span> t
   <span style="color: #8f0075;">:config</span>
+  (<span style="color: #5317ac;">setq</span> vertico-cycle t)
   (vertico-mode))
 
 (<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">savehist</span>
@@ -691,12 +699,43 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 (<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">orderless</span>
   <span style="color: #8f0075;">:ensure</span> t
   <span style="color: #8f0075;">:config</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">Configure a custom style dispatcher (see the Consult wiki)</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">(setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)</span>
-  <span style="color: #505050;">;;       </span><span style="color: #505050;">orderless-component-separator #'orderless-escapable-split-on-space)</span>
   (<span style="color: #5317ac;">setq</span> completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
+
+(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">marginalia</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  (marginalia-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8562d88" class="outline-3">
+<h3 id="org8562d88"><span class="section-number-3">6.7.</span> Search everything (<code>consult</code>)</h3>
+<div class="outline-text-3" id="text-6-7">
+<p>
+Preview files, and search open buffers, recently opened files, bookmarks, &#x2026; all in one place
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">consult</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:config</span>
+  (global-set-key (kbd <span style="color: #2544bb;">"M-g o"</span>) 'consult-buffer))
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org4af13fe" class="outline-3">
+<h3 id="org4af13fe"><span class="section-number-3">6.8.</span> Custom modeline (<code>simple-modeline</code>)</h3>
+<div class="outline-text-3" id="text-6-8">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">simple-modeline</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:hook</span> (after-init . simple-modeline-mode))
 </pre>
 </div>
 </div>
