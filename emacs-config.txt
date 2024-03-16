@@ -462,7 +462,8 @@ You can have a raw version of this file [here] (`init.el').
 
 * 5.6.1.1 TODO A4 paper size
 
-  Why should I export my documents on inferior paper dimensions?
+  Why should I export my documents on inferior paper dimensions? (I like
+  to have $\sqrt 2$ around, you know)
   ,----
 
   `----
