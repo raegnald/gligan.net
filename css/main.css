@@ -167,6 +167,10 @@ a:active, a:focus, a:hover {
   .org-svg {
       scale: 100%;
   }
+
+  h1 {
+      padding-top: 50px;
+  }
 }
 
 .note::before {
@@ -279,7 +283,7 @@ table {
 }
 
 table thead {
-    border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
 }
 
 table td, table th {
