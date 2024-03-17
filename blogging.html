@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 03:21 -->
+<!-- 2024-03-17 Sun 12:10 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The journey of finding a good way to do blogging</title>
@@ -78,15 +78,15 @@ Also, check out this OCaml snippet
 </p>
 
 <div class="org-src-container">
-<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #8f0075;">Printf</span>
-<span style="color: #a0132f;">;;</span>
-<span style="color: #505050;">(* </span><span style="color: #505050;">type 'a ghostype</span><span style="color: #505050;"> *)</span>
+<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">open </span><span style="color: #444fcf;">Printf</span>
+<span style="color: #ff4500;">;;</span>
+<span style="color: #8f6f4a; font-style: italic;">(* </span><span style="color: #8f6f4a; font-style: italic;">type 'a ghostype</span><span style="color: #8f6f4a; font-style: italic;"> *)</span>
 
-<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #721045;">double</span> <span style="color: #00538b;">n</span> = 2*n
-<span style="color: #a0132f;">;;</span>
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #a7601f;">double</span> <span style="color: #007a9f;">n</span> = 2*n
+<span style="color: #ff4500;">;;</span>
 <span style="color: #000000; font-weight: bold;">let</span> () =
-  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #00538b;">n</span> = 145
-  <span style="color: #000000; font-weight: bold;">in</span> printf <span style="color: #2544bb;">"double %d = %d\n"</span> n (double n)
+  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #007a9f;">n</span> = 145
+  <span style="color: #000000; font-weight: bold;">in</span> printf <span style="color: #ca3400;">"double %d = %d\n"</span> n (double n)
 </pre>
 </div>
 
@@ -124,23 +124,23 @@ language-agnostic and exist beyond the individual programming languages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #505050;">-- </span><span style="color: #505050;">Na&#239;ve solution that does not scale well</span>
-<span style="color: #505050;">-- </span><span style="color: #505050;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
+<pre class="src src-haskell"><span style="color: #8f6f4a; font-style: italic;">-- </span><span style="color: #8f6f4a; font-style: italic;">Na&#239;ve solution that does not scale well</span>
+<span style="color: #8f6f4a; font-style: italic;">-- </span><span style="color: #8f6f4a; font-style: italic;">naive n = sum . map (\c -&gt; fromEnum $ c == 'a') . take n . concat . repeat</span>
 
-<span style="color: #721045;">solution</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">Int</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">String</span> <span style="color: #00538b;">-&gt;</span> <span style="color: #005a5f;">Int</span>
-<span style="color: #721045;">solution</span> n s <span style="color: #00538b;">=</span>
-  a <span style="color: #00538b;">*</span> (n <span style="color: #00538b;">`div`</span> l) <span style="color: #00538b;">+</span> countRest r s
-  <span style="color: #5317ac;">where</span> a <span style="color: #00538b;">=</span> countAs s
-        l <span style="color: #00538b;">=</span> length s
-        r <span style="color: #00538b;">=</span> n <span style="color: #00538b;">`mod`</span> l
-        countAs <span style="color: #00538b;">=</span> length <span style="color: #00538b;">.</span> filter (<span style="color: #00538b;">==</span> <span style="color: #2544bb;">'a'</span>)
-        countRest sub <span style="color: #00538b;">=</span> countAs <span style="color: #00538b;">.</span> take sub
+<span style="color: #a7601f;">solution</span> <span style="color: #007a9f;">::</span> <span style="color: #444fcf;">Int</span> <span style="color: #007a9f;">-&gt;</span> <span style="color: #444fcf;">String</span> <span style="color: #007a9f;">-&gt;</span> <span style="color: #444fcf;">Int</span>
+<span style="color: #a7601f;">solution</span> n s <span style="color: #007a9f;">=</span>
+  a <span style="color: #007a9f;">*</span> (n <span style="color: #007a9f;">`div`</span> l) <span style="color: #007a9f;">+</span> countRest r s
+  <span style="color: #006f00; font-weight: bold;">where</span> a <span style="color: #007a9f;">=</span> countAs s
+        l <span style="color: #007a9f;">=</span> length s
+        r <span style="color: #007a9f;">=</span> n <span style="color: #007a9f;">`mod`</span> l
+        countAs <span style="color: #007a9f;">=</span> length <span style="color: #007a9f;">.</span> filter (<span style="color: #007a9f;">==</span> <span style="color: #ca3400;">'a'</span>)
+        countRest sub <span style="color: #007a9f;">=</span> countAs <span style="color: #007a9f;">.</span> take sub
 
-<span style="color: #721045;">main</span> <span style="color: #00538b;">::</span> <span style="color: #005a5f;">IO</span> <span style="color: #005a5f;">()</span>
-<span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> <span style="color: #5317ac;">do</span> s <span style="color: #00538b;">&lt;-</span> getLine
-          secondLine <span style="color: #00538b;">&lt;-</span> getLine
-          <span style="color: #5317ac;">let</span> n <span style="color: #00538b;">=</span> read secondLine
-          putStrLn <span style="color: #00538b;">$</span> show <span style="color: #00538b;">$</span> solution n s
+<span style="color: #a7601f;">main</span> <span style="color: #007a9f;">::</span> <span style="color: #444fcf;">IO</span> <span style="color: #444fcf;">()</span>
+<span style="color: #a7601f;">main</span> <span style="color: #007a9f;">=</span> <span style="color: #006f00; font-weight: bold;">do</span> s <span style="color: #007a9f;">&lt;-</span> getLine
+          secondLine <span style="color: #007a9f;">&lt;-</span> getLine
+          <span style="color: #006f00; font-weight: bold;">let</span> n <span style="color: #007a9f;">=</span> read secondLine
+          putStrLn <span style="color: #007a9f;">$</span> show <span style="color: #007a9f;">$</span> solution n s
 </pre>
 </div>
 
@@ -149,8 +149,8 @@ It is astonishing that one can do literate programming inside Org-mode.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8f0075;">print</span>(<span style="color: #2544bb;">"hello"</span>)
-<span style="color: #505050;"># </span><span style="color: #505050;">print(fileName, "is!")</span>
+<pre class="src src-python"><span style="color: #557400; font-weight: bold;">print</span>(<span style="color: #ca3400;">"hello"</span>)
+<span style="color: #8f6f4a; font-style: italic;"># </span><span style="color: #8f6f4a; font-style: italic;">print(fileName, "is!")</span>
 </pre>
 </div>
 
@@ -189,37 +189,41 @@ This is, obviously, centered
 </div>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #721045;">main</span> <span style="color: #00538b;">=</span> putStrLn <span style="color: #2544bb;">"hello"</span>
+<pre class="src src-haskell"><span style="color: #a7601f;">main</span> <span style="color: #007a9f;">=</span> putStrLn <span style="color: #ca3400;">"hello"</span>
 
-<span style="color: #505050;">-- </span><span style="color: #505050;">From "The Genuine Sieve of Eratosthenes", page 11</span>
-<span style="color: #721045;">primes</span> <span style="color: #00538b;">::</span> [<span style="color: #005a5f;">Integer</span>]
-<span style="color: #721045;">primes</span> <span style="color: #00538b;">=</span> 2 <span style="color: #005a5f;">:</span> ([3<span style="color: #00538b;">..</span>] <span style="color: #00538b;">`minus`</span> composites)
+<span style="color: #8f6f4a; font-style: italic;">-- </span><span style="color: #8f6f4a; font-style: italic;">From "The Genuine Sieve of Eratosthenes", page 11</span>
+<span style="color: #a7601f;">primes</span> <span style="color: #007a9f;">::</span> [<span style="color: #444fcf;">Integer</span>]
+<span style="color: #a7601f;">primes</span> <span style="color: #007a9f;">=</span> 2 <span style="color: #444fcf;">:</span> ([3<span style="color: #007a9f;">..</span>] <span style="color: #007a9f;">`minus`</span> composites)
 
-  <span style="color: #5317ac;">where</span> composites <span style="color: #00538b;">=</span> union [multiples p <span style="color: #00538b;">|</span> p <span style="color: #00538b;">&lt;-</span> primes]
+  <span style="color: #006f00; font-weight: bold;">where</span> composites <span style="color: #007a9f;">=</span> union [multiples p <span style="color: #007a9f;">|</span> p <span style="color: #007a9f;">&lt;-</span> primes]
 
-        multiples n <span style="color: #00538b;">=</span> map (<span style="color: #00538b;">*</span>n) [n<span style="color: #00538b;">..</span>]
+        multiples n <span style="color: #007a9f;">=</span> map (<span style="color: #007a9f;">*</span>n) [n<span style="color: #007a9f;">..</span>]
 
-        (x<span style="color: #005a5f;">:</span>xs) <span style="color: #00538b;">`minus`</span> (y<span style="color: #005a5f;">:</span>ys)
-          <span style="color: #00538b;">|</span> x  <span style="color: #00538b;">&lt;</span> y    <span style="color: #00538b;">=</span>  x<span style="color: #005a5f;">:</span>(xs <span style="color: #00538b;">`minus`</span> (y<span style="color: #005a5f;">:</span>ys))
-          <span style="color: #00538b;">|</span> x <span style="color: #00538b;">==</span> y    <span style="color: #00538b;">=</span>     xs <span style="color: #00538b;">`minus`</span> ys
-          <span style="color: #00538b;">|</span> otherwise <span style="color: #00538b;">=</span> (x<span style="color: #005a5f;">:</span>xs) <span style="color: #00538b;">`minus`</span> ys
+        (x<span style="color: #444fcf;">:</span>xs) <span style="color: #007a9f;">`minus`</span> (y<span style="color: #444fcf;">:</span>ys)
+          <span style="color: #007a9f;">|</span> x  <span style="color: #007a9f;">&lt;</span> y    <span style="color: #007a9f;">=</span>  x<span style="color: #444fcf;">:</span>(xs <span style="color: #007a9f;">`minus`</span> (y<span style="color: #444fcf;">:</span>ys))
+          <span style="color: #007a9f;">|</span> x <span style="color: #007a9f;">==</span> y    <span style="color: #007a9f;">=</span>     xs <span style="color: #007a9f;">`minus`</span> ys
+          <span style="color: #007a9f;">|</span> otherwise <span style="color: #007a9f;">=</span> (x<span style="color: #444fcf;">:</span>xs) <span style="color: #007a9f;">`minus`</span> ys
 
-        union <span style="color: #00538b;">=</span> foldr merge <span style="color: #005a5f;">[]</span>
+        union <span style="color: #007a9f;">=</span> foldr merge <span style="color: #444fcf;">[]</span>
 
-        merge (x<span style="color: #005a5f;">:</span>xs) ys <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge' xs ys
-        merge' (x<span style="color: #005a5f;">:</span>xs) (y<span style="color: #005a5f;">:</span>ys)
-          <span style="color: #00538b;">|</span> x  <span style="color: #00538b;">&lt;</span> y    <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge'    xs (y<span style="color: #005a5f;">:</span>ys)
-          <span style="color: #00538b;">|</span> x <span style="color: #00538b;">==</span> y    <span style="color: #00538b;">=</span> x <span style="color: #005a5f;">:</span> merge'    xs    ys
-          <span style="color: #00538b;">|</span> otherwise <span style="color: #00538b;">=</span> y <span style="color: #005a5f;">:</span> merge' (x<span style="color: #005a5f;">:</span>xs)   ys
+        merge (x<span style="color: #444fcf;">:</span>xs) ys <span style="color: #007a9f;">=</span> x <span style="color: #444fcf;">:</span> merge' xs ys
+        merge' (x<span style="color: #444fcf;">:</span>xs) (y<span style="color: #444fcf;">:</span>ys)
+          <span style="color: #007a9f;">|</span> x  <span style="color: #007a9f;">&lt;</span> y    <span style="color: #007a9f;">=</span> x <span style="color: #444fcf;">:</span> merge'    xs (y<span style="color: #444fcf;">:</span>ys)
+          <span style="color: #007a9f;">|</span> x <span style="color: #007a9f;">==</span> y    <span style="color: #007a9f;">=</span> x <span style="color: #444fcf;">:</span> merge'    xs    ys
+          <span style="color: #007a9f;">|</span> otherwise <span style="color: #007a9f;">=</span> y <span style="color: #444fcf;">:</span> merge' (x<span style="color: #444fcf;">:</span>xs)   ys
 
 </pre>
 </div>
 
-<p>
-<img src="/blogging_de58ff068e39c28909160c8fa39e3c01775562b4.svg" alt="blogging_de58ff068e39c28909160c8fa39e3c01775562b4.svg" class="org-svg">                        % arbitrary environments,
-x=% even tables, figures
-% etc
-</p>
+
+<div class="equation-container">
+<span class="equation">
+<img src="/blogging_25be8448ed1c541d5ca0fb6f7e3b692660f409bc.svg" alt="blogging_25be8448ed1c541d5ca0fb6f7e3b692660f409bc.svg" class="org-svg">
+</span>
+<span class="equation-label">
+1
+</span>
+</div>
 </div>
 </div>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 03:21 -->
+<!-- 2024-03-17 Sun 12:10 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -55,10 +55,11 @@
 <li><a href="#org769bc86">5.3. <span class="todo TODO">TODO</span> Auto tangle (<code>org-auto-tangle</code>)</a></li>
 <li><a href="#orgf0d9013">5.4. Org modern (<code>org-modern</code>)</a></li>
 <li><a href="#org22bb4db">5.5. Zen mode (<code>olivetti</code>)</a></li>
-<li><a href="#orgd237f23">5.6. Proportional fonts (<code>mixed-pitch</code>)</a></li>
-<li><a href="#orga29ed3d">5.7. Exporting</a>
+<li><a href="#org9727cb2">5.6. Big document titles</a></li>
+<li><a href="#orgd237f23">5.7. Proportional fonts (<code>mixed-pitch</code>)</a></li>
+<li><a href="#orga29ed3d">5.8. Exporting</a>
 <ul>
-<li><a href="#org505e7d1">5.7.1. to LaTeX</a></li>
+<li><a href="#org505e7d1">5.8.1. to LaTeX</a></li>
 </ul>
 </li>
 </ul>
@@ -72,7 +73,8 @@
 <li><a href="#orga4800d2">6.5. Change names of modes (<code>delight</code>)</a></li>
 <li><a href="#orgfb2d72e">6.6. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
 <li><a href="#org8562d88">6.7. Search everything (<code>consult</code>)</a></li>
-<li><a href="#org4af13fe">6.8. Custom modeline (<code>simple-modeline</code>)</a></li>
+<li><a href="#org6b59148">6.8. Icons (<code>nerd-icons</code>)</a></li>
+<li><a href="#org0937df4">6.9. Custom modeline (<code>mini-echo-mode</code>)</a></li>
 </ul>
 </li>
 </ul>
@@ -82,14 +84,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="orgb3e7a72">
+<div class="warning" id="org2aafca7">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="orga8fab62">
+<div class="note" id="orgd63d64c">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -159,17 +161,17 @@ These are the custom key bindings I have for my set-up. Notice I tend to prefix 
 My personal information
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> user-full-name <span style="color: #2544bb;">"Ronaldo Gligan"</span>
-      user-mail-address <span style="color: #2544bb;">"ronaldogligan@outlook.com"</span>)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> user-full-name <span style="color: #ca3400;">"Ronaldo Gligan"</span>
+      user-mail-address <span style="color: #ca3400;">"ronaldogligan@outlook.com"</span>)
 </pre>
 </div></li>
 <li><p>
 Insert today's date
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">defun</span> <span style="color: #721045;">gligan/today</span> () (<span style="color: #5317ac;">interactive</span>) 
- (insert (format-time-string <span style="color: #2544bb;">"%Y-%m-%d"</span>)))
-(global-set-key (kbd <span style="color: #2544bb;">"M-g d"</span>) 'gligan/today)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">gligan/today</span> () (<span style="color: #006f00; font-weight: bold;">interactive</span>) 
+ (insert (format-time-string <span style="color: #ca3400;">"%Y-%m-%d"</span>)))
+(global-set-key (kbd <span style="color: #ca3400;">"M-g d"</span>) 'gligan/today)
 </pre>
 </div></li>
 </ul>
@@ -181,9 +183,9 @@ Insert today's date
 <h2 id="orgf79b733"><span class="section-number-2">2.</span> Packages</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">require</span> '<span style="color: #0000c0;">package</span>)
-(add-to-list 'package-archives '(<span style="color: #2544bb;">"gnu"</span>   . <span style="color: #2544bb;">"https://elpa.gnu.org/packages/"</span>))
-(add-to-list 'package-archives '(<span style="color: #2544bb;">"melpa"</span> . <span style="color: #2544bb;">"https://melpa.org/packages/"</span>))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">require</span> '<span style="color: #00824f;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #ca3400;">"gnu"</span>   . <span style="color: #ca3400;">"https://elpa.gnu.org/packages/"</span>))
+(add-to-list 'package-archives '(<span style="color: #ca3400;">"melpa"</span> . <span style="color: #ca3400;">"https://melpa.org/packages/"</span>))
 (package-initialize)
 </pre>
 </div>
@@ -199,10 +201,10 @@ Insert today's date
 <h3 id="org2430575"><span class="section-number-3">3.1.</span> Early</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">Title</span>
-(<span style="color: #5317ac;">setq</span> frame-title-format <span style="color: #2544bb;">"%b - Emacs"</span>)
+<pre class="src src-elisp"><span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Title</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> frame-title-format <span style="color: #ca3400;">"%b - Emacs"</span>)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">Minimal window without buttons or scrollbars</span>
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Minimal window without buttons or scrollbars</span>
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -216,33 +218,36 @@ Insert today's date
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-elisp">
-<span style="color: #505050;">;; </span><span style="color: #505050;">Maximise window at start up</span>
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Maximise window at start up</span>
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">Window transparency</span>
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Window transparency</span>
 (set-frame-parameter (selected-frame) 'alpha-background 95)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">No window decorations</span>
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">No window decorations</span>
 (add-to-list 'default-frame-alist '(undecorated . t))
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">Use two spaces</span>
-(<span style="color: #5317ac;">setq-default</span> tab-width 2)
-(<span style="color: #5317ac;">setq-default</span> indent-tabs-mode nil)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Use two spaces</span>
+(<span style="color: #006f00; font-weight: bold;">setq-default</span> tab-width 2)
+(<span style="color: #006f00; font-weight: bold;">setq-default</span> indent-tabs-mode nil)
 (delete-selection-mode 1)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">Use a small bar as a cursor</span>
-(<span style="color: #5317ac;">setq-default</span> cursor-type 'bar)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Use a small bar as a cursor</span>
+(<span style="color: #006f00; font-weight: bold;">setq-default</span> cursor-type 'bar)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">I don't like line numbers</span>
-(<span style="color: #5317ac;">setq</span> display-line-numbers-type nil)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">I don't like line numbers</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> display-line-numbers-type nil)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">No welcome message; no scratch buffer message</span>
-(<span style="color: #5317ac;">setq</span> inhibit-startup-message t)
-(<span style="color: #5317ac;">setq</span> initial-scratch-message nil)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">No welcome message; no scratch buffer message</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> inhibit-startup-message t)
+(<span style="color: #006f00; font-weight: bold;">setq</span> initial-scratch-message nil)
 
-<span style="color: #505050;">;; </span><span style="color: #505050;">Auto-save &amp; back up files</span>
-(<span style="color: #5317ac;">setq</span> auto-save-default t
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Auto-save &amp; back up files</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> auto-save-default t
       make-backup-files t)
+
+(<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">display-startup-echo-area-message</span> ()
+  (message (emacs-init-time)))
 </pre>
 </div>
 </div>
@@ -252,7 +257,7 @@ Insert today's date
 <h3 id="orga1622ac"><span class="section-number-3">3.3.</span> Modeline</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">Show line and column</span>
+<pre class="src src-elisp"><span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Show line and column</span>
 (column-number-mode 1)
 </pre>
 </div>
@@ -266,9 +271,9 @@ Insert today's date
 <a href="https://github.com/protesilaos/iosevka-comfy">Iosevka Comfy</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(set-face-attribute 'default nil <span style="color: #8f0075;">:font</span> <span style="color: #2544bb;">"Iosevka Comfy Motion 12"</span>)
-(set-face-attribute 'fixed-pitch nil <span style="color: #8f0075;">:family</span> <span style="color: #2544bb;">"Iosevka Comfy Motion"</span> <span style="color: #8f0075;">:height</span> 1.0)
-(set-face-attribute 'variable-pitch nil <span style="color: #8f0075;">:family</span> <span style="color: #2544bb;">"Iosevka Comfy Motion Duo"</span> <span style="color: #8f0075;">:height</span> 1.0)
+<pre class="src src-elisp">(set-face-attribute 'default nil <span style="color: #557400; font-weight: bold;">:font</span> <span style="color: #ca3400;">"Iosevka Comfy Motion 14"</span>)
+(set-face-attribute 'fixed-pitch nil <span style="color: #557400; font-weight: bold;">:family</span> <span style="color: #ca3400;">"Iosevka Comfy Motion"</span> <span style="color: #557400; font-weight: bold;">:height</span> 1.0)
+(set-face-attribute 'variable-pitch nil <span style="color: #557400; font-weight: bold;">:family</span> <span style="color: #ca3400;">"Iosevka Comfy Motion Duo"</span> <span style="color: #557400; font-weight: bold;">:height</span> 1.0)
 </pre>
 </div>
 </div>
@@ -278,22 +283,34 @@ Insert today's date
 <h3 id="orgc25ce17"><span class="section-number-3">3.5.</span> Theme</h3>
 <div class="outline-text-3" id="text-3-5">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> gligan/dark-theme 'monokate)
-(<span style="color: #5317ac;">setq</span> gligan/light-theme 'modus-operandi)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">ef-themes</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t)
 
-(<span style="color: #5317ac;">setq</span> gligan/current-theme gligan/dark-theme)
+(<span style="color: #006f00; font-weight: bold;">setq</span> gligan/dark-theme 'monokate)
+(<span style="color: #006f00; font-weight: bold;">setq</span> gligan/light-theme 'ef-cyprus)<span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">'modus-operandi</span>
 
-(load-theme gligan/current-theme t)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">We start with the dark theme</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> gligan/current-theme gligan/dark-theme)
 
-(<span style="color: #5317ac;">defun</span> <span style="color: #721045;">gligan/toggle-theme</span> () (<span style="color: #5317ac;">interactive</span>)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Between these two hours, when opening Emacs, the light theme should be the default</span>
+(<span style="color: #006f00; font-weight: bold;">defvar</span> <span style="color: #007a9f;">gligan/light-theme-hour-start</span> 8)
+(<span style="color: #006f00; font-weight: bold;">defvar</span> <span style="color: #007a9f;">gligan/light-theme-hour-end</span>  20) 
+
+(<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">gligan/toggle-theme</span> () (<span style="color: #006f00; font-weight: bold;">interactive</span>)
        (disable-theme gligan/current-theme)
-       (<span style="color: #5317ac;">setq</span> next-theme (<span style="color: #5317ac;">if</span> (equal gligan/current-theme gligan/light-theme)
+       (<span style="color: #006f00; font-weight: bold;">setq</span> next-theme (<span style="color: #006f00; font-weight: bold;">if</span> (equal gligan/current-theme gligan/light-theme)
                             gligan/dark-theme
                             gligan/light-theme))
-       (<span style="color: #5317ac;">setq</span> gligan/current-theme next-theme)
+       (<span style="color: #006f00; font-weight: bold;">setq</span> gligan/current-theme next-theme)
        (load-theme next-theme t))
 
-(global-set-key (kbd <span style="color: #2544bb;">"M-g t"</span>) 'gligan/toggle-theme)
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Switch to light theme if we're between the bounds defined above</span>
+(<span style="color: #006f00; font-weight: bold;">let</span> ((hour (string-to-number (substring (current-time-string) 11 13))))
+  (<span style="color: #006f00; font-weight: bold;">if</span> (member hour (number-sequence gligan/light-theme-hour-start gligan/light-theme-hour-end))
+    (gligan/toggle-theme)
+    (load-theme gligan/current-theme t)))
+
+(global-set-key (kbd <span style="color: #ca3400;">"M-g t"</span>) 'gligan/toggle-theme)
 </pre>
 </div>
 </div>
@@ -313,10 +330,10 @@ Insert today's date
 <h4 id="orgdcd4f3d"><span class="section-number-4">4.1.1.</span> Company</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">company</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">company</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (global-company-mode 1))
 </pre>
 </div>
@@ -327,10 +344,10 @@ Insert today's date
 <h4 id="orgdda4865"><span class="section-number-4">4.1.2.</span> Flycheck</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">flycheck</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (global-flycheck-mode 1))
 </pre>
 </div>
@@ -341,54 +358,54 @@ Insert today's date
 <h4 id="org0ddf630"><span class="section-number-4">4.1.3.</span> LSP</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-ui</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:after</span> lsp-mode
-  <span style="color: #8f0075;">:commands</span> lsp-ui-mode
-  <span style="color: #8f0075;">:custom</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">lsp-ui</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:after</span> lsp-mode
+  <span style="color: #557400; font-weight: bold;">:commands</span> lsp-ui-mode
+  <span style="color: #557400; font-weight: bold;">:custom</span>
   (lsp-ui-peek-enable t)
   (lsp-ui-peek-show-directory t)
   (lsp-ui-doc-enable t)
-  <span style="color: #505050;">;; </span><span style="color: #505050;">You might want this:</span>
-  <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-ui-doc-show-with-cursor nil)</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">Also this because isearch gets broken otherwise</span>
-  <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-ui-doc-show-with-mouse nil)</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">You might want this:</span>
+  <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">(lsp-ui-doc-show-with-cursor nil)</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Also this because isearch gets broken otherwise</span>
+  <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">(lsp-ui-doc-show-with-mouse nil)</span>
   (lsp-ui-doc-position 'top)
   (lsp-ui-imenu-window-width 20))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-mode</span>
-  <span style="color: #8f0075;">:commands</span> lsp
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:init</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">You need to restart emacs for keymap prefix to take effect</span>
-  <span style="color: #505050;">; </span><span style="color: #505050;">(setq lsp-keymap-prefix "M-L")</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">lsp-mode</span>
+  <span style="color: #557400; font-weight: bold;">:commands</span> lsp
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:init</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">You need to restart emacs for keymap prefix to take effect</span>
+  <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">(setq lsp-keymap-prefix "M-L")</span>
 
-  <span style="color: #8f0075;">:config</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">so that dir-locals have effect:</span>
-  <span style="color: #505050;">;;   </span><span style="color: #505050;">https://github.com/emacs-lsp/lsp-mode/issues/405</span>
-  (add-hook 'hack-local-variables-hook (<span style="color: #5317ac;">lambda</span> () (<span style="color: #5317ac;">when</span> lsp-mode (lsp))))
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">so that dir-locals have effect:</span>
+  <span style="color: #8f6f4a; font-style: italic;">;;   </span><span style="color: #8f6f4a; font-style: italic;">https://github.com/emacs-lsp/lsp-mode/issues/405</span>
+  (add-hook 'hack-local-variables-hook (<span style="color: #006f00; font-weight: bold;">lambda</span> () (<span style="color: #006f00; font-weight: bold;">when</span> lsp-mode (lsp))))
 
-  <span style="color: #8f0075;">:hook</span> ((haskell-mode . lsp-deferred)
+  <span style="color: #557400; font-weight: bold;">:hook</span> ((haskell-mode . lsp-deferred)
          (haskell-literate-mode . lsp-deferred)
          (lsp-managed-mode . lsp-modeline-diagnostics-mode)
-         <span style="color: #505050;">;; </span><span style="color: #505050;">if you want which-key integration</span>
-         <span style="color: #505050;">; </span><span style="color: #505050;">(lsp-mode . (lambda () (lsp-enable-which-key-integration t)))</span>
+         <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">if you want which-key integration</span>
+         <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">(lsp-mode . (lambda () (lsp-enable-which-key-integration t)))</span>
          )
 
-  <span style="color: #8f0075;">:custom</span>
-  (lsp-progress-via-spinner nil) <span style="color: #505050;">;; </span><span style="color: #505050;">spinner seems to cause problems</span>
+  <span style="color: #557400; font-weight: bold;">:custom</span>
+  (lsp-progress-via-spinner nil) <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">spinner seems to cause problems</span>
   (lsp-restart 'ignore)
   (lsp-keep-workspace-alive nil)
   (lsp-headerline-breadcrumb-enable t)
   (lsp-headerline-breadcrumb-segments '(symbols))
   (lsp-enable-snippet nil)
 
-  <span style="color: #505050;">;; </span><span style="color: #505050;">:global/:workspace/:file</span>
-  (lsp-modeline-diagnostics-scope <span style="color: #8f0075;">:workspace</span>)
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">:global/:workspace/:file</span>
+  (lsp-modeline-diagnostics-scope <span style="color: #557400; font-weight: bold;">:workspace</span>)
   (lsp-file-watch-threshold 2000)
-  <span style="color: #505050;">; </span><span style="color: #505050;">(setq lsp-idle-delay 0.500)</span>
-  (lsp-completion-provider <span style="color: #8f0075;">:capf</span>))
+  <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">(setq lsp-idle-delay 0.500)</span>
+  (lsp-completion-provider <span style="color: #557400; font-weight: bold;">:capf</span>))
 </pre>
 </div>
 </div>
@@ -398,38 +415,38 @@ Insert today's date
 <h3 id="org69a8897"><span class="section-number-3">4.2.</span> OCaml</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">tuareg</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:delight</span> <span style="color: #2544bb;">"&#128043;"</span>)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">tuareg</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:delight</span> <span style="color: #ca3400;">"&#128043;"</span>)
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">dune</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t)
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">dune</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">merlin</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">merlin</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (add-hook 'tuareg-mode-hook #'merlin-mode)
   (add-hook 'merlin-mode-hook #'company-mode)
-  (<span style="color: #5317ac;">setq</span> merlin-error-after-save nil))
+  (<span style="color: #006f00; font-weight: bold;">setq</span> merlin-error-after-save nil))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">merlin-eldoc</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:hook</span> (tuareg . merlin-eldoc-setup))
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">merlin-eldoc</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (tuareg . merlin-eldoc-setup))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-ocaml</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">flycheck-ocaml</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (flycheck-ocaml-setup))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">utop</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">utop</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 </pre>
 </div>
@@ -442,29 +459,29 @@ Insert today's date
 Haskell code checking is <i>very</i> slow, so I'm only activating it on file save.
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">haskell-mode</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:delight</span> <span style="color: #2544bb;">"&#955;"</span>
-  <span style="color: #8f0075;">:config</span>)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">haskell-mode</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:delight</span> <span style="color: #ca3400;">"&#955;"</span>
+  <span style="color: #557400; font-weight: bold;">:config</span>)
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-haskell</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
-  (<span style="color: #5317ac;">setq</span> flycheck-check-syntax-automatically '(mode-enabled save)))
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">flycheck-haskell</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (<span style="color: #006f00; font-weight: bold;">setq</span> flycheck-check-syntax-automatically '(mode-enabled save)))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">lsp-haskell</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:after</span> (haskell-mode lsp-mode)
-  <span style="color: #8f0075;">:config</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">Comment/uncomment this line to see interactions between lsp client/server.</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">(setq lsp-log-io t)</span>
-  <span style="color: #8f0075;">:custom</span>
-  <span style="color: #505050;">;</span><span style="color: #505050;">(lsp-haskell-process-args-hie '("-d" "-l" "/tmp/hie.log"))</span>
-  <span style="color: #505050;">;</span><span style="color: #505050;">(lsp-haskell-server-args ())</span>
-  (lsp-haskell-server-path <span style="color: #2544bb;">"haskell-language-server"</span>))
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">lsp-haskell</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:after</span> (haskell-mode lsp-mode)
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Comment/uncomment this line to see interactions between lsp client/server.</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(setq lsp-log-io t)</span>
+  <span style="color: #557400; font-weight: bold;">:custom</span>
+  <span style="color: #8f6f4a; font-style: italic;">;</span><span style="color: #8f6f4a; font-style: italic;">(lsp-haskell-process-args-hie '("-d" "-l" "/tmp/hie.log"))</span>
+  <span style="color: #8f6f4a; font-style: italic;">;</span><span style="color: #8f6f4a; font-style: italic;">(lsp-haskell-server-args ())</span>
+  (lsp-haskell-server-path <span style="color: #ca3400;">"haskell-language-server"</span>))
 </pre>
 </div>
 </div>
@@ -473,15 +490,15 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <h3 id="orgb67a382"><span class="section-number-3">4.4.</span> C</h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">company-irony</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t)
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">irony-eldoc</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t)
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">flycheck-irony</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">company-irony</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">irony-eldoc</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">flycheck-irony</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
 </pre>
 </div>
 </div>
@@ -491,9 +508,9 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <h3 id="orga264727"><span class="section-number-3">4.5.</span> Zig</h3>
 <div class="outline-text-3" id="text-4-5">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">zig-mode</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">zig-mode</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
 </pre>
 </div>
 </div>
@@ -510,13 +527,13 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <h2 id="orga225488"><span class="section-number-2">5.</span> Org mode</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> org-directory <span style="color: #2544bb;">"~/org/"</span>)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> org-directory <span style="color: #ca3400;">"~/org/"</span>)
 
-(<span style="color: #5317ac;">setq</span> org-hide-emphasis-markers t)
-(<span style="color: #5317ac;">setq</span> org-startup-folded 'fold)
-(<span style="color: #5317ac;">setq</span> org-startup-indented t)
+(<span style="color: #006f00; font-weight: bold;">setq</span> org-hide-emphasis-markers t)
+(<span style="color: #006f00; font-weight: bold;">setq</span> org-startup-folded 'fold)
+(<span style="color: #006f00; font-weight: bold;">setq</span> org-startup-indented t)
 
-(<span style="color: #5317ac;">setq</span> org-preview-latex-default-process 'dvipng)
+(<span style="color: #006f00; font-weight: bold;">setq</span> org-preview-latex-default-process 'dvipng)
 </pre>
 </div>
 </div>
@@ -525,15 +542,15 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <h3 id="org657502b"><span class="section-number-3">5.1.</span> <code>org-journal</code></h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> journal-dir <span style="color: #2544bb;">"~/org/journal/"</span>)
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-journal</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
-   (<span style="color: #5317ac;">setq</span> org-journal-date-format <span style="color: #2544bb;">"%A, %d %B %Y"</span>) <span style="color: #505050;">; </span><span style="color: #505050;">e.g. "Friday, 8 March 2024"</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> journal-dir <span style="color: #ca3400;">"~/org/journal/"</span>)
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">org-journal</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+   (<span style="color: #006f00; font-weight: bold;">setq</span> org-journal-date-format <span style="color: #ca3400;">"%A, %d %B %Y"</span>) <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">e.g. "Friday, 8 March 2024"</span>
    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
-   (global-set-key (kbd <span style="color: #2544bb;">"M-g j j"</span>) 'org-journal-new-entry)
-   (global-set-key (kbd <span style="color: #2544bb;">"M-g j s"</span>) 'org-journal-search-forever))
+   (global-set-key (kbd <span style="color: #ca3400;">"M-g j j"</span>) 'org-journal-new-entry)
+   (global-set-key (kbd <span style="color: #ca3400;">"M-g j s"</span>) 'org-journal-search-forever))
 </pre>
 </div>
 </div>
@@ -543,13 +560,13 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <h3 id="org145ad69"><span class="section-number-3">5.2.</span> Skeletons for <code>org-mode</code></h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">define-skeleton</span> <span style="color: #721045;">org-header-skeleton</span>
-  <span style="color: #2a486a;">"Header for my org files, mainly for blog posts"</span>
-  <span style="color: #2544bb;">"Document title: "</span> <span style="color: #2544bb;">"#+title: "</span> str <span style="color: #2544bb;">"\n"</span>
-                     <span style="color: #2544bb;">"#+author: "</span> user-full-name <span style="color: #2544bb;">"\n"</span>
-                     <span style="color: #505050;">;; </span><span style="color: #505050;">"#+EMAIL: " user-mail-address "\n"</span>
-                     <span style="color: #2544bb;">"#+date: "</span> (format-time-string <span style="color: #2544bb;">"%Y-%m-%d"</span>) <span style="color: #2544bb;">"\n"</span>
-                     <span style="color: #2544bb;">"#+setupfile: blog.config"</span>)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">define-skeleton</span> <span style="color: #a7601f;">org-header-skeleton</span>
+  <span style="color: #4f677f; font-style: italic;">"Header for my org files, mainly for blog posts"</span>
+  <span style="color: #ca3400;">"Document title: "</span> <span style="color: #ca3400;">"#+title: "</span> str <span style="color: #ca3400;">"\n"</span>
+                     <span style="color: #ca3400;">"#+author: "</span> user-full-name <span style="color: #ca3400;">"\n"</span>
+                     <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">"#+EMAIL: " user-mail-address "\n"</span>
+                     <span style="color: #ca3400;">"#+date: "</span> (format-time-string <span style="color: #ca3400;">"%Y-%m-%d"</span>) <span style="color: #ca3400;">"\n"</span>
+                     <span style="color: #ca3400;">"#+setupfile: blog.config"</span>)
 </pre>
 </div>
 </div>
@@ -562,12 +579,12 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-auto-tangle</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:hook</span> (org-mode . org-auto-tangle-mode)
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:config</span>
-  (<span style="color: #5317ac;">setq</span> org-auto-tangle-default t))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">org-auto-tangle</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (org-mode . org-auto-tangle-mode)
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (<span style="color: #006f00; font-weight: bold;">setq</span> org-auto-tangle-default t))
 </pre>
 </div>
 </div>
@@ -577,10 +594,10 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
 <h3 id="orgf0d9013"><span class="section-number-3">5.4.</span> Org modern (<code>org-modern</code>)</h3>
 <div class="outline-text-3" id="text-5-4">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">org-modern</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:hook</span> (org-mode . org-modern-mode))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">org-modern</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (org-mode . org-modern-mode))
 </pre>
 </div>
 </div>
@@ -590,38 +607,49 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
 <h3 id="org22bb4db"><span class="section-number-3">5.5.</span> Zen mode (<code>olivetti</code>)</h3>
 <div class="outline-text-3" id="text-5-5">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">olivetti</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:defer</span> t
-  <span style="color: #8f0075;">:hook</span> (org-mode . olivetti-mode))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">olivetti</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (org-mode . olivetti-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9727cb2" class="outline-3">
+<h3 id="org9727cb2"><span class="section-number-3">5.6.</span> Big document titles</h3>
+<div class="outline-text-3" id="text-5-6">
+<div class="org-src-container">
+<pre class="src src-elisp">(custom-set-faces
+ (set-face-attribute 'org-document-title nil <span style="color: #557400; font-weight: bold;">:height</span> 2.0))
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orgd237f23" class="outline-3">
-<h3 id="orgd237f23"><span class="section-number-3">5.6.</span> Proportional fonts (<code>mixed-pitch</code>)</h3>
-<div class="outline-text-3" id="text-5-6">
+<h3 id="orgd237f23"><span class="section-number-3">5.7.</span> Proportional fonts (<code>mixed-pitch</code>)</h3>
+<div class="outline-text-3" id="text-5-7">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">mixed-pitch</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:hook</span> (text-mode . mixed-pitch-mode))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">mixed-pitch</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (text-mode . mixed-pitch-mode))
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orga29ed3d" class="outline-3">
-<h3 id="orga29ed3d"><span class="section-number-3">5.7.</span> Exporting</h3>
-<div class="outline-text-3" id="text-5-7">
+<h3 id="orga29ed3d"><span class="section-number-3">5.8.</span> Exporting</h3>
+<div class="outline-text-3" id="text-5-8">
 </div>
 <div id="outline-container-org505e7d1" class="outline-4">
-<h4 id="org505e7d1"><span class="section-number-4">5.7.1.</span> to LaTeX</h4>
-<div class="outline-text-4" id="text-5-7-1">
+<h4 id="org505e7d1"><span class="section-number-4">5.8.1.</span> to LaTeX</h4>
+<div class="outline-text-4" id="text-5-8-1">
 </div>
 <ol class="org-ol">
 <li><a id="orgbb18759"></a><span class="todo TODO">TODO</span> A4 paper size<br>
-<div class="outline-text-5" id="text-5-7-1-1">
+<div class="outline-text-5" id="text-5-8-1-1">
 <p>
 Why should I export my documents on inferior paper dimensions? (I like to have <img src="/emacs-config_226506ef330eddcaabcee3ba852ece4addaa6126.svg" alt="emacs-config_226506ef330eddcaabcee3ba852ece4addaa6126.svg" class="org-svg"> around, you know)
 </p>
@@ -632,16 +660,16 @@ Why should I export my documents on inferior paper dimensions? (I like to have <
 </div>
 </li>
 <li><a id="org8547683"></a>Syntax highlighting with <code>minted</code><br>
-<div class="outline-text-5" id="text-5-7-1-2">
+<div class="outline-text-5" id="text-5-8-1-2">
 <p>
 Minted is a LaTeX package that adds syntax highlighting to code blocks.
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">setq</span> org-latex-src-block-backend 'minted
-      org-latex-packages-alist '((<span style="color: #2544bb;">""</span> <span style="color: #2544bb;">"minted"</span>))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> org-latex-src-block-backend 'minted
+      org-latex-packages-alist '((<span style="color: #ca3400;">""</span> <span style="color: #ca3400;">"minted"</span>))
       org-latex-pdf-process
-      '(<span style="color: #2544bb;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>
-        <span style="color: #2544bb;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>))
+      '(<span style="color: #ca3400;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>
+        <span style="color: #ca3400;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>))
 </pre>
 </div>
 </div>
@@ -661,7 +689,7 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <h3 id="org53eab21"><span class="section-number-3">6.1.</span> Save the session</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #505050;">;; </span><span style="color: #505050;">(desktop-save-mode 1)</span>
+<pre class="src src-elisp"><span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(desktop-save-mode 1)</span>
 </pre>
 </div>
 </div>
@@ -681,16 +709,13 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <h3 id="orgfd2d6e5"><span class="section-number-3">6.3.</span> Ligatures</h3>
 <div class="outline-text-3" id="text-6-3">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">ligature</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
-  <span style="color: #505050;">;; </span><span style="color: #505050;">Enable all Iosevka ligatures in programming modes</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">ligature</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Enable all Iosevka ligatures in programming modes</span>
   (ligature-set-ligatures
    'prog-mode
-   '(<span style="color: #2544bb;">"&lt;---"</span> <span style="color: #2544bb;">"&lt;--"</span>  <span style="color: #2544bb;">"&lt;&lt;-"</span> <span style="color: #2544bb;">"&lt;-"</span> <span style="color: #2544bb;">"-&gt;"</span> <span style="color: #2544bb;">"--&gt;"</span> <span style="color: #2544bb;">"---&gt;"</span> <span style="color: #2544bb;">"&lt;-&gt;"</span> <span style="color: #2544bb;">"&lt;--&gt;"</span> <span style="color: #2544bb;">"&lt;---&gt;"</span> <span style="color: #2544bb;">"&lt;----&gt;"</span> <span style="color: #2544bb;">"&lt;!--"</span>
-     <span style="color: #2544bb;">"&lt;=="</span> <span style="color: #2544bb;">"&lt;==="</span> <span style="color: #2544bb;">"&lt;="</span> <span style="color: #2544bb;">"=&gt;"</span> <span style="color: #2544bb;">"=&gt;&gt;"</span> <span style="color: #2544bb;">"==&gt;"</span> <span style="color: #2544bb;">"===&gt;"</span> <span style="color: #2544bb;">"&gt;="</span> <span style="color: #2544bb;">"&lt;=&gt;"</span> <span style="color: #2544bb;">"&lt;==&gt;"</span> <span style="color: #2544bb;">"&lt;===&gt;"</span> <span style="color: #2544bb;">"&lt;====&gt;"</span> <span style="color: #2544bb;">"&lt;!---"</span>
-     <span style="color: #2544bb;">"&lt;~~"</span> <span style="color: #2544bb;">"&lt;~"</span> <span style="color: #2544bb;">"~&gt;"</span> <span style="color: #2544bb;">"~~&gt;"</span> <span style="color: #2544bb;">"::"</span> <span style="color: #2544bb;">":::"</span> <span style="color: #2544bb;">"=="</span> <span style="color: #2544bb;">"!="</span> <span style="color: #2544bb;">"==="</span> <span style="color: #2544bb;">"!=="</span>
-     <span style="color: #2544bb;">":="</span> <span style="color: #2544bb;">":-"</span> <span style="color: #2544bb;">":+"</span> <span style="color: #2544bb;">"&lt;*"</span> <span style="color: #2544bb;">"&lt;*&gt;"</span> <span style="color: #2544bb;">"*&gt;"</span> <span style="color: #2544bb;">"&lt;|"</span> <span style="color: #2544bb;">"&lt;|&gt;"</span> <span style="color: #2544bb;">"|&gt;"</span> <span style="color: #2544bb;">"+:"</span> <span style="color: #2544bb;">"-:"</span> <span style="color: #2544bb;">"=:"</span> <span style="color: #2544bb;">"&lt;******&gt;"</span> <span style="color: #2544bb;">"++"</span> <span style="color: #2544bb;">"+++"</span>))
+   '(<span style="color: #ca3400;">"&lt;---"</span> <span style="color: #ca3400;">"&lt;--"</span> <span style="color: #ca3400;">"&gt;&gt;="</span> <span style="color: #ca3400;">"=&lt;&lt;"</span> <span style="color: #ca3400;">"&lt;&lt;-"</span> <span style="color: #ca3400;">"&lt;-"</span> <span style="color: #ca3400;">"-&gt;"</span> <span style="color: #ca3400;">"--&gt;"</span> <span style="color: #ca3400;">"---&gt;"</span> <span style="color: #ca3400;">"&lt;-&gt;"</span> <span style="color: #ca3400;">"&lt;--&gt;"</span> <span style="color: #ca3400;">"&lt;---&gt;"</span> <span style="color: #ca3400;">"&lt;----&gt;"</span> <span style="color: #ca3400;">"&lt;!--"</span> <span style="color: #ca3400;">"&lt;=="</span> <span style="color: #ca3400;">"&lt;==="</span> <span style="color: #ca3400;">"&lt;="</span> <span style="color: #ca3400;">"=&gt;"</span> <span style="color: #ca3400;">"=&gt;&gt;"</span> <span style="color: #ca3400;">"==&gt;"</span> <span style="color: #ca3400;">"===&gt;"</span> <span style="color: #ca3400;">"&gt;="</span> <span style="color: #ca3400;">"&lt;=&gt;"</span> <span style="color: #ca3400;">"&lt;==&gt;"</span> <span style="color: #ca3400;">"&lt;===&gt;"</span> <span style="color: #ca3400;">"&lt;====&gt;"</span> <span style="color: #ca3400;">"&lt;!---"</span> <span style="color: #ca3400;">"&lt;~~"</span> <span style="color: #ca3400;">"&lt;~"</span> <span style="color: #ca3400;">"~&gt;"</span> <span style="color: #ca3400;">"~~&gt;"</span> <span style="color: #ca3400;">"::"</span> <span style="color: #ca3400;">":::"</span> <span style="color: #ca3400;">"=="</span> <span style="color: #ca3400;">"!="</span> <span style="color: #ca3400;">"==="</span> <span style="color: #ca3400;">"!=="</span> <span style="color: #ca3400;">":="</span> <span style="color: #ca3400;">":-"</span> <span style="color: #ca3400;">":+"</span> <span style="color: #ca3400;">"&lt;*"</span> <span style="color: #ca3400;">"&lt;*&gt;"</span> <span style="color: #ca3400;">"*&gt;"</span> <span style="color: #ca3400;">"&lt;|"</span> <span style="color: #ca3400;">"&lt;|&gt;"</span> <span style="color: #ca3400;">"|&gt;"</span> <span style="color: #ca3400;">"+:"</span> <span style="color: #ca3400;">"-:"</span> <span style="color: #ca3400;">"=:"</span> <span style="color: #ca3400;">"&lt;******&gt;"</span> <span style="color: #ca3400;">"++"</span> <span style="color: #ca3400;">"+++"</span> <span style="color: #ca3400;">"|||&gt;"</span> <span style="color: #ca3400;">"&lt;|||"</span> <span style="color: #ca3400;">"####"</span> <span style="color: #ca3400;">"***"</span> <span style="color: #ca3400;">"||="</span> <span style="color: #ca3400;">"||&gt;"</span> <span style="color: #ca3400;">"::="</span> <span style="color: #ca3400;">"=:="</span> <span style="color: #ca3400;">"=!="</span> <span style="color: #ca3400;">"=/="</span> <span style="color: #ca3400;">"!!."</span> <span style="color: #ca3400;">"&gt;=&gt;"</span> <span style="color: #ca3400;">"&gt;&gt;&gt;"</span> <span style="color: #ca3400;">"&gt;&gt;-"</span> <span style="color: #ca3400;">"&gt;-&gt;"</span> <span style="color: #ca3400;">"-&gt;&gt;"</span> <span style="color: #ca3400;">"---"</span> <span style="color: #ca3400;">"-&lt;&lt;"</span> <span style="color: #ca3400;">"&lt;~&gt;"</span> <span style="color: #ca3400;">"&lt;||"</span> <span style="color: #ca3400;">"&lt;$&gt;"</span> <span style="color: #ca3400;">"&lt;=&lt;"</span> <span style="color: #ca3400;">"&lt;-&lt;"</span> <span style="color: #ca3400;">"&lt;&lt;="</span> <span style="color: #ca3400;">"&lt;&lt;&lt;"</span> <span style="color: #ca3400;">"&lt;+&gt;"</span> <span style="color: #ca3400;">"&lt;/&gt;"</span> <span style="color: #ca3400;">"###"</span> <span style="color: #ca3400;">"#_("</span> <span style="color: #ca3400;">"..&lt;"</span> <span style="color: #ca3400;">"..."</span> <span style="color: #ca3400;">"/=="</span> <span style="color: #ca3400;">"///"</span> <span style="color: #ca3400;">"_|_"</span> <span style="color: #ca3400;">"www"</span> <span style="color: #ca3400;">"&amp;&amp;"</span> <span style="color: #ca3400;">"^="</span> <span style="color: #ca3400;">"~~"</span> <span style="color: #ca3400;">"~@"</span> <span style="color: #ca3400;">"~="</span> <span style="color: #ca3400;">"~-"</span> <span style="color: #ca3400;">"**"</span> <span style="color: #ca3400;">"*/"</span> <span style="color: #ca3400;">"||"</span> <span style="color: #ca3400;">"|}"</span> <span style="color: #ca3400;">"|]"</span> <span style="color: #ca3400;">"|="</span> <span style="color: #ca3400;">"|-"</span> <span style="color: #ca3400;">"{|"</span> <span style="color: #ca3400;">"[|"</span> <span style="color: #ca3400;">"]#"</span> <span style="color: #ca3400;">":&gt;"</span> <span style="color: #ca3400;">":&lt;"</span> <span style="color: #ca3400;">"$&gt;"</span> <span style="color: #ca3400;">"!!"</span> <span style="color: #ca3400;">"&gt;:"</span> <span style="color: #ca3400;">"&gt;&gt;"</span> <span style="color: #ca3400;">"&gt;-"</span> <span style="color: #ca3400;">"-~"</span> <span style="color: #ca3400;">"-|"</span> <span style="color: #ca3400;">"--"</span> <span style="color: #ca3400;">"-&lt;"</span> <span style="color: #ca3400;">"&lt;:"</span> <span style="color: #ca3400;">"&lt;$"</span> <span style="color: #ca3400;">"&lt;&gt;"</span> <span style="color: #ca3400;">"&lt;&lt;"</span> <span style="color: #ca3400;">"&lt;+"</span> <span style="color: #ca3400;">"&lt;/"</span> <span style="color: #ca3400;">"#{"</span> <span style="color: #ca3400;">"#["</span> <span style="color: #ca3400;">"#:"</span> <span style="color: #ca3400;">"#="</span> <span style="color: #ca3400;">"#!"</span> <span style="color: #ca3400;">"##"</span> <span style="color: #ca3400;">"#("</span> <span style="color: #ca3400;">"#?"</span> <span style="color: #ca3400;">"#_"</span> <span style="color: #ca3400;">"%%"</span> <span style="color: #ca3400;">".="</span> <span style="color: #ca3400;">".-"</span> <span style="color: #ca3400;">".."</span> <span style="color: #ca3400;">".?"</span> <span style="color: #ca3400;">"+&gt;"</span> <span style="color: #ca3400;">"?:"</span> <span style="color: #ca3400;">"?="</span> <span style="color: #ca3400;">"?."</span> <span style="color: #ca3400;">"??"</span> <span style="color: #ca3400;">";;"</span> <span style="color: #ca3400;">"/*"</span> <span style="color: #ca3400;">"/="</span> <span style="color: #ca3400;">"/&gt;"</span> <span style="color: #ca3400;">"//"</span> <span style="color: #ca3400;">"__"</span> <span style="color: #ca3400;">"(*"</span> <span style="color: #ca3400;">"*)"</span> <span style="color: #ca3400;">"\\\\"</span> <span style="color: #ca3400;">"://"</span>))
   (global-ligature-mode t))
 </pre>
 </div>
@@ -700,9 +725,9 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <h3 id="org7b82b37"><span class="section-number-3">6.4.</span> TODO, NOTE, FIXME, BUG, &#x2026; (<code>hl-todo</code>)</h3>
 <div class="outline-text-3" id="text-6-4">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">hl-todo</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">hl-todo</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (global-hl-todo-mode 1))
 </pre>
 </div>
@@ -713,8 +738,8 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <h3 id="orga4800d2"><span class="section-number-3">6.5.</span> Change names of modes (<code>delight</code>)</h3>
 <div class="outline-text-3" id="text-6-5">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">delight</span>
-  <span style="color: #8f0075;">:ensure</span> t)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">delight</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t)
 </pre>
 </div>
 </div>
@@ -724,27 +749,27 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <h3 id="orgfb2d72e"><span class="section-number-3">6.6.</span> Better <code>M-x</code> completion (<code>vertico</code>)</h3>
 <div class="outline-text-3" id="text-6-6">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">vertico</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
-  (<span style="color: #5317ac;">setq</span> vertico-cycle t)
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">vertico</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (<span style="color: #006f00; font-weight: bold;">setq</span> vertico-cycle t)
   (vertico-mode))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">savehist</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">savehist</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (savehist-mode))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">orderless</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
-  (<span style="color: #5317ac;">setq</span> completion-styles '(orderless basic)
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">orderless</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (<span style="color: #006f00; font-weight: bold;">setq</span> completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">marginalia</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">marginalia</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
   (marginalia-mode))
 </pre>
 </div>
@@ -758,24 +783,42 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 Preview files, and search open buffers, recently opened files, bookmarks, &#x2026; all in one place
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">consult</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:config</span>
-  (global-set-key (kbd <span style="color: #2544bb;">"M-g o"</span>) 'consult-buffer)
-  (global-set-key (kbd <span style="color: #2544bb;">"M-g s"</span>) 'consult-line-multi))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">consult</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (recentf-mode)
+  (global-set-key (kbd <span style="color: #ca3400;">"M-g o"</span>) 'consult-buffer)
+  (global-set-key (kbd <span style="color: #ca3400;">"M-g s"</span>) 'consult-line-multi))
 </pre>
 </div>
 </div>
 </div>
 
-
-<div id="outline-container-org4af13fe" class="outline-3">
-<h3 id="org4af13fe"><span class="section-number-3">6.8.</span> Custom modeline (<code>simple-modeline</code>)</h3>
+<div id="outline-container-org6b59148" class="outline-3">
+<h3 id="org6b59148"><span class="section-number-3">6.8.</span> Icons (<code>nerd-icons</code>)</h3>
 <div class="outline-text-3" id="text-6-8">
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">simple-modeline</span>
-  <span style="color: #8f0075;">:ensure</span> t
-  <span style="color: #8f0075;">:hook</span> (after-init . simple-modeline-mode))
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t)
+
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (dired-mode . nerd-icons-dired-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0937df4" class="outline-3">
+<h3 id="org0937df4"><span class="section-number-3">6.9.</span> Custom modeline (<code>mini-echo-mode</code>)</h3>
+<div class="outline-text-3" id="text-6-9">
+<p>
+Another good alternative is <a href="https://github.com/gexplorer/simple-modeline"><code>simple-modeline</code></a>.
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">mini-echo</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:hook</span> (after-init . mini-echo-mode))
 </pre>
 </div>
 </div>

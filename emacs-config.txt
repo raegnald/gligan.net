@@ -36,8 +36,9 @@ _________________
 .. 3. TODO Auto tangle (`org-auto-tangle')
 .. 4. Org modern (`org-modern')
 .. 5. Zen mode (`olivetti')
-.. 6. Proportional fonts (`mixed-pitch')
-.. 7. Exporting
+.. 6. Big document titles
+.. 7. Proportional fonts (`mixed-pitch')
+.. 8. Exporting
 ..... 1. to LaTeX
 6. Nicities
 .. 1. Save the session
@@ -47,7 +48,8 @@ _________________
 .. 5. Change names of modes (`delight')
 .. 6. Better `M-x' completion (`vertico')
 .. 7. Search everything (`consult')
-.. 8. Custom modeline (`simple-modeline')
+.. 8. Icons (`nerd-icons')
+.. 9. Custom modeline (`mini-echo-mode')
 
 
 This is my vanilla Emacs literate configuration file. You can skim
@@ -156,6 +158,9 @@ prefix them by `M-g'.
   | ;; Auto-save & back up files
   | (setq auto-save-default t
   |       make-backup-files t)
+  | 
+  | (defun display-startup-echo-area-message ()
+  |   (message (emacs-init-time)))
   `----
 
 
@@ -173,7 +178,7 @@ prefix them by `M-g'.
 
   [Iosevka Comfy]
   ,----
-  | (set-face-attribute 'default nil :font "Iosevka Comfy Motion 12")
+  | (set-face-attribute 'default nil :font "Iosevka Comfy Motion 14")
   | (set-face-attribute 'fixed-pitch nil :family "Iosevka Comfy Motion" :height 1.0)
   | (set-face-attribute 'variable-pitch nil :family "Iosevka Comfy Motion Duo" :height 1.0)
   `----
@@ -186,12 +191,18 @@ prefix them by `M-g'.
 ~~~~~~~~~
 
   ,----
-  | (setq gligan/dark-theme 'monokate)
-  | (setq gligan/light-theme 'modus-operandi)
+  | (use-package ef-themes
+  |   :ensure t)
   | 
+  | (setq gligan/dark-theme 'monokate)
+  | (setq gligan/light-theme 'ef-cyprus); 'modus-operandi
+  | 
+  | ;; We start with the dark theme
   | (setq gligan/current-theme gligan/dark-theme)
   | 
-  | (load-theme gligan/current-theme t)
+  | ;; Between these two hours, when opening Emacs, the light theme should be the default
+  | (defvar gligan/light-theme-hour-start 8)
+  | (defvar gligan/light-theme-hour-end  20) 
   | 
   | (defun gligan/toggle-theme () (interactive)
   |        (disable-theme gligan/current-theme)
@@ -200,6 +211,12 @@ prefix them by `M-g'.
   |                             gligan/light-theme))
   |        (setq gligan/current-theme next-theme)
   |        (load-theme next-theme t))
+  | 
+  | ;; Switch to light theme if we're between the bounds defined above
+  | (let ((hour (string-to-number (substring (current-time-string) 11 13))))
+  |   (if (member hour (number-sequence gligan/light-theme-hour-start gligan/light-theme-hour-end))
+  |     (gligan/toggle-theme)
+  |     (load-theme gligan/current-theme t)))
   | 
   | (global-set-key (kbd "M-g t") 'gligan/toggle-theme)
   `----
@@ -472,7 +489,16 @@ prefix them by `M-g'.
   `----
 
 
-5.6 Proportional fonts (`mixed-pitch')
+5.6 Big document titles
+~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (custom-set-faces
+  |  (set-face-attribute 'org-document-title nil :height 2.0))
+  `----
+
+
+5.7 Proportional fonts (`mixed-pitch')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   ,----
@@ -482,13 +508,13 @@ prefix them by `M-g'.
   `----
 
 
-5.7 Exporting
+5.8 Exporting
 ~~~~~~~~~~~~~
 
-5.7.1 to LaTeX
+5.8.1 to LaTeX
 --------------
 
-* 5.7.1.1 TODO A4 paper size
+* 5.8.1.1 TODO A4 paper size
 
   Why should I export my documents on inferior paper dimensions? (I like
   to have $\sqrt 2$ around, you know)
@@ -497,7 +523,7 @@ prefix them by `M-g'.
   `----
 
 
-* 5.7.1.2 Syntax highlighting with `minted'
+* 5.8.1.2 Syntax highlighting with `minted'
 
   Minted is a LaTeX package that adds syntax highlighting to code
   blocks.
@@ -539,10 +565,7 @@ prefix them by `M-g'.
   |   ;; Enable all Iosevka ligatures in programming modes
   |   (ligature-set-ligatures
   |    'prog-mode
-  |    '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
-  |      "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
-  |      "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
-  |      ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+  |    '("<---" "<--" ">>=" "=<<" "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--" "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---" "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!==" ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++" "|||>" "<|||" "####" "***" "||=" "||>" "::=" "=:=" "=!=" "=/=" "!!." ">=>" ">>>" ">>-" ">->" "->>" "---" "-<<" "<~>" "<||" "<$>" "<=<" "<-<" "<<=" "<<<" "<+>" "</>" "###" "#_(" "..<" "..." "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~=" "~-" "**" "*/" "||" "|}" "|]" "|=" "|-" "{|" "[|" "]#" ":>" ":<" "$>" "!!" ">:" ">>" ">-" "-~" "-|" "--" "-<" "<:" "<$" "<>" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!" "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "?:" "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "(*" "*)" "\\\\" "://"))
   |   (global-ligature-mode t))
   `----
 
@@ -605,16 +628,34 @@ prefix them by `M-g'.
   | (use-package consult
   |   :ensure t
   |   :config
+  |   (recentf-mode)
   |   (global-set-key (kbd "M-g o") 'consult-buffer)
   |   (global-set-key (kbd "M-g s") 'consult-line-multi))
   `----
 
 
-6.8 Custom modeline (`simple-modeline')
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6.8 Icons (`nerd-icons')
+~~~~~~~~~~~~~~~~~~~~~~~~
 
   ,----
-  | (use-package simple-modeline
+  | (use-package nerd-icons
+  |   :ensure t)
+  | 
+  | (use-package nerd-icons
   |   :ensure t
-  |   :hook (after-init . simple-modeline-mode))
+  |   :hook (dired-mode . nerd-icons-dired-mode))
   `----
+
+
+6.9 Custom modeline (`mini-echo-mode')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Another good alternative is [`simple-modeline'].
+  ,----
+  | (use-package mini-echo
+  |   :ensure t
+  |   :hook (after-init . mini-echo-mode))
+  `----
+
+
+[`simple-modeline'] <https://github.com/gexplorer/simple-modeline>

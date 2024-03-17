@@ -169,5 +169,6 @@ My new needs
   | 
   `----
 
-  \begin{equation} % arbitrary environments, x=\sqrt{b} % even tables,
-  figures \end{equation} % etc
+  \begin{equation}
+    x=\sqrt{b}
+  \end{equation}
