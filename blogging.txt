@@ -36,7 +36,9 @@ My new needs
 
   I don't care... I'll still do it
 
-  $$ \varphi f = f (\varphi f) $$
+  \begin{equation*}
+  \varphi f = f (\varphi f)
+  \end{equation*}
 
   is the fix operator.
 
@@ -73,6 +75,10 @@ My new needs
   in scientific computing and in data science routinely for reproducible
   research and open access purposes.[2] Literate programming tools are
   used by millions of programmers today.[3]
+
+  \begin{equation}
+    x=\sqrt{b}
+  \end{equation}
 
   The literate programming paradigm, as conceived by Donald Knuth,
   represents a move away from writing computer programs in the manner

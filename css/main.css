@@ -49,10 +49,12 @@ body {
 #preamble, #postamble {}
 
 #preamble {
-  background: linear-gradient(var(--distant-bg), var(--content-bg));
+  background: linear-gradient(to bottom, var(--distant-bg), var(--content-bg));
 }
 
-#postamble {}
+#postamble {
+  background: linear-gradient(to bottom, var(--content-bg), var(--distant-bg));
+}
 
 #content {
   background-color: var(--content-bg);
@@ -258,7 +260,14 @@ pre {
 pre.example {
   margin-top: -8px;
   border-top: 0;
-  background: #fafafa;
+  background: linear-gradient(to right, var(--content-bg), var(--distant-bg));
+}
+
+pre.example::before {
+  content: "Result";
+  float: right;
+  padding-right: 10px;
+  opacity: 0.6;
 }
 
 .footnote {
@@ -360,12 +369,29 @@ strong, b {
 .org-svg {
   vertical-align: middle;
 }
-
-p > .org-svg:only-child {
+ 
+.equation-container {
   text-align: center;
-  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.equation-container .equation {
+  display: inline-block;
   margin: 0 auto;
   scale: 120%;
+}
+
+.equation-container .equation-label {
+    float: right;
+    opacity: 0.6;
+}
+
+.equation-container .equation-label::before {
+  content: '(';
+}
+.equation-container .equation-label::after {
+  content: ')';
 }
 
 hr {
@@ -383,4 +409,13 @@ hr {
   background: #ffb5b5;
   padding: 2px 7px;
   color: #8f2929;
+}
+
+footer .footer-right  {
+  float: right;
+}
+
+footer .footer-right span {
+  padding-left: 10px;
+  opacity: 0.6;
 }
