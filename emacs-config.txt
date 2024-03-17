@@ -72,6 +72,7 @@ prefix them by `M-g'.
  `M-g j j'    Insert a new journal entry                                          
  `M-g j s'    Search through my journal entries                                   
  `M-g o'      Open buffer, recent file, bookmark, ...                             
+ `M-g s'      Search for a string in current buffers                              
 
 ------------------------------------------------------------------------
 
@@ -604,7 +605,8 @@ prefix them by `M-g'.
   | (use-package consult
   |   :ensure t
   |   :config
-  |   (global-set-key (kbd "M-g o") 'consult-buffer))
+  |   (global-set-key (kbd "M-g o") 'consult-buffer)
+  |   (global-set-key (kbd "M-g s") 'consult-line-multi))
   `----
 
 

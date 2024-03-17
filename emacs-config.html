@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 03:10 -->
+<!-- 2024-03-17 Sun 03:21 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -82,14 +82,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org042d78a">
+<div class="warning" id="orgb3e7a72">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org225f216">
+<div class="note" id="orga8fab62">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -140,6 +140,11 @@ These are the custom key bindings I have for my set-up. Notice I tend to prefix 
 <tr>
 <td class="org-left"><code>M-g o</code></td>
 <td class="org-left">Open buffer, recent file, bookmark, &#x2026;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g s</code></td>
+<td class="org-left">Search for a string in current buffers</td>
 </tr>
 </tbody>
 </table>
@@ -756,7 +761,8 @@ Preview files, and search open buffers, recently opened files, bookmarks, &#x202
 <pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">consult</span>
   <span style="color: #8f0075;">:ensure</span> t
   <span style="color: #8f0075;">:config</span>
-  (global-set-key (kbd <span style="color: #2544bb;">"M-g o"</span>) 'consult-buffer))
+  (global-set-key (kbd <span style="color: #2544bb;">"M-g o"</span>) 'consult-buffer)
+  (global-set-key (kbd <span style="color: #2544bb;">"M-g s"</span>) 'consult-line-multi))
 </pre>
 </div>
 </div>
