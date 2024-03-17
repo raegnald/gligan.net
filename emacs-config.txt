@@ -89,8 +89,8 @@ prefix them by `M-g'.
     `----
   - Insert today's date
     ,----
-    | (defun gligan/today () (interactive)
-    |   (format-time-string "%Y-%m-%d"))
+    | (defun gligan/today () (interactive) 
+    |  (insert (format-time-string "%Y-%m-%d")))
     | (global-set-key (kbd "M-g d") 'gligan/today)
     `----
 
