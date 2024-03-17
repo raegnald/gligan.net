@@ -66,19 +66,27 @@ You can have a raw version of this file [here] (`init.el').
 These are the custom key bindings I have for my set-up. Notice I tend to
 prefix them by `M-g'.
 
- Key binding  Function                                                           
----------------------------------------------------------------------------------
- `M-g t'      Toggle between themes `gligan/dark-theme' and `gligan/light-theme' 
- `M-g d'      Input the current date                                             
- `M-g j j'    Insert a new journal entry                                         
- `M-g j s'    Search through my journal entries                                  
- `M-g o'      Open buffer, recent file, bookmark, ...                            
- `M-g s'      Search for a string in open buffers                                
+ Key binding  Function                                                            Defined 
+------------------------------------------------------------------------------------------
+ `M-g t'      Toggle between themes `gligan/dark-theme' and `gligan/light-theme'  [here]  
+ `M-g d'      Input the current date                                              [here]  
+ `M-g j j'    Insert a new journal entry                                          [here]  
+ `M-g j s'    Search through my journal entries                                   [here]  
+ `M-g o'      Open buffer, recent file, bookmark, ...                             [here]  
+ `M-g s'      Search for a string in open buffers                                 [here]  
 
 ------------------------------------------------------------------------
 
 
 [here] <https://gligan.net/init.el>
+
+[here] See section 3.5
+
+[here] See figure (2)
+
+[here] See section 5.1
+
+[here] See section 6.6
 
 
 1 Personal

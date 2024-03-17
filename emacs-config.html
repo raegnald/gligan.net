@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 14:30 -->
+<!-- 2024-03-17 Sun 14:54 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -29,7 +29,7 @@
 <li><a href="#org5298f32">3.2. Main window properties</a></li>
 <li><a href="#orga1622ac">3.3. Modeline</a></li>
 <li><a href="#org1613318">3.4. Fonts</a></li>
-<li><a href="#orgc25ce17">3.5. Theme</a></li>
+<li><a href="#org0b11938">3.5. Theme </a></li>
 </ul>
 </li>
 <li><a href="#orga3334c6">4. Languages</a>
@@ -50,7 +50,7 @@
 </li>
 <li><a href="#orga225488">5. Org mode</a>
 <ul>
-<li><a href="#org657502b">5.1. <code>org-journal</code></a></li>
+<li><a href="#org1c70609">5.1. <code>org-journal</code> </a></li>
 <li><a href="#org145ad69">5.2. Skeletons for <code>org-mode</code></a></li>
 <li><a href="#org769bc86">5.3. <span class="todo TODO">TODO</span> Auto tangle (<code>org-auto-tangle</code>)</a></li>
 <li><a href="#orgf0d9013">5.4. Org modern (<code>org-modern</code>)</a></li>
@@ -71,7 +71,7 @@
 <li><a href="#orgfd2d6e5">6.3. Ligatures</a></li>
 <li><a href="#org7b82b37">6.4. TODO, NOTE, FIXME, BUG, &#x2026; (<code>hl-todo</code>)</a></li>
 <li><a href="#orgfb2d72e">6.5. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
-<li><a href="#org8562d88">6.6. Search everything (<code>consult</code>)</a></li>
+<li><a href="#org55176d1">6.6. Search everything (<code>consult</code>) </a></li>
 <li><a href="#org6b59148">6.7. Icons (<code>nerd-icons</code>)</a></li>
 <li><a href="#org0937df4">6.8. Custom modeline (<code>mini-echo-mode</code>)</a></li>
 </ul>
@@ -83,14 +83,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org9e8cc0e">
+<div class="warning" id="org0fd5c72">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org3e69fd7">
+<div class="note" id="org89b80ae">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -110,42 +110,51 @@ These are the custom key bindings I have for my set-up. Notice I tend to prefix 
 <col  class="org-left">
 
 <col  class="org-left">
+
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
 <th scope="col" class="org-left">Key binding</th>
 <th scope="col" class="org-left">Function</th>
+<th scope="col" class="org-left">Defined</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left"><code>M-g t</code></td>
 <td class="org-left">Toggle between themes <code>gligan/dark-theme</code> and <code>gligan/light-theme</code></td>
+<td class="org-left"><a href="#org0df7146">here</a></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>M-g d</code></td>
 <td class="org-left">Input the current date</td>
+<td class="org-left"><a href="#org24ff5b4">here</a></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>M-g j j</code></td>
 <td class="org-left">Insert a new journal entry</td>
+<td class="org-left"><a href="#org4f784f9">here</a></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>M-g j s</code></td>
 <td class="org-left">Search through my journal entries</td>
+<td class="org-left"><a href="#org4f784f9">here</a></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>M-g o</code></td>
 <td class="org-left">Open buffer, recent file, bookmark, &#x2026;</td>
+<td class="org-left"><a href="#org45ad575">here</a></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>M-g s</code></td>
 <td class="org-left">Search for a string in open buffers</td>
+<td class="org-left"><a href="#org45ad575">here</a></td>
 </tr>
 </tbody>
 </table>
@@ -165,7 +174,7 @@ My personal information
 </pre>
 </div></li>
 <li><p>
-Insert today's date
+Insert today's date <a id="org24ff5b4"></a>
 </p>
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">gligan/today</span> () (<span style="color: #006f00; font-weight: bold;">interactive</span>) 
@@ -278,8 +287,8 @@ Insert today's date
 </div>
 </div>
 
-<div id="outline-container-orgc25ce17" class="outline-3">
-<h3 id="orgc25ce17"><span class="section-number-3">3.5.</span> Theme</h3>
+<div id="outline-container-org0b11938" class="outline-3">
+<h3 id="org0b11938"><span class="section-number-3">3.5.</span> Theme <a id="org0df7146"></a></h3>
 <div class="outline-text-3" id="text-3-5">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">ef-themes</span>
@@ -535,8 +544,8 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 </div>
 </div>
 
-<div id="outline-container-org657502b" class="outline-3">
-<h3 id="org657502b"><span class="section-number-3">5.1.</span> <code>org-journal</code></h3>
+<div id="outline-container-org1c70609" class="outline-3">
+<h3 id="org1c70609"><span class="section-number-3">5.1.</span> <code>org-journal</code> <a id="org4f784f9"></a></h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> journal-dir <span style="color: #ca3400;">"~/org/journal/"</span>)
@@ -761,8 +770,8 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 </div>
 </div>
 
-<div id="outline-container-org8562d88" class="outline-3">
-<h3 id="org8562d88"><span class="section-number-3">6.6.</span> Search everything (<code>consult</code>)</h3>
+<div id="outline-container-org55176d1" class="outline-3">
+<h3 id="org55176d1"><span class="section-number-3">6.6.</span> Search everything (<code>consult</code>) <a id="org45ad575"></a></h3>
 <div class="outline-text-3" id="text-6-6">
 <p>
 Preview files, and search open buffers, recently opened files, bookmarks, &#x2026; all in one place
