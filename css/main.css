@@ -1,6 +1,27 @@
 
-@import url('/fonts/linux-biolinum.css')
-@import url('/fonts/iosevka.css')
+/* TODO Use CSS variables
+   https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
+
+@import url('/fonts/linux-biolinum.css');
+@import url('/fonts/iosevka.css');
+
+:root {
+  --distant-bg: #fafafa;
+  --content-bg: #ffffff;
+  --content-cl: black;
+  
+  --content-text-size: 22px;
+  --content-code-size: 16px;
+  --text-font: 'Linux Biolinum', sans-serif;
+  --code-font: 'Iosevka Web', Iosevka, monospaced;
+  
+  --content-width: 836px;
+  --content-padding: 88px;
+  --content-lateral-separation: 15px;
+
+  --accent-cl-1: #805020;
+  --accent-cl-2: #D0343F;
+}
 
 html, body  {
   border: 0px;
@@ -9,32 +30,32 @@ html, body  {
 }
 
 body {
-  background: #fafafa !important;
+  background: var(--distant-bg) !important;
   margin: 0 !important;
   min-height: 100vh;
 }
 
 #content, #preamble, #postamble {
-  color: black;
-  font-size: 22px;
-  font-family: 'Linux Biolinum', sans-serif;
+  color: var(--content-cl);
+  font-size: var(--content-text-size);
+  font-family: var(--text-font);
   text-align: justify;
   border: 0px;
-  padding: 4em;
+  padding: var(--content-padding);
   margin: 0 auto;
-  max-width: 38em;
+  max-width: var(--content-width);
 }
 
 #preamble, #postamble {}
 
 #preamble {
-  background: linear-gradient(#fafafa, #ffffff);
+  background: linear-gradient(var(--distant-bg), var(--content-bg));
 }
 
 #postamble {}
 
 #content {
-  background-color: white;
+  background-color: var(--content-bg);
 }
 
 #site-name {
@@ -52,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-weight: bold;
-  font-size: 1.4em;
+  font-size: 31px;
   padding-bottom: 2em;
   text-align: left;
 }
@@ -88,16 +109,15 @@ h4, h5, h6 {
 .section-number-2, .section-number-3, .section-number-4 {
   text-align: right;
   position: absolute;
-  left: 50px;
-  width: calc(50vw - 600px);
+  left: 0;
+  width: calc(50vw - var(--content-width) / 2 - 1.5 * var(--content-padding));
 }
 
 .section-number-2 {
-  background: linear-gradient(to right, #fafafa, #fff);
+  background: linear-gradient(to right, var(--distant-bg), var(--content-bg));
   padding-top: 10px;
   margin-top: -10px;
   padding-bottom: 10px;
-  padding-right: 10px;
 }
 
 .section-number-4 {
@@ -112,20 +132,20 @@ div {
 p, center {
   margin: 0px;
   padding: 0px;
-  padding-bottom: 0.35em;
-  padding-top: 0.35em;
+  padding-bottom: 8px;
+  padding-top: 8px;
 }
 
 ul, ol, dl, di {
   margin-top: 0px;
   margin-bottom: 0px;
-  padding-top: 0.35em;
-  padding-bottom: 0.35em;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 ul > p, ol > p, dl > p, di > p {
-  padding-bottom: 0.1em;
-  padding-top: 0.1em;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 table {
@@ -135,18 +155,18 @@ table {
 tbody p {
   margin: 0px;
   padding: 0px;
-  padding-bottom: 0.1em;
-  padding-top: 0.1em;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 td {
-  padding: 0.2em;
+  padding: 5px;
   vertical-align: baseline;
 }
 
 dd {
-  margin-left: 2.75em;
-  padding-bottom: 0.25em;
+  margin-left: 60px;
+  padding-bottom: 6px;
 }
 
 dd p {
@@ -157,7 +177,7 @@ dt {
   display: inline !important;
   float: left;
   font-weight: bold;
-  padding-right: 1em;
+  padding-right: 22px;
 }
 
 a:link, a:visited {
@@ -173,7 +193,7 @@ a:active, a:focus, a:hover {
 @media screen and (max-width: 1199px) {
   #content, #preamble, #postamble {
     font-size: 24px;
-    padding: 3em;
+    padding: 66px;
   }
 
   .section-number-2, .section-number-3, .section-number-4 {
@@ -185,7 +205,7 @@ a:active, a:focus, a:hover {
 @media screen and (max-width: 799px) {
   #content, #preamble, #postamble {
     font-size: 18px;
-    padding: 1em;
+    padding: 22px;
   }
 
   .org-svg {
@@ -210,7 +230,7 @@ a:active, a:focus, a:hover {
 }
 
 .note, .warning {
-  margin: 0.35em -15px;
+  margin: 8px -15px;
   border: 1px solid #d9d9d9;
   padding: 15px;
 }
@@ -226,15 +246,16 @@ code {
 pre {
   text-align: left !important;
   white-space: pre-wrap;
-  border: 1px solid #d9d9d9;
-  padding: 15px;
-  margin: 0.35em -15px;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15px 0;
+  margin: 8px 0; /* -4em; */ /* -15px; */
   font-size: 90%;
 }
 
 /* Result of a code block */
 pre.example {
-  margin-top: -0.35em;
+  margin-top: -8px;
   border-top: 0;
   background: #fafafa;
 }
@@ -302,7 +323,7 @@ pre.example {
 
 table {
   max-width: 100% !important;
-  margin: 0.35em -15px;
+  margin: 8px -15px;
   border: 1px solid #d9d9d9;
 }
 
