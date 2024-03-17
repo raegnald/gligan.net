@@ -23,6 +23,11 @@
   --accent-cl-2: #D0343F;
 }
 
+::-moz-selection, ::selection { /* Code for Firefox */
+  color: white;
+  background: var(--accent-cl-1);
+}
+
 html, body  {
   border: 0px;
   padding: 0px;
@@ -411,10 +416,11 @@ hr {
   color: #8f2929;
 }
 
-footer {
-  text-align: center;
+footer .footer-right  {
+  float: right;
 }
 
-footer .footer-author {
+footer .footer-right span {
+  padding-left: 10px;
   opacity: 0.6;
 }

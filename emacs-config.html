@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 13:03 -->
+<!-- 2024-03-17 Sun 13:11 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -70,11 +70,10 @@
 <li><a href="#org30ec304">6.2. Auto close parentheses, brackets, et c. (<code>electric-pair-mode</code>)</a></li>
 <li><a href="#orgfd2d6e5">6.3. Ligatures</a></li>
 <li><a href="#org7b82b37">6.4. TODO, NOTE, FIXME, BUG, &#x2026; (<code>hl-todo</code>)</a></li>
-<li><a href="#orga4800d2">6.5. Change names of modes (<code>delight</code>)</a></li>
-<li><a href="#orgfb2d72e">6.6. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
-<li><a href="#org8562d88">6.7. Search everything (<code>consult</code>)</a></li>
-<li><a href="#org6b59148">6.8. Icons (<code>nerd-icons</code>)</a></li>
-<li><a href="#org0937df4">6.9. Custom modeline (<code>mini-echo-mode</code>)</a></li>
+<li><a href="#orgfb2d72e">6.5. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
+<li><a href="#org8562d88">6.6. Search everything (<code>consult</code>)</a></li>
+<li><a href="#org6b59148">6.7. Icons (<code>nerd-icons</code>)</a></li>
+<li><a href="#org0937df4">6.8. Custom modeline (<code>mini-echo-mode</code>)</a></li>
 </ul>
 </li>
 </ul>
@@ -84,14 +83,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org9928bc4">
+<div class="warning" id="org760ed75">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="orga734121">
+<div class="note" id="org1f57a03">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -417,8 +416,7 @@ Insert today's date
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">tuareg</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
-  <span style="color: #557400; font-weight: bold;">:defer</span> t
-  <span style="color: #557400; font-weight: bold;">:delight</span> <span style="color: #ca3400;">"&#128043;"</span>)
+  <span style="color: #557400; font-weight: bold;">:defer</span> t)
 
 (<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">dune</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
@@ -462,7 +460,6 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">haskell-mode</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
   <span style="color: #557400; font-weight: bold;">:defer</span> t
-  <span style="color: #557400; font-weight: bold;">:delight</span> <span style="color: #ca3400;">"&#955;"</span>
   <span style="color: #557400; font-weight: bold;">:config</span>)
 
 (<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">flycheck-haskell</span>
@@ -734,20 +731,9 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 </div>
 </div>
 
-<div id="outline-container-orga4800d2" class="outline-3">
-<h3 id="orga4800d2"><span class="section-number-3">6.5.</span> Change names of modes (<code>delight</code>)</h3>
-<div class="outline-text-3" id="text-6-5">
-<div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">delight</span>
-  <span style="color: #557400; font-weight: bold;">:ensure</span> t)
-</pre>
-</div>
-</div>
-</div>
-
 <div id="outline-container-orgfb2d72e" class="outline-3">
-<h3 id="orgfb2d72e"><span class="section-number-3">6.6.</span> Better <code>M-x</code> completion (<code>vertico</code>)</h3>
-<div class="outline-text-3" id="text-6-6">
+<h3 id="orgfb2d72e"><span class="section-number-3">6.5.</span> Better <code>M-x</code> completion (<code>vertico</code>)</h3>
+<div class="outline-text-3" id="text-6-5">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">vertico</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
@@ -777,8 +763,8 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 </div>
 
 <div id="outline-container-org8562d88" class="outline-3">
-<h3 id="org8562d88"><span class="section-number-3">6.7.</span> Search everything (<code>consult</code>)</h3>
-<div class="outline-text-3" id="text-6-7">
+<h3 id="org8562d88"><span class="section-number-3">6.6.</span> Search everything (<code>consult</code>)</h3>
+<div class="outline-text-3" id="text-6-6">
 <p>
 Preview files, and search open buffers, recently opened files, bookmarks, &#x2026; all in one place
 </p>
@@ -795,8 +781,8 @@ Preview files, and search open buffers, recently opened files, bookmarks, &#x202
 </div>
 
 <div id="outline-container-org6b59148" class="outline-3">
-<h3 id="org6b59148"><span class="section-number-3">6.8.</span> Icons (<code>nerd-icons</code>)</h3>
-<div class="outline-text-3" id="text-6-8">
+<h3 id="org6b59148"><span class="section-number-3">6.7.</span> Icons (<code>nerd-icons</code>)</h3>
+<div class="outline-text-3" id="text-6-7">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t)
@@ -810,8 +796,8 @@ Preview files, and search open buffers, recently opened files, bookmarks, &#x202
 </div>
 
 <div id="outline-container-org0937df4" class="outline-3">
-<h3 id="org0937df4"><span class="section-number-3">6.9.</span> Custom modeline (<code>mini-echo-mode</code>)</h3>
-<div class="outline-text-3" id="text-6-9">
+<h3 id="org0937df4"><span class="section-number-3">6.8.</span> Custom modeline (<code>mini-echo-mode</code>)</h3>
+<div class="outline-text-3" id="text-6-8">
 <p>
 Another good alternative is <a href="https://github.com/gexplorer/simple-modeline"><code>simple-modeline</code></a>.
 </p>

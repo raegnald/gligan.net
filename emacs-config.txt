@@ -45,11 +45,10 @@ _________________
 .. 2. Auto close parentheses, brackets, et c. (`electric-pair-mode')
 .. 3. Ligatures
 .. 4. TODO, NOTE, FIXME, BUG, ... (`hl-todo')
-.. 5. Change names of modes (`delight')
-.. 6. Better `M-x' completion (`vertico')
-.. 7. Search everything (`consult')
-.. 8. Icons (`nerd-icons')
-.. 9. Custom modeline (`mini-echo-mode')
+.. 5. Better `M-x' completion (`vertico')
+.. 6. Search everything (`consult')
+.. 7. Icons (`nerd-icons')
+.. 8. Custom modeline (`mini-echo-mode')
 
 
 This is my vanilla Emacs literate configuration file. You can skim
@@ -313,8 +312,7 @@ prefix them by `M-g'.
   ,----
   | (use-package tuareg
   |   :ensure t
-  |   :defer t
-  |   :delight "🐫")
+  |   :defer t)
   | 
   | (use-package dune
   |   :ensure t
@@ -356,7 +354,6 @@ prefix them by `M-g'.
   | (use-package haskell-mode
   |   :ensure t
   |   :defer t
-  |   :delight "λ"
   |   :config)
   | 
   | (use-package flycheck-haskell
@@ -581,16 +578,7 @@ prefix them by `M-g'.
   `----
 
 
-6.5 Change names of modes (`delight')
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  ,----
-  | (use-package delight
-  |   :ensure t)
-  `----
-
-
-6.6 Better `M-x' completion (`vertico')
+6.5 Better `M-x' completion (`vertico')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   ,----
@@ -619,7 +607,7 @@ prefix them by `M-g'.
   `----
 
 
-6.7 Search everything (`consult')
+6.6 Search everything (`consult')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Preview files, and search open buffers, recently opened files,
@@ -634,7 +622,7 @@ prefix them by `M-g'.
   `----
 
 
-6.8 Icons (`nerd-icons')
+6.7 Icons (`nerd-icons')
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
   ,----
@@ -647,7 +635,7 @@ prefix them by `M-g'.
   `----
 
 
-6.9 Custom modeline (`mini-echo-mode')
+6.8 Custom modeline (`mini-echo-mode')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Another good alternative is [`simple-modeline'].
