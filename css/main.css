@@ -85,6 +85,25 @@ h4, h5, h6 {
   text-align: left;
 }
 
+.section-number-2, .section-number-3, .section-number-4 {
+  text-align: right;
+  position: absolute;
+  left: 50px;
+  width: calc(50vw - 600px);
+}
+
+.section-number-2 {
+  background: linear-gradient(to right, #fafafa, #fff);
+  padding-top: 10px;
+  margin-top: -10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.section-number-4 {
+  opacity: 0.6;
+}
+
 div {
   margin: 0px;
   padding: 0px;
@@ -155,6 +174,11 @@ a:active, a:focus, a:hover {
   #content, #preamble, #postamble {
     font-size: 24px;
     padding: 3em;
+  }
+
+  .section-number-2, .section-number-3, .section-number-4 {
+    position: initial;
+    margin-left: 0;
   }
 }
 
@@ -247,7 +271,7 @@ pre.example {
 
   #table-of-contents {
     position: absolute;
-    right: 2em;
+    right: 50px;
     width: calc((100vw - 38em) / 2 - 4*2em);
     text-align: left;
     display: block;
