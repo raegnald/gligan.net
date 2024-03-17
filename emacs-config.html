@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 00:41 -->
+<!-- 2024-03-17 Sun 01:14 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -55,9 +55,10 @@
 <li><a href="#org769bc86">5.3. <span class="todo TODO">TODO</span> Auto tangle (<code>org-auto-tangle</code>)</a></li>
 <li><a href="#orgf0d9013">5.4. Org modern (<code>org-modern</code>)</a></li>
 <li><a href="#org22bb4db">5.5. Zen mode (<code>olivetti</code>)</a></li>
-<li><a href="#orga29ed3d">5.6. Exporting</a>
+<li><a href="#orgd237f23">5.6. Proportional fonts (<code>mixed-pitch</code>)</a></li>
+<li><a href="#orga29ed3d">5.7. Exporting</a>
 <ul>
-<li><a href="#org505e7d1">5.6.1. to LaTeX</a></li>
+<li><a href="#org505e7d1">5.7.1. to LaTeX</a></li>
 </ul>
 </li>
 </ul>
@@ -81,14 +82,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org9d074eb">
+<div class="warning" id="orgb51d6fb">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org1f19039">
+<div class="note" id="org1bb00b5">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -97,6 +98,9 @@ You can have a raw version of this file <a href="https://gligan.net/init.el">her
 
 <hr>
 
+<p>
+These are the custom key bindings I have for my set-up. Notice I tend to prefix them by <code>M-g</code>.
+</p>
 
 <table>
 
@@ -124,11 +128,23 @@ You can have a raw version of this file <a href="https://gligan.net/init.el">her
 </tr>
 
 <tr>
+<td class="org-left"><code>M-g j j</code></td>
+<td class="org-left">Insert a new journal entry</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g j s</code></td>
+<td class="org-left">Search through my journal entries</td>
+</tr>
+
+<tr>
 <td class="org-left"><code>M-g o</code></td>
 <td class="org-left">Open buffer, recent file, bookmark, &#x2026;</td>
 </tr>
 </tbody>
 </table>
+
+<hr>
 
 <div id="outline-container-org23b112a" class="outline-2">
 <h2 id="org23b112a"><span class="section-number-2">1.</span> Personal</h2>
@@ -241,8 +257,13 @@ Insert today's date
 <div id="outline-container-org1613318" class="outline-3">
 <h3 id="org1613318"><span class="section-number-3">3.4.</span> Fonts</h3>
 <div class="outline-text-3" id="text-3-4">
+<p>
+<a href="https://github.com/protesilaos/iosevka-comfy">Iosevka Comfy</a>
+</p>
 <div class="org-src-container">
-<pre class="src src-elisp">(set-frame-font <span style="color: #2544bb;">"Iosevka 12"</span> nil t)
+<pre class="src src-elisp">(set-face-attribute 'default nil <span style="color: #8f0075;">:font</span> <span style="color: #2544bb;">"Iosevka Comfy Motion 12"</span>)
+(set-face-attribute 'fixed-pitch nil <span style="color: #8f0075;">:family</span> <span style="color: #2544bb;">"Iosevka Comfy Motion"</span> <span style="color: #8f0075;">:height</span> 1.0)
+(set-face-attribute 'variable-pitch nil <span style="color: #8f0075;">:family</span> <span style="color: #2544bb;">"Iosevka Comfy Motion Duo"</span> <span style="color: #8f0075;">:height</span> 1.0)
 </pre>
 </div>
 </div>
@@ -504,9 +525,10 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
   <span style="color: #8f0075;">:ensure</span> t
   <span style="color: #8f0075;">:config</span>
    (<span style="color: #5317ac;">setq</span> org-journal-date-format <span style="color: #2544bb;">"%A, %d %B %Y"</span>) <span style="color: #505050;">; </span><span style="color: #505050;">e.g. "Friday, 8 March 2024"</span>
-   (global-set-key (kbd <span style="color: #2544bb;">"M-g j"</span>) 'org-journal-new-entry))
+   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+   (global-set-key (kbd <span style="color: #2544bb;">"M-g j j"</span>) 'org-journal-new-entry)
+   (global-set-key (kbd <span style="color: #2544bb;">"M-g j s"</span>) 'org-journal-search-forever))
 </pre>
 </div>
 </div>
@@ -572,17 +594,29 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
 </div>
 </div>
 
-<div id="outline-container-orga29ed3d" class="outline-3">
-<h3 id="orga29ed3d"><span class="section-number-3">5.6.</span> Exporting</h3>
+<div id="outline-container-orgd237f23" class="outline-3">
+<h3 id="orgd237f23"><span class="section-number-3">5.6.</span> Proportional fonts (<code>mixed-pitch</code>)</h3>
 <div class="outline-text-3" id="text-5-6">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #5317ac;">use-package</span> <span style="color: #0000c0;">mixed-pitch</span>
+  <span style="color: #8f0075;">:ensure</span> t
+  <span style="color: #8f0075;">:hook</span> (text-mode . mixed-pitch-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga29ed3d" class="outline-3">
+<h3 id="orga29ed3d"><span class="section-number-3">5.7.</span> Exporting</h3>
+<div class="outline-text-3" id="text-5-7">
 </div>
 <div id="outline-container-org505e7d1" class="outline-4">
-<h4 id="org505e7d1"><span class="section-number-4">5.6.1.</span> to LaTeX</h4>
-<div class="outline-text-4" id="text-5-6-1">
+<h4 id="org505e7d1"><span class="section-number-4">5.7.1.</span> to LaTeX</h4>
+<div class="outline-text-4" id="text-5-7-1">
 </div>
 <ol class="org-ol">
 <li><a id="orgbb18759"></a><span class="todo TODO">TODO</span> A4 paper size<br>
-<div class="outline-text-5" id="text-5-6-1-1">
+<div class="outline-text-5" id="text-5-7-1-1">
 <p>
 Why should I export my documents on inferior paper dimensions? (I like to have <img src="/emacs-config_226506ef330eddcaabcee3ba852ece4addaa6126.svg" alt="emacs-config_226506ef330eddcaabcee3ba852ece4addaa6126.svg" class="org-svg"> around, you know)
 </p>
@@ -593,7 +627,7 @@ Why should I export my documents on inferior paper dimensions? (I like to have <
 </div>
 </li>
 <li><a id="org8547683"></a>Syntax highlighting with <code>minted</code><br>
-<div class="outline-text-5" id="text-5-6-1-2">
+<div class="outline-text-5" id="text-5-7-1-2">
 <p>
 Minted is a LaTeX package that adds syntax highlighting to code blocks.
 </p>

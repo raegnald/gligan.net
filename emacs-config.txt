@@ -36,7 +36,8 @@ _________________
 .. 3. TODO Auto tangle (`org-auto-tangle')
 .. 4. Org modern (`org-modern')
 .. 5. Zen mode (`olivetti')
-.. 6. Exporting
+.. 6. Proportional fonts (`mixed-pitch')
+.. 7. Exporting
 ..... 1. to LaTeX
 6. Nicities
 .. 1. Save the session
@@ -61,12 +62,18 @@ You can have a raw version of this file [here] (`init.el').
 
 ------------------------------------------------------------------------
 
+These are the custom key bindings I have for my set-up. Notice I tend to
+prefix them by `M-g'.
 
  Key binding  Function                                                            
 ----------------------------------------------------------------------------------
  `M-g t'      Toggles between themes `gligan/dark-theme' and `gligan/light-theme' 
  `M-g d'      Inputs the current date                                             
+ `M-g j j'    Insert a new journal entry                                          
+ `M-g j s'    Search through my journal entries                                   
  `M-g o'      Open buffer, recent file, bookmark, ...                             
+
+------------------------------------------------------------------------
 
 
 [here] <https://gligan.net/init.el>
@@ -163,9 +170,15 @@ You can have a raw version of this file [here] (`init.el').
 3.4 Fonts
 ~~~~~~~~~
 
+  [Iosevka Comfy]
   ,----
-  | (set-frame-font "Iosevka 12" nil t)
+  | (set-face-attribute 'default nil :font "Iosevka Comfy Motion 12")
+  | (set-face-attribute 'fixed-pitch nil :family "Iosevka Comfy Motion" :height 1.0)
+  | (set-face-attribute 'variable-pitch nil :family "Iosevka Comfy Motion Duo" :height 1.0)
   `----
+
+
+[Iosevka Comfy] <https://github.com/protesilaos/iosevka-comfy>
 
 
 3.5 Theme
@@ -401,9 +414,10 @@ You can have a raw version of this file [here] (`init.el').
   |   :ensure t
   |   :config
   |    (setq org-journal-date-format "%A, %d %B %Y") ; e.g. "Friday, 8 March 2024"
-  |    (global-set-key (kbd "M-g j") 'org-journal-new-entry))
+  |    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
   | 
-  | (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  |    (global-set-key (kbd "M-g j j") 'org-journal-new-entry)
+  |    (global-set-key (kbd "M-g j s") 'org-journal-search-forever))
   `----
 
 
@@ -457,13 +471,23 @@ You can have a raw version of this file [here] (`init.el').
   `----
 
 
-5.6 Exporting
+5.6 Proportional fonts (`mixed-pitch')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package mixed-pitch
+  |   :ensure t
+  |   :hook (text-mode . mixed-pitch-mode))
+  `----
+
+
+5.7 Exporting
 ~~~~~~~~~~~~~
 
-5.6.1 to LaTeX
+5.7.1 to LaTeX
 --------------
 
-* 5.6.1.1 TODO A4 paper size
+* 5.7.1.1 TODO A4 paper size
 
   Why should I export my documents on inferior paper dimensions? (I like
   to have $\sqrt 2$ around, you know)
@@ -472,7 +496,7 @@ You can have a raw version of this file [here] (`init.el').
   `----
 
 
-* 5.6.1.2 Syntax highlighting with `minted'
+* 5.7.1.2 Syntax highlighting with `minted'
 
   Minted is a LaTeX package that adds syntax highlighting to code
   blocks.
