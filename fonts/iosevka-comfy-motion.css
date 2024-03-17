@@ -1,0 +1,140 @@
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Bold'), local('Iosevka-Comfy-Motion-Bold'),
+        url('Iosevka-Comfy-Motion-Bold.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Extrabold'), local('Iosevka-Comfy-Motion-Extrabold'),
+        url('Iosevka-Comfy-Motion-Extrabold.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Extrabold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Bold Italic'), local('Iosevka-Comfy-Motion-Bold-Italic'),
+        url('Iosevka-Comfy-Motion-Bold-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Bold-Italic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Extrabold Italic'), local('Iosevka-Comfy-Motion-Extrabold-Italic'),
+        url('Iosevka-Comfy-Motion-Extrabold-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Extrabold-Italic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Light'), local('Iosevka-Comfy-Motion-Light'),
+        url('Iosevka-Comfy-Motion-Light.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Italic'), local('Iosevka-Comfy-Motion-Italic'),
+        url('Iosevka-Comfy-Motion-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Light Italic'), local('Iosevka-Comfy-Motion-Light-Italic'),
+        url('Iosevka-Comfy-Motion-Light-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Light-Italic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Medium Italic'), local('Iosevka-Comfy-Motion-Medium-Italic'),
+        url('Iosevka-Comfy-Motion-Medium-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Medium-Italic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Medium'), local('Iosevka-Comfy-Motion-Medium'),
+        url('Iosevka-Comfy-Motion-Medium.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion'), local('Iosevka-Comfy-Motion'),
+        url('Iosevka-Comfy-Motion.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Semibold'), local('Iosevka-Comfy-Motion-Semibold'),
+        url('Iosevka-Comfy-Motion-Semibold.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Semibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion SemiLight';
+    src: local('Iosevka Comfy Motion SemiLight'), local('Iosevka-Comfy-Motion-SemiLight'),
+        url('Iosevka-Comfy-Motion-SemiLight.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-SemiLight.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion';
+    src: local('Iosevka Comfy Motion Semibold Italic'), local('Iosevka-Comfy-Motion-Semibold-Italic'),
+        url('Iosevka-Comfy-Motion-Semibold-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-Semibold-Italic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Comfy Motion SemiLight';
+    src: local('Iosevka Comfy Motion SemiLight Italic'), local('Iosevka-Comfy-Motion-SemiLight-Italic'),
+        url('Iosevka-Comfy-Motion-SemiLight-Italic.woff2') format('woff2'),
+        url('Iosevka-Comfy-Motion-SemiLight-Italic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+

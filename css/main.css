@@ -1,9 +1,6 @@
 
-/* TODO Use CSS variables
-   https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
-
 @import url('/fonts/linux-biolinum.css');
-@import url('/fonts/iosevka.css');
+@import url('/fonts/iosevka-comfy-motion.css');
 
 :root {
   --distant-bg: #fafafa;
@@ -13,7 +10,7 @@
   --content-text-size: 22px;
   --content-code-size: 16px;
   --text-font: 'Linux Biolinum', sans-serif;
-  --code-font: 'Iosevka Web', Iosevka, monospaced;
+  --code-font: 'Iosevka Comfy Motion', 'Iosevka Web', Iosevka, monospaced;
   
   --content-width: 836px;
   --content-padding: 88px;
@@ -23,7 +20,7 @@
   --accent-cl-2: #D0343F;
 }
 
-::-moz-selection, ::selection { /* Code for Firefox */
+::-moz-selection, ::selection {
   color: white;
   background: var(--accent-cl-1);
 }
@@ -50,8 +47,6 @@ body {
   margin: 0 auto;
   max-width: var(--content-width);
 }
-
-#preamble, #postamble {}
 
 #preamble {
   background: linear-gradient(to bottom, var(--distant-bg), var(--content-bg));
@@ -244,7 +239,7 @@ a:active, a:focus, a:hover {
 }
 
 pre, code {
-  font-family: 'Iosevka', 'Iosevka Web', monospace;
+  font-family: var(--code-font);
 }
 
 code {
@@ -409,7 +404,7 @@ hr {
 }
 
 .todo, .TODO {
-  font-family: Iosevka Web;
+  font-family: var(--code-font);
   font-size: 75%;
   background: #ffb5b5;
   padding: 2px 7px;
