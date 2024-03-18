@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-17 Sun 14:54 -->
+<!-- 2024-03-18 Mon 01:11 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -25,7 +25,11 @@
 <li><a href="#orgf79b733">2. Packages</a></li>
 <li><a href="#org349fd95">3. Emacs window</a>
 <ul>
-<li><a href="#org2430575">3.1. Early</a></li>
+<li><a href="#org2430575">3.1. Early</a>
+<ul>
+<li><a href="#orgcbf3837">3.1.1. GC trick</a></li>
+</ul>
+</li>
 <li><a href="#org5298f32">3.2. Main window properties</a></li>
 <li><a href="#orga1622ac">3.3. Modeline</a></li>
 <li><a href="#org1613318">3.4. Fonts</a></li>
@@ -83,14 +87,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org0fd5c72">
+<div class="warning" id="orgceee52d">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org89b80ae">
+<div class="note" id="org94ce37e">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -159,6 +163,23 @@ These are the custom key bindings I have for my set-up. Notice I tend to prefix 
 </tbody>
 </table>
 
+
+<ul class="org-ul">
+<li><p>
+Performance
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(format <span style="color: #ca3400;">"%s with %d collections"</span>
+     (format <span style="color: #ca3400;">"%.2f seconds"</span>
+             (float-time
+              (time-subtract after-init-time before-init-time)))
+     gcs-done)
+</pre>
+</div></li>
+</ul>
+
+
+
 <hr>
 
 <div id="outline-container-org23b112a" class="outline-2">
@@ -219,7 +240,19 @@ Insert today's date <a id="org24ff5b4"></a>
 </pre>
 </div>
 </div>
+
+<div id="outline-container-orgcbf3837" class="outline-4">
+<h4 id="orgcbf3837"><span class="section-number-4">3.1.1.</span> GC trick</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> gc-cons-threshold 32000000
+      gc-cons-percentage 0.6)
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org5298f32" class="outline-3">
 <h3 id="org5298f32"><span class="section-number-3">3.2.</span> Main window properties</h3>
@@ -254,8 +287,14 @@ Insert today's date <a id="org24ff5b4"></a>
 (<span style="color: #006f00; font-weight: bold;">setq</span> auto-save-default t
       make-backup-files t)
 
+(<span style="color: #006f00; font-weight: bold;">setq</span> backup-directory-alist '((<span style="color: #ca3400;">"."</span> . <span style="color: #ca3400;">"~/.emacs.d/backup"</span>)))
+
 (<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">display-startup-echo-area-message</span> ()
-  (message (emacs-init-time)))
+  (message <span style="color: #ca3400;">"%s with %d collections"</span>
+       (format <span style="color: #ca3400;">"%.2f seconds"</span>
+               (float-time
+                (time-subtract after-init-time before-init-time)))
+       gcs-done))
 </pre>
 </div>
 </div>
@@ -551,12 +590,15 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> journal-dir <span style="color: #ca3400;">"~/org/journal/"</span>)
 (<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">org-journal</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:bind</span> ((<span style="color: #ca3400;">"M-g j j"</span> . 'org-journal-new-entry)
+         (<span style="color: #ca3400;">"M-g j s"</span> . 'org-journal-search-forever))
   <span style="color: #557400; font-weight: bold;">:config</span>
    (<span style="color: #006f00; font-weight: bold;">setq</span> org-journal-date-format <span style="color: #ca3400;">"%A, %d %B %Y"</span>) <span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">e.g. "Friday, 8 March 2024"</span>
    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
-   (global-set-key (kbd <span style="color: #ca3400;">"M-g j j"</span>) 'org-journal-new-entry)
-   (global-set-key (kbd <span style="color: #ca3400;">"M-g j s"</span>) 'org-journal-search-forever))
+   <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(global-set-key (kbd "M-g j j") 'org-journal-new-entry)</span>
+   <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(global-set-key (kbd "M-g j s") 'org-journal-search-forever)</span>
+   )
 </pre>
 </div>
 </div>
@@ -779,10 +821,13 @@ Preview files, and search open buffers, recently opened files, bookmarks, &#x202
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">consult</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:bind</span> ((<span style="color: #ca3400;">"M-g o"</span> . 'consult-buffer)
+         (<span style="color: #ca3400;">"M-g s"</span> . 'consult-line-multi))
   <span style="color: #557400; font-weight: bold;">:config</span>
   (recentf-mode)
-  (global-set-key (kbd <span style="color: #ca3400;">"M-g o"</span>) 'consult-buffer)
-  (global-set-key (kbd <span style="color: #ca3400;">"M-g s"</span>) 'consult-line-multi))
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(global-set-key (kbd "M-g o") 'consult-buffer)</span>
+  <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">(global-set-key (kbd "M-g s") 'consult-line-multi)</span>
+  )
 </pre>
 </div>
 </div>

@@ -16,6 +16,7 @@ _________________
 2. Packages
 3. Emacs window
 .. 1. Early
+..... 1. GC trick
 .. 2. Main window properties
 .. 3. Modeline
 .. 4. Fonts
@@ -75,6 +76,18 @@ prefix them by `M-g'.
  `M-g o'      Open buffer, recent file, bookmark, ...                             [here]  
  `M-g s'      Search for a string in open buffers                                 [here]  
 
+
+- Performance
+  ,----
+  | (format "%s with %d collections"
+  |      (format "%.2f seconds"
+  |              (float-time
+  |               (time-subtract after-init-time before-init-time)))
+  |      gcs-done)
+  `----
+
+
+
 ------------------------------------------------------------------------
 
 
@@ -133,6 +146,15 @@ prefix them by `M-g'.
   `----
 
 
+3.1.1 GC trick
+--------------
+
+  ,----
+  | (setq gc-cons-threshold 32000000
+  |       gc-cons-percentage 0.6)
+  `----
+
+
 3.2 Main window properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -166,8 +188,14 @@ prefix them by `M-g'.
   | (setq auto-save-default t
   |       make-backup-files t)
   | 
+  | (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+  | 
   | (defun display-startup-echo-area-message ()
-  |   (message (emacs-init-time)))
+  |   (message "%s with %d collections"
+  |        (format "%.2f seconds"
+  |                (float-time
+  |                 (time-subtract after-init-time before-init-time)))
+  |        gcs-done))
   `----
 
 
@@ -435,12 +463,15 @@ prefix them by `M-g'.
   | (setq journal-dir "~/org/journal/")
   | (use-package org-journal
   |   :ensure t
+  |   :bind (("M-g j j" . 'org-journal-new-entry)
+  |          ("M-g j s" . 'org-journal-search-forever))
   |   :config
   |    (setq org-journal-date-format "%A, %d %B %Y") ; e.g. "Friday, 8 March 2024"
   |    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
   | 
-  |    (global-set-key (kbd "M-g j j") 'org-journal-new-entry)
-  |    (global-set-key (kbd "M-g j s") 'org-journal-search-forever))
+  |    ;; (global-set-key (kbd "M-g j j") 'org-journal-new-entry)
+  |    ;; (global-set-key (kbd "M-g j s") 'org-journal-search-forever)
+  |    )
   `----
 
 
@@ -622,10 +653,13 @@ prefix them by `M-g'.
   ,----
   | (use-package consult
   |   :ensure t
+  |   :bind (("M-g o" . 'consult-buffer)
+  |          ("M-g s" . 'consult-line-multi))
   |   :config
   |   (recentf-mode)
-  |   (global-set-key (kbd "M-g o") 'consult-buffer)
-  |   (global-set-key (kbd "M-g s") 'consult-line-multi))
+  |   ;; (global-set-key (kbd "M-g o") 'consult-buffer)
+  |   ;; (global-set-key (kbd "M-g s") 'consult-line-multi)
+  |   )
   `----
 
 
