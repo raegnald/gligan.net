@@ -77,7 +77,10 @@ prefix them by `M-g'.
  `M-g s'      Search for a string in open buffers                                 [here]  
 
 
-- Performance
+Thinks I like about my Emacs
+
+- It's mine, it's tailored for my needs.
+- Performance: look how fast my Emacs is!
   ,----
   | (format "%s with %d collections"
   |      (format "%.2f seconds"
@@ -89,6 +92,10 @@ prefix them by `M-g'.
 
 
 ------------------------------------------------------------------------
+
+,----
+| (setq gc-cons-threshold (* 50 1000 1000))
+`----
 
 
 [here] <https://gligan.net/init.el>
