@@ -310,6 +310,10 @@ pre.example::before {
     transition: all .2s ease-in-out;
   }
 
+  #table-of-contents * {
+    list-style-type: none;
+  }
+
   #table-of-contents > h2 {
     margin: 0;
   }
@@ -322,6 +326,9 @@ pre.example::before {
     outline-width: 1px;
   }
 
+  #text-table-of-contents > ul {
+    padding-left: 0;
+  }
   
   .section-number-2, .section-number-3, .section-number-4 {
     text-align: right;
