@@ -174,10 +174,10 @@ a, a:link {
   text-decoration: none;
 }
 
-a:visited {
-  color: var(--accent-cl-2);
-  text-decoration: none;
-}
+/* a:visited { */
+/*   color: var(--accent-cl-2); */
+/*   text-decoration: none; */
+/* } */
 
 a:active, a:focus, a:hover {
   color: var(--accent-cl-2);
