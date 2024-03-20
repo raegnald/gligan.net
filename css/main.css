@@ -169,7 +169,7 @@ dt {
   padding-right: 22px;
 }
 
-a:link,  {
+a, a:link {
   color: var(--accent-cl-1);
   text-decoration: none;
 }
