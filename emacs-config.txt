@@ -50,6 +50,7 @@ _________________
 .. 6. Search everything (`consult')
 .. 7. Icons (`nerd-icons')
 .. 8. Custom modeline (`mini-echo-mode')
+.. 9. `which-key'
 
 
 This is my vanilla Emacs literate configuration file. You can skim
@@ -700,3 +701,14 @@ Thinks I like about my Emacs
 
 
 [`simple-modeline'] <https://github.com/gexplorer/simple-modeline>
+
+
+6.9 `which-key'
+~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package which-key
+  |   :ensure t
+  |   :config
+  |   (which-key-mode))
+  `----

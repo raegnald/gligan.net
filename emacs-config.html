@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-20 Wed 01:02 -->
+<!-- 2024-03-20 Wed 19:28 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -78,6 +78,7 @@
 <li><a href="#org55176d1">6.6. Search everything (<code>consult</code>) </a></li>
 <li><a href="#org6b59148">6.7. Icons (<code>nerd-icons</code>)</a></li>
 <li><a href="#org0937df4">6.8. Custom modeline (<code>mini-echo-mode</code>)</a></li>
+<li><a href="#orgd053923">6.9. <code>which-key</code></a></li>
 </ul>
 </li>
 </ul>
@@ -87,14 +88,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="orgcc15984">
+<div class="warning" id="orgadab1c2">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org144dc3b">
+<div class="note" id="org9293bbd">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -874,6 +875,19 @@ Another good alternative is <a href="https://github.com/gexplorer/simple-modelin
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">mini-echo</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
   <span style="color: #557400; font-weight: bold;">:hook</span> (after-init . mini-echo-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd053923" class="outline-3">
+<h3 id="orgd053923"><span class="section-number-3">6.9.</span> <code>which-key</code></h3>
+<div class="outline-text-3" id="text-6-9">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">which-key</span>
+  <span style="color: #557400; font-weight: bold;">:ensure</span> t
+  <span style="color: #557400; font-weight: bold;">:config</span>
+  (which-key-mode))
 </pre>
 </div>
 </div>
