@@ -25,6 +25,10 @@
   background: var(--accent-cl-1);
 }
 
+:target {
+  border-bottom: 3px dashed var(--accent-cl-1);
+}
+
 html, body  {
   border: 0px;
   padding: 0px;
@@ -165,13 +169,18 @@ dt {
   padding-right: 22px;
 }
 
-a:link, a:visited {
-  color: #805020;
+a:link,  {
+  color: var(--accent-cl-1);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--accent-cl-2);
   text-decoration: none;
 }
 
 a:active, a:focus, a:hover {
-  color: #D0343F;
+  color: var(--accent-cl-2);
   text-decoration: underline;
 }
 

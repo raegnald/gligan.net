@@ -150,6 +150,12 @@ Thinks I like about my Emacs
   | (menu-bar-mode -1)
   | (tool-bar-mode -1)
   | (scroll-bar-mode -1)
+  | 
+  | ;; Maximise window at start up
+  | (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+  | 
+  | ;; No window decorations
+  | (add-to-list 'default-frame-alist '(undecorated . t))
   `----
 
 
@@ -167,14 +173,8 @@ Thinks I like about my Emacs
 
   ,----
   | 
-  | ;; Maximise window at start up
-  | (add-hook 'window-setup-hook 'toggle-frame-maximized t)
-  | 
   | ;; Window transparency
   | (set-frame-parameter (selected-frame) 'alpha-background 95)
-  | 
-  | ;; No window decorations
-  | (add-to-list 'default-frame-alist '(undecorated . t))
   | 
   | ;; Use two spaces
   | (setq-default tab-width 2)
@@ -235,6 +235,11 @@ Thinks I like about my Emacs
   ,----
   | (use-package ef-themes
   |   :ensure t)
+  `----
+
+  ,----
+  | ;; Declare all themes as safe. That way, Emacs won't ask the user if it's okay to load a theme
+  | (setq custom-safe-themes t)
   | 
   | (setq gligan/dark-theme 'monokate)
   | (setq gligan/light-theme 'ef-cyprus); 'modus-operandi

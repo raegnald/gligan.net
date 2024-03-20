@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-18 Mon 01:21 -->
+<!-- 2024-03-20 Wed 01:02 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -87,14 +87,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="orgd3c8cf7">
+<div class="warning" id="orgcc15984">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org1dd9f77">
+<div class="note" id="org144dc3b">
 <p>
 You can have a raw version of this file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -247,6 +247,12 @@ Insert today's date <a id="org24ff5b4"></a>
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Maximise window at start up</span>
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+
+<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">No window decorations</span>
+(add-to-list 'default-frame-alist '(undecorated . t))
 </pre>
 </div>
 </div>
@@ -269,14 +275,8 @@ Insert today's date <a id="org24ff5b4"></a>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-elisp">
-<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Maximise window at start up</span>
-(add-hook 'window-setup-hook 'toggle-frame-maximized t)
-
 <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Window transparency</span>
 (set-frame-parameter (selected-frame) 'alpha-background 95)
-
-<span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">No window decorations</span>
-(add-to-list 'default-frame-alist '(undecorated . t))
 
 <span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Use two spaces</span>
 (<span style="color: #006f00; font-weight: bold;">setq-default</span> tab-width 2)
@@ -342,6 +342,12 @@ Insert today's date <a id="org24ff5b4"></a>
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">ef-themes</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #8f6f4a; font-style: italic;">;; </span><span style="color: #8f6f4a; font-style: italic;">Declare all themes as safe. That way, Emacs won't ask the user if it's okay to load a theme</span>
+(<span style="color: #006f00; font-weight: bold;">setq</span> custom-safe-themes t)
 
 (<span style="color: #006f00; font-weight: bold;">setq</span> gligan/dark-theme 'monokate)
 (<span style="color: #006f00; font-weight: bold;">setq</span> gligan/light-theme 'ef-cyprus)<span style="color: #8f6f4a; font-style: italic;">; </span><span style="color: #8f6f4a; font-style: italic;">'modus-operandi</span>
