@@ -1,9 +1,6 @@
 
-/* TODO Use CSS variables
-   https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
-
 @import url('/fonts/linux-biolinum.css');
-@import url('/fonts/iosevka.css');
+@import url('/fonts/iosevka-comfy-motion.css');
 
 :root {
   --distant-bg: #fafafa;
@@ -13,7 +10,7 @@
   --content-text-size: 22px;
   --content-code-size: 16px;
   --text-font: 'Linux Biolinum', sans-serif;
-  --code-font: 'Iosevka Web', Iosevka, monospaced;
+  --code-font: 'Iosevka Comfy Motion', 'Iosevka Web', Iosevka, monospaced;
   
   --content-width: 836px;
   --content-padding: 88px;
@@ -23,9 +20,13 @@
   --accent-cl-2: #D0343F;
 }
 
-::-moz-selection, ::selection { /* Code for Firefox */
+::-moz-selection, ::selection {
   color: white;
   background: var(--accent-cl-1);
+}
+
+:target {
+  border-bottom: 3px dashed var(--accent-cl-1);
 }
 
 html, body  {
@@ -51,14 +52,12 @@ body {
   max-width: var(--content-width);
 }
 
-#preamble, #postamble {}
-
 #preamble {
-  background: linear-gradient(to bottom, var(--distant-bg), var(--content-bg));
+  background: linear-gradient(var(--distant-bg), var(--content-bg));
 }
 
 #postamble {
-  background: linear-gradient(to bottom, var(--content-bg), var(--distant-bg));
+  background: linear-gradient(to top, var(--distant-bg), var(--content-bg));
 }
 
 #content {
@@ -113,24 +112,6 @@ h4, h5, h6 {
   text-align: left;
 }
 
-.section-number-2, .section-number-3, .section-number-4 {
-  text-align: right;
-  position: absolute;
-  left: 0;
-  width: calc(50vw - var(--content-width) / 2 - 1.5 * var(--content-padding));
-}
-
-.section-number-2 {
-  background: linear-gradient(to right, var(--distant-bg), var(--content-bg));
-  padding-top: 10px;
-  margin-top: -10px;
-  padding-bottom: 10px;
-  padding-right: calc(0.5 * var(--content-padding));
-}
-
-.section-number-4 {
-  opacity: 0.6;
-}
 
 div {
   margin: 0px;
@@ -188,13 +169,18 @@ dt {
   padding-right: 22px;
 }
 
-a:link, a:visited {
-  color: #805020;
+a, a:link {
+  color: var(--accent-cl-1);
   text-decoration: none;
 }
 
+/* a:visited { */
+/*   color: var(--accent-cl-2); */
+/*   text-decoration: none; */
+/* } */
+
 a:active, a:focus, a:hover {
-  color: #D0343F;
+  color: var(--accent-cl-2);
   text-decoration: underline;
 }
 
@@ -244,7 +230,7 @@ a:active, a:focus, a:hover {
 }
 
 pre, code {
-  font-family: 'Iosevka', 'Iosevka Web', monospace;
+  font-family: var(--code-font);
 }
 
 code {
@@ -314,8 +300,18 @@ pre.example::before {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    padding: 15px;
+    margin-top: -15px;
+    margin-right: -15px;
+    outline-width: 0;
+    outline-style: solid;
+    outline-color: #d9d9d9;
     z-index: 1;
     transition: all .2s ease-in-out;
+  }
+
+  #table-of-contents * {
+    list-style-type: none;
   }
 
   #table-of-contents > h2 {
@@ -327,17 +323,34 @@ pre.example::before {
     background: white;
     overflow: visible;
     white-space: normal;
-    padding: 15px;
-    margin-top: -15px;
-    margin-right: -15px;
-    border: 1px solid #d9d9d9;
-    box-shadow: 10px 10px  rgba(0, 0, 0, .25);
+    outline-width: 1px;
   }
 
+  #text-table-of-contents > ul {
+    padding-left: 0;
+  }
+  
+  .section-number-2, .section-number-3, .section-number-4 {
+    text-align: right;
+    position: absolute;
+    left: 0;
+    width: calc(50vw - var(--content-width) / 2 - 1.5 * var(--content-padding));
+  }
+
+  .section-number-2 {
+    background: linear-gradient(to right, var(--distant-bg), var(--content-bg));
+    padding-top: 10px;
+    margin-top: -10px;
+    padding-bottom: 10px;
+    padding-right: calc(0.5 * var(--content-padding));
+  }
+}
+
+.section-number-4 {
+  opacity: 0.6;
 }
 
 table {
-  max-width: 100% !important;
   margin: 8px -15px;
   border: 1px solid #d9d9d9;
 }
@@ -409,7 +422,7 @@ hr {
 }
 
 .todo, .TODO {
-  font-family: Iosevka Web;
+  font-family: var(--code-font);
   font-size: 75%;
   background: #ffb5b5;
   padding: 2px 7px;

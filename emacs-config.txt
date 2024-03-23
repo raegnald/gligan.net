@@ -49,8 +49,9 @@ _________________
 .. 5. Better `M-x' completion (`vertico')
 .. 6. Search everything (`consult')
 .. 7. Icons (`nerd-icons')
-.. 8. Custom modeline (`mini-echo-mode')
-.. 9. `which-key'
+.. 8. `which-key'
+.. 9. `keycast'
+.. 10. TODO Open a terminal emulator
 
 
 This is my vanilla Emacs literate configuration file. You can skim
@@ -68,20 +69,23 @@ You can have a raw version of my configuration file [here] (`init.el').
 These are the custom key bindings I have for my set-up. Notice I tend to
 prefix them by `M-g'.
 
- Key binding  Function                                                            Defined 
-------------------------------------------------------------------------------------------
- `M-g t'      Toggle between themes `gligan/dark-theme' and `gligan/light-theme'  [here]  
- `M-g d'      Input the current date                                              [here]  
- `M-g j j'    Insert a new journal entry                                          [here]  
- `M-g j s'    Search through my journal entries                                   [here]  
- `M-g o'      Open buffer, recent file, bookmark, ...                             [here]  
- `M-g s'      Search for a string in open buffers                                 [here]  
+ Key binding  Function                                                                                                                        Defined 
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ `M-g t t'    Toggle between themes `gligan/dark-theme' and `gligan/light-theme'                                                              [here]  
+ `M-g t k'    Toggle `keycast-mode-line-mode'. Beware that the package `keycast' must be installed manually, as my config does not ensure it  [here]  
+ `M-g e'      Open a terminal emulator. Order: `vterm', `eshell', `term'                                                                      [here]  
+ `M-g d'      Input the current date                                                                                                          [here]  
+ `M-g j j'    Insert a new journal entry                                                                                                      [here]  
+ `M-g j s'    Search through my journal entries                                                                                               [here]  
+ `M-g o'      Open buffer, recent file, bookmark, ...                                                                                         [here]  
+ `M-g s'      Search for a string in open buffers                                                                                             [here]  
 
 
 Things I like about my Emacs
 
 - It's mine, it's tailored for my needs.
 - Performance: look how fast my Emacs is!
+
   ,----
   | (format "%s with %d collections"
   |      (format "%.2f seconds"
@@ -89,10 +93,6 @@ Things I like about my Emacs
   |               (time-subtract after-init-time before-init-time)))
   |      gcs-done)
   `----
-  ,----
-  | 1.18 seconds with 9 collections
-  `----
-
 
 
 ------------------------------------------------------------------------
@@ -101,14 +101,14 @@ Things I like about my Emacs
 | (setq gc-cons-threshold (* 50 1000 1000))
 `----
 
-,----
-| 50000000
-`----
-
 
 [here] <https://gligan.net/init.el>
 
 [here] See section 3.5
+
+[here] See section 6.9
+
+[here] See section 6.10
 
 [here] See figure (2)
 
@@ -125,20 +125,11 @@ Things I like about my Emacs
     | (setq user-full-name "Ronaldo Gligan"
     |       user-mail-address "ronaldogligan@outlook.com")
     `----
-
-    ,----
-    | ronaldogligan@outlook.com
-    `----
-
   - Insert today's date
     ,----
     | (defun gligan/today () (interactive) 
     |  (insert (format-time-string "%Y-%m-%d")))
     | (global-set-key (kbd "M-g d") 'gligan/today)
-    `----
-
-    ,----
-    | gligan/today
     `----
 
 
@@ -175,10 +166,6 @@ Things I like about my Emacs
   | (add-to-list 'default-frame-alist '(undecorated . t))
   `----
 
-  ,----
-  | ((right-divider-width . 1) (bottom-divider-width . 1) (undecorated . t) (vertical-scroll-bars))
-  `----
-
 
 3.1.1 GC trick
 --------------
@@ -186,10 +173,6 @@ Things I like about my Emacs
   ,----
   | (setq gc-cons-threshold 32000000
   |       gc-cons-percentage 0.6)
-  `----
-
-  ,----
-  | 0.6
   `----
 
 
@@ -230,10 +213,6 @@ Things I like about my Emacs
   |        gcs-done))
   `----
 
-  ,----
-  | display-startup-echo-area-message
-  `----
-
 
 3.3 Modeline
 ~~~~~~~~~~~~
@@ -241,10 +220,6 @@ Things I like about my Emacs
   ,----
   | ;; Show line and column
   | (column-number-mode 1)
-  `----
-
-  ,----
-  | t
   `----
 
 
@@ -298,11 +273,7 @@ Things I like about my Emacs
   |     (gligan/toggle-theme)
   |     (load-theme gligan/current-theme t)))
   | 
-  | (global-set-key (kbd "M-g t") 'gligan/toggle-theme)
-  `----
-
-  ,----
-  | gligan/toggle-theme
+  | (global-set-key (kbd "M-g t t") 'gligan/toggle-theme)
   `----
 
 
@@ -389,8 +360,6 @@ Things I like about my Emacs
   |   ; (setq lsp-idle-delay 0.500)
   |   (lsp-completion-provider :capf))
   `----
-
-   lsp-modeline-diagnostics-mode 
 
 
 4.2 OCaml
@@ -506,10 +475,6 @@ Things I like about my Emacs
   | (setq org-preview-latex-default-process 'dvipng)
   `----
 
-  ,----
-  | dvipng
-  `----
-
 
 5.1 `org-journal'
 ~~~~~~~~~~~~~~~~~
@@ -529,10 +494,6 @@ Things I like about my Emacs
   |    )
   `----
 
-  ,----
-  | org-journal-search-forever
-  `----
-
 
 5.2 Skeletons for `org-mode'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -545,10 +506,6 @@ Things I like about my Emacs
   |                      ;; "#+EMAIL: " user-mail-address "\n"
   |                      "#+date: " (format-time-string "%Y-%m-%d") "\n"
   |                      "#+setupfile: blog.config")
-  `----
-
-  ,----
-  | org-header-skeleton
   `----
 
 
@@ -565,8 +522,6 @@ Things I like about my Emacs
   |   (setq org-auto-tangle-default t))
   `----
 
-   #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2]  org-auto-tangle-mode  olivetti-mode  org-modern-mode  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]  org-babel-result-hide-spec  org-babel-hide-all-hashes 
-
 
 5.4 Org modern (`org-modern')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -578,8 +533,6 @@ Things I like about my Emacs
   |   :hook (org-mode . org-modern-mode))
   `----
 
-   #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2]  org-auto-tangle-mode  olivetti-mode  org-modern-mode  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]  org-babel-result-hide-spec  org-babel-hide-all-hashes 
-
 
 5.5 Zen mode (`olivetti')
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -590,8 +543,6 @@ Things I like about my Emacs
   |   :defer t
   |   :hook (org-mode . olivetti-mode))
   `----
-
-   #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2]  org-auto-tangle-mode  olivetti-mode  org-modern-mode  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]  #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]  org-babel-result-hide-spec  org-babel-hide-all-hashes 
 
 
 5.6 Big document titles
@@ -611,8 +562,6 @@ Things I like about my Emacs
   |   :ensure t
   |   :hook (text-mode . mixed-pitch-mode))
   `----
-
-   mixed-pitch-mode  text-mode-hook-identify 
 
 
 5.8 Exporting
@@ -642,8 +591,6 @@ Things I like about my Emacs
   |         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
   `----
 
-   pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f  pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f 
-
 
 6 Nicities
 ==========
@@ -663,10 +610,6 @@ Things I like about my Emacs
   | (electric-pair-mode 1)
   `----
 
-  ,----
-  | t
-  `----
-
 
 6.3 Ligatures
 ~~~~~~~~~~~~~
@@ -681,10 +624,6 @@ Things I like about my Emacs
   |   (global-ligature-mode t))
   `----
 
-  ,----
-  | t
-  `----
-
 
 6.4 TODO, NOTE, FIXME, BUG, ... (`hl-todo')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -694,10 +633,6 @@ Things I like about my Emacs
   |   :ensure t
   |   :config
   |   (global-hl-todo-mode 1))
-  `----
-
-  ,----
-  | t
   `----
 
 
@@ -729,10 +664,6 @@ Things I like about my Emacs
   |   (marginalia-mode))
   `----
 
-  ,----
-  | t
-  `----
-
 
 6.6 Search everything (`consult')
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -751,10 +682,6 @@ Things I like about my Emacs
   |   )
   `----
 
-  ,----
-  | consult-line-multi
-  `----
-
 
 6.7 Icons (`nerd-icons')
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -763,31 +690,13 @@ Things I like about my Emacs
   | (use-package nerd-icons
   |   :ensure t)
   | 
-  | (use-package nerd-icons
+  | (use-package nerd-icons-dired
   |   :ensure t
   |   :hook (dired-mode . nerd-icons-dired-mode))
   `----
 
-   nerd-icons-dired-mode 
 
-
-6.8 Custom modeline (`mini-echo-mode')
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Another good alternative is [`simple-modeline'].
-  ,----
-  | (use-package mini-echo
-  |   :ensure t
-  |   :hook (after-init . mini-echo-mode))
-  `----
-
-   org-persist-load-all  mini-echo-mode  x-wm-set-size-hint  tramp-register-archive-autoload-file-name-handler  table--make-cell-map 
-
-
-[`simple-modeline'] <https://github.com/gexplorer/simple-modeline>
-
-
-6.9 `which-key'
+6.8 `which-key'
 ~~~~~~~~~~~~~~~
 
   ,----
@@ -797,6 +706,25 @@ Things I like about my Emacs
   |   (which-key-mode))
   `----
 
+
+6.9 `keycast'
+~~~~~~~~~~~~~
+
   ,----
-  | t
+  | (use-package keycast
+  |   :defer t
+  |   :bind ("M-g t k" . keycast-mode-line-mode))
+  `----
+
+
+6.10 TODO Open a terminal emulator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (defun gligan/open-terminal-emulator () (interactive)
+  |   (if (vterm) (vterm)
+  |     (if eshell (eshell)
+  |       (term))))
+  | 
+  | (global-set-key (kbd "M-g e") 'gligan/open-terminal-emulator)
   `----

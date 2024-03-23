@@ -53,11 +53,11 @@ body {
 }
 
 #preamble {
-  background: linear-gradient(to bottom, var(--distant-bg), var(--content-bg));
+  background: linear-gradient(var(--distant-bg), var(--content-bg));
 }
 
 #postamble {
-  background: linear-gradient(to bottom, var(--content-bg), var(--distant-bg));
+  background: linear-gradient(to top, var(--distant-bg), var(--content-bg)); /* Doing it like this fixes dark reader bug */
 }
 
 #content {

@@ -3,21 +3,6 @@ interesting and think should be shared — it is also a way for me to
 learn to express myself more eloquently.
 
 
-Posts
-=====
-
-  I invite you to explore my posts on mathematics, which I usually write
-  in Spanish, as it is the language I employ to study this
-  subject. Additionally, I also delve into programming topics, which
-  undoubtedly lend themselves more easily to expression in English.
-
-  [Journey of finding a decent CMS and how I gave up; not really]
-
-
-[Journey of finding a decent CMS and how I gave up; not really]
-<./blogging.org>
-
-
 Works
 =====
 
@@ -26,17 +11,27 @@ Works
 
   ----------------------------------------------------------------------
 
-  Take a look at my [Emacs literate config file].
+
+[Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
+para hallar $f_\textrm{máx}$] <./redes-de-flujo.pdf>
+
+Emacs
+~~~~~
+
+  Emacs in undoubtedly a way of life for some, and here's mine:
+
+  - Take a look at my [Emacs literate config file].
+  - Check out my port of /Colorsublime/'s "Monokate theme" for Emacs
+    [here].
 
   ----------------------------------------------------------------------
 
   This website is proudly
 
-  - Ad–, cookie– and tracker–free.
-  - Written with Org-mode & managed using Emacs.
+  + Ad–, cookie–, javascript– and tracker–free.
+  + Written with Org-mode & managed using Emacs.
 
-
-[Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
-para hallar $f_\textrm{máx}$] <./redes-de-flujo.pdf>
 
 [Emacs literate config file] <./emacs-config.org>
+
+[here] <file:monokate-theme.org>

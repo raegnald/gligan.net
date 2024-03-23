@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-21 Thu 10:08 -->
+<!-- 2024-03-23 Sat 00:30 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -77,8 +77,9 @@
 <li><a href="#orgfb2d72e">6.5. Better <code>M-x</code> completion (<code>vertico</code>)</a></li>
 <li><a href="#org55176d1">6.6. Search everything (<code>consult</code>) </a></li>
 <li><a href="#org6b59148">6.7. Icons (<code>nerd-icons</code>)</a></li>
-<li><a href="#org0937df4">6.8. Custom modeline (<code>mini-echo-mode</code>)</a></li>
-<li><a href="#orgd053923">6.9. <code>which-key</code></a></li>
+<li><a href="#orgd053923">6.8. <code>which-key</code></a></li>
+<li><a href="#orgfa61718">6.9. <code>keycast</code> </a></li>
+<li><a href="#org3918768">6.10. <span class="todo TODO">TODO</span> Open a terminal emulator </a></li>
 </ul>
 </li>
 </ul>
@@ -88,14 +89,14 @@
 This is my vanilla Emacs literate configuration file. You can skim through the table of contents to find snippets that could suit you.
 </p>
 
-<div class="warning" id="org2bd863b">
+<div class="warning" id="org1525b00">
 <p>
 This is <i>my</i> config file, and I do as I please with it — anything is subject to change without further notice. You are free to take the parts you may want and adapt them however you please. Also, there is no need to cite me if you copy anything below.
 </p>
 
 </div>
 
-<div class="note" id="org244aa80">
+<div class="note" id="orgf8afda1">
 <p>
 You can have a raw version of my configuration file <a href="https://gligan.net/init.el">here</a> (<code>init.el</code>).
 </p>
@@ -127,9 +128,21 @@ These are the custom key bindings I have for my set-up. Notice I tend to prefix 
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><code>M-g t</code></td>
+<td class="org-left"><code>M-g t t</code></td>
 <td class="org-left">Toggle between themes <code>gligan/dark-theme</code> and <code>gligan/light-theme</code></td>
 <td class="org-left"><a href="#org0df7146">here</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g t k</code></td>
+<td class="org-left">Toggle <code>keycast-mode-line-mode</code>. Beware that the package <code>keycast</code> must be installed manually, as my config does not ensure it</td>
+<td class="org-left"><a href="#orgec3bcf5">here</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-g e</code></td>
+<td class="org-left">Open a terminal emulator. Order: <code>vterm</code>, <code>eshell</code>, <code>term</code></td>
+<td class="org-left"><a href="#org837b423">here</a></td>
 </tr>
 
 <tr>
@@ -174,6 +187,7 @@ Things I like about my Emacs
 <li><p>
 Performance: look how fast my Emacs is!
 </p>
+
 <div class="org-src-container">
 <pre class="src src-elisp">(format <span style="color: #ca3400;">"%s with %d collections"</span>
      (format <span style="color: #ca3400;">"%.2f seconds"</span>
@@ -181,12 +195,8 @@ Performance: look how fast my Emacs is!
               (time-subtract after-init-time before-init-time)))
      gcs-done)
 </pre>
-</div>
-<pre class="example">
-1.18 seconds with 8 collections
-</pre></li>
+</div></li>
 </ul>
-
 
 
 <hr>
@@ -195,10 +205,6 @@ Performance: look how fast my Emacs is!
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> gc-cons-threshold (* 50 1000 1000))
 </pre>
 </div>
-
-<pre class="example">
-50000000
-</pre>
 
 <div id="outline-container-org23b112a" class="outline-2">
 <h2 id="org23b112a"><span class="section-number-2">1.</span> Personal</h2>
@@ -211,12 +217,7 @@ My personal information
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">setq</span> user-full-name <span style="color: #ca3400;">"Ronaldo Gligan"</span>
       user-mail-address <span style="color: #ca3400;">"ronaldogligan@outlook.com"</span>)
 </pre>
-</div>
-
-<pre class="example">
-ronaldogligan@outlook.com
-</pre></li>
-
+</div></li>
 <li><p>
 Insert today's date <a id="org24ff5b4"></a>
 </p>
@@ -225,11 +226,7 @@ Insert today's date <a id="org24ff5b4"></a>
  (insert (format-time-string <span style="color: #ca3400;">"%Y-%m-%d"</span>)))
 (global-set-key (kbd <span style="color: #ca3400;">"M-g d"</span>) 'gligan/today)
 </pre>
-</div>
-
-<pre class="example">
-gligan/today
-</pre></li>
+</div></li>
 </ul>
 </div>
 </div>
@@ -272,10 +269,6 @@ gligan/today
 (add-to-list 'default-frame-alist '(undecorated . t))
 </pre>
 </div>
-
-<pre class="example">
-((right-divider-width . 1) (bottom-divider-width . 1) (undecorated . t) (vertical-scroll-bars))
-</pre>
 </div>
 
 <div id="outline-container-orgcbf3837" class="outline-4">
@@ -286,10 +279,6 @@ gligan/today
       gc-cons-percentage 0.6)
 </pre>
 </div>
-
-<pre class="example">
-0.6
-</pre>
 </div>
 </div>
 </div>
@@ -332,10 +321,6 @@ gligan/today
        gcs-done))
 </pre>
 </div>
-
-<pre class="example">
-display-startup-echo-area-message
-</pre>
 </div>
 </div>
 
@@ -347,10 +332,6 @@ display-startup-echo-area-message
 (column-number-mode 1)
 </pre>
 </div>
-
-<pre class="example">
-t
-</pre>
 </div>
 </div>
 
@@ -406,13 +387,9 @@ t
     (gligan/toggle-theme)
     (load-theme gligan/current-theme t)))
 
-(global-set-key (kbd <span style="color: #ca3400;">"M-g t"</span>) 'gligan/toggle-theme)
+(global-set-key (kbd <span style="color: #ca3400;">"M-g t t"</span>) 'gligan/toggle-theme)
 </pre>
 </div>
-
-<pre class="example">
-gligan/toggle-theme
-</pre>
 </div>
 </div>
 </div>
@@ -508,23 +485,9 @@ gligan/toggle-theme
   (lsp-completion-provider <span style="color: #557400; font-weight: bold;">:capf</span>))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">lsp-modeline-diagnostics-mode</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
-
 <div id="outline-container-org69a8897" class="outline-3">
 <h3 id="org69a8897"><span class="section-number-3">4.2.</span> OCaml</h3>
 <div class="outline-text-3" id="text-4-2">
@@ -565,7 +528,6 @@ gligan/toggle-theme
 </div>
 </div>
 </div>
-
 <div id="outline-container-orgd5b7518" class="outline-3">
 <h3 id="orgd5b7518"><span class="section-number-3">4.3.</span> Haskell</h3>
 <div class="outline-text-3" id="text-4-3">
@@ -599,7 +561,6 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 </div>
 </div>
 </div>
-
 <div id="outline-container-orgb67a382" class="outline-3">
 <h3 id="orgb67a382"><span class="section-number-3">4.4.</span> C</h3>
 <div class="outline-text-3" id="text-4-4">
@@ -650,10 +611,6 @@ Haskell code checking is <i>very</i> slow, so I'm only activating it on file sav
 (<span style="color: #006f00; font-weight: bold;">setq</span> org-preview-latex-default-process 'dvipng)
 </pre>
 </div>
-
-<pre class="example">
-dvipng
-</pre>
 </div>
 
 <div id="outline-container-org1c70609" class="outline-3">
@@ -674,10 +631,6 @@ dvipng
    )
 </pre>
 </div>
-
-<pre class="example">
-org-journal-search-forever
-</pre>
 </div>
 </div>
 
@@ -694,10 +647,6 @@ org-journal-search-forever
                      <span style="color: #ca3400;">"#+setupfile: blog.config"</span>)
 </pre>
 </div>
-
-<pre class="example">
-org-header-skeleton
-</pre>
 </div>
 </div>
 
@@ -716,37 +665,6 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
   (<span style="color: #006f00; font-weight: bold;">setq</span> org-auto-tangle-default t))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">org-auto-tangle-mode</td>
-<td class="org-left">olivetti-mode</td>
-<td class="org-left">org-modern-mode</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]</td>
-<td class="org-left">org-babel-result-hide-spec</td>
-<td class="org-left">org-babel-hide-all-hashes</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -760,37 +678,6 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
   <span style="color: #557400; font-weight: bold;">:hook</span> (org-mode . org-modern-mode))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">org-auto-tangle-mode</td>
-<td class="org-left">olivetti-mode</td>
-<td class="org-left">org-modern-mode</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]</td>
-<td class="org-left">org-babel-result-hide-spec</td>
-<td class="org-left">org-babel-hide-all-hashes</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -804,37 +691,6 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
   <span style="color: #557400; font-weight: bold;">:hook</span> (org-mode . olivetti-mode))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">org-auto-tangle-mode</td>
-<td class="org-left">olivetti-mode</td>
-<td class="org-left">org-modern-mode</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5]</td>
-<td class="org-left">#[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5]</td>
-<td class="org-left">org-babel-result-hide-spec</td>
-<td class="org-left">org-babel-hide-all-hashes</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -858,22 +714,6 @@ Setting <code>org-auto-tangle-default</code> doesn't seem to make an effect.
   <span style="color: #557400; font-weight: bold;">:hook</span> (text-mode . mixed-pitch-mode))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">mixed-pitch-mode</td>
-<td class="org-left">text-mode-hook-identify</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -897,7 +737,6 @@ Why should I export my documents on inferior paper dimensions? (I like to have <
 </div>
 </div>
 </li>
-
 <li><a id="org8547683"></a>Syntax highlighting with <code>minted</code><br>
 <div class="outline-text-5" id="text-5-8-1-2">
 <p>
@@ -911,22 +750,6 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
         <span style="color: #ca3400;">"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"</span>))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f</td>
-<td class="org-left">pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f</td>
-</tr>
-</tbody>
-</table>
 </div>
 </li>
 </ol>
@@ -957,10 +780,6 @@ Minted is a LaTeX package that adds syntax highlighting to code blocks.
 <pre class="src src-elisp">(electric-pair-mode 1)
 </pre>
 </div>
-
-<pre class="example">
-t
-</pre>
 </div>
 </div>
 
@@ -977,13 +796,8 @@ t
   (global-ligature-mode t))
 </pre>
 </div>
-
-<pre class="example">
-t
-</pre>
 </div>
 </div>
-
 <div id="outline-container-org7b82b37" class="outline-3">
 <h3 id="org7b82b37"><span class="section-number-3">6.4.</span> TODO, NOTE, FIXME, BUG, &#x2026; (<code>hl-todo</code>)</h3>
 <div class="outline-text-3" id="text-6-4">
@@ -994,10 +808,6 @@ t
   (global-hl-todo-mode 1))
 </pre>
 </div>
-
-<pre class="example">
-t
-</pre>
 </div>
 </div>
 
@@ -1029,10 +839,6 @@ t
   (marginalia-mode))
 </pre>
 </div>
-
-<pre class="example">
-t
-</pre>
 </div>
 </div>
 
@@ -1054,10 +860,6 @@ Preview files, and search open buffers, recently opened files, bookmarks, &#x202
   )
 </pre>
 </div>
-
-<pre class="example">
-consult-line-multi
-</pre>
 </div>
 </div>
 
@@ -1068,70 +870,17 @@ consult-line-multi
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t)
 
-(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons</span>
+(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">nerd-icons-dired</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
   <span style="color: #557400; font-weight: bold;">:hook</span> (dired-mode . nerd-icons-dired-mode))
 </pre>
 </div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">nerd-icons-dired-mode</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-org0937df4" class="outline-3">
-<h3 id="org0937df4"><span class="section-number-3">6.8.</span> Custom modeline (<code>mini-echo-mode</code>)</h3>
-<div class="outline-text-3" id="text-6-8">
-<p>
-Another good alternative is <a href="https://github.com/gexplorer/simple-modeline"><code>simple-modeline</code></a>.
-</p>
-<div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">mini-echo</span>
-  <span style="color: #557400; font-weight: bold;">:ensure</span> t
-  <span style="color: #557400; font-weight: bold;">:hook</span> (after-init . mini-echo-mode))
-</pre>
-</div>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">org-persist-load-all</td>
-<td class="org-left">mini-echo-mode</td>
-<td class="org-left">x-wm-set-size-hint</td>
-<td class="org-left">tramp-register-archive-autoload-file-name-handler</td>
-<td class="org-left">table&#x2013;make-cell-map</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
 <div id="outline-container-orgd053923" class="outline-3">
-<h3 id="orgd053923"><span class="section-number-3">6.9.</span> <code>which-key</code></h3>
-<div class="outline-text-3" id="text-6-9">
+<h3 id="orgd053923"><span class="section-number-3">6.8.</span> <code>which-key</code></h3>
+<div class="outline-text-3" id="text-6-8">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">which-key</span>
   <span style="color: #557400; font-weight: bold;">:ensure</span> t
@@ -1139,10 +888,33 @@ Another good alternative is <a href="https://github.com/gexplorer/simple-modelin
   (which-key-mode))
 </pre>
 </div>
+</div>
+</div>
 
-<pre class="example">
-t
+<div id="outline-container-orgfa61718" class="outline-3">
+<h3 id="orgfa61718"><span class="section-number-3">6.9.</span> <code>keycast</code> <a id="orgec3bcf5"></a></h3>
+<div class="outline-text-3" id="text-6-9">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">use-package</span> <span style="color: #00824f;">keycast</span>
+  <span style="color: #557400; font-weight: bold;">:defer</span> t
+  <span style="color: #557400; font-weight: bold;">:bind</span> (<span style="color: #ca3400;">"M-g t k"</span> . keycast-mode-line-mode))
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3918768" class="outline-3">
+<h3 id="org3918768"><span class="section-number-3">6.10.</span> <span class="todo TODO">TODO</span> Open a terminal emulator <a id="org837b423"></a></h3>
+<div class="outline-text-3" id="text-6-10">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span style="color: #006f00; font-weight: bold;">defun</span> <span style="color: #a7601f;">gligan/open-terminal-emulator</span> () (<span style="color: #006f00; font-weight: bold;">interactive</span>)
+  (<span style="color: #006f00; font-weight: bold;">if</span> (vterm) (vterm)
+    (<span style="color: #006f00; font-weight: bold;">if</span> eshell (eshell)
+      (term))))
+
+(global-set-key (kbd <span style="color: #ca3400;">"M-g e"</span>) 'gligan/open-terminal-emulator)
+</pre>
+</div>
 </div>
 </div>
 </div>
