@@ -57,7 +57,7 @@ body {
 }
 
 #postamble {
-  background: linear-gradient(to top, var(--distant-bg), var(--content-bg)); /* Doing it like this fixes dark reader bug */
+  background: linear-gradient(var(--content-bg), var(--distant-bg));
 }
 
 #content {
