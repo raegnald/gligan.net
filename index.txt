@@ -21,7 +21,7 @@ Emacs
   Emacs in undoubtedly a way of life for some, and here's mine:
 
   - Take a look at my [Emacs literate config file].
-  - Check out my port of /Colorsublime/'s "Monokate theme" for Emacs
+  - Check out my port of /Colorsublime/'s "Monokate" theme for Emacs
     [here].
 
   ----------------------------------------------------------------------
