@@ -441,5 +441,9 @@ footer .footer-right span {
 footer .footer-license {
   display: block;
   padding-top: 20px;
-  font-size: 80%;  
+}
+
+.notice, footer .footer-license {
+  font-size: 80%;
+  opacity: 0.8;
 }

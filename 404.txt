@@ -26,6 +26,10 @@ You are lost. Perhaps go to the [home page].
       And they're talking it to me
 
         -- /Talk/, Coldplay
+      "Talk" lyrics (c) Coldplay. This excerpt is believed to be
+      used under fair use for the purposes of amusement on a 404
+      page. Not intended to infringe on the copyright of the
+      original work.
 
 
 [home page] <file:index.org>
