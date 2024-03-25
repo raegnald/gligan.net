@@ -250,7 +250,7 @@ Things I like about my Emacs
   | (setq custom-safe-themes t)
   | 
   | (setq gligan/dark-theme 'monokate)
-  | (setq gligan/light-theme 'ef-cyprus); 'modus-operandi
+  | (setq gligan/light-theme 'ef-cyprus); 'ellas)   ; 'ef-cyprus or 'modus-operandi are other solid options
   | 
   | ;; We start with the dark theme
   | (setq gligan/current-theme gligan/dark-theme)
