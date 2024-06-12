@@ -44,7 +44,11 @@ pre {
 
 #preamble, #content, #postamble {
   margin: 0 auto;
-  padding: 0 50px;
+  padding: 20px;
+}
+
+#preamble, #postamble {
+  padding: 50px 20px;
 }
 
 /* Preamble */
@@ -73,7 +77,8 @@ pre {
 @media only screen and (min-width: 1200px) {
   #preamble, #content, #postamble {
     max-width: 1200px;
-    padding: 0 auto;
+    margin: 0 auto;
+    padding: 50px !important;
   }
 
   #table-of-contents, .margin {
