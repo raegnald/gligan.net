@@ -9,6 +9,8 @@
 
 html {
   font-family: "IBM Plex Serif", serif;
+  min-height: 100vh;
+  margin: 0;
 }
 
 body {
