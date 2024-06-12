@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Linux Biolinum';
+    src: url('/fonts/LinBiolinumI.eot');
+    src: local('Linux Biolinum Italic'), local('/fonts/LinBiolinumI'),
+        url('/fonts/LinBiolinumI.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LinBiolinumI.woff2') format('woff2'),
+        url('/fonts/LinBiolinumI.woff') format('woff'),
+        url('/fonts/LinBiolinumI.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Linux Biolinum';
+    src: url('/fonts/LinBiolinumB.eot');
+    src: local('Linux Biolinum Bold'), local('/fonts/LinBiolinumB'),
+        url('/fonts/LinBiolinumB.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LinBiolinumB.woff2') format('woff2'),
+        url('/fonts/LinBiolinumB.woff') format('woff'),
+        url('/fonts/LinBiolinumB.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Linux Biolinum Keyboard';
+    src: url('/fonts/LinBiolinumK.eot');
+    src: local('Linux Biolinum Keyboard'), local('/fonts/LinBiolinumK'),
+        url('/fonts/LinBiolinumK.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LinBiolinumK.woff2') format('woff2'),
+        url('/fonts/LinBiolinumK.woff') format('woff'),
+        url('/fonts/LinBiolinumK.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Linux Biolinum';
+    src: url('/fonts/LinBiolinum.eot');
+    src: local('Linux Biolinum'), local('/fonts/LinBiolinum'),
+        url('/fonts/LinBiolinum.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LinBiolinum.woff2') format('woff2'),
+        url('/fonts/LinBiolinum.woff') format('woff'),
+        url('/fonts/LinBiolinum.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

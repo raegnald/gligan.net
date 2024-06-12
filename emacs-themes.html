@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/" lang="en" xml:lang="en">
+<head>
+<!-- 2024-06-12 Wed 20:59 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs themes</title>
+<meta name="author" content="Ronaldo Gligan" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="gligan-org.css" />
+<script src="gligan-fold.js"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<span id="site-name">Ronaldo Gligan</span><span id="home-link"><a href="/">Home</a></span>
+</div>
+<div id="content" class="content">
+<h1 class="title">Emacs themes</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2c284a9">1. The Ellas Theme</a></li>
+<li><a href="#org28c363b">2. The Somnus Theme</a></li>
+<li><a href="#org812ff4d">3. Monokate theme</a></li>
+</ul>
+</div>
+</div>
+<p>
+This page contains a collection of Emacs themes that I've developed or
+ported from other editors (specifically Monokate, see below).
+</p>
+
+<p>
+I have a very straightforward approach to making themes: I start with
+nothing and build up, I use my themes while coding or writing and what
+irritates me, I fix. The source code of the themes I present below is
+very simple to comprehend and, if you want to modify or use any of my
+themes as a template, you can easily do so.
+</p>
+
+<div class="warning" id="orgf2b61d6">
+<p>
+I have to say that none of my themes have any kind of versioning: they
+are taken directly from what I use for my Emacs. If you want to get
+the latest version, use the links to the Emacs Lisp file for each
+theme to do so &#x2013; I intend to make those URLs static, so you can fetch
+them periodically.
+</p>
+
+</div>
+
+<p>
+If, for any reason, you have a question or suggestion, you can <a href="mailto:ronaldogligan@outlook.com?subject=Question%20or%20Suggestion%20about%20one%20of%20your%20Emacs%20themes">contact
+me through email</a>.
+</p>
+
+<hr />
+
+<p>
+You may want to have available on your system all of my themes, but
+they're not in any official package repository like Melpa. You can
+obtain all of my Emacs themes through this command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #3c2a19; font-weight: bold;">export</span> <span style="color: #074a96;">EMACS_THEMES_DIR</span>=$<span style="color: #074a96;">HOME</span>/.emacs.d/ &amp;&amp; curl -s https://gligan.net/emacs-themes.sh | sh
+</pre>
+</div>
+
+<p>
+If you have your Emacs themes in a different folder, change
+<code>EMACS_THEMES_DIR</code> accordingly &#x2013; you should know what you're doing if
+you have a custom themes folder.
+</p>
+
+<hr />
+
+<div id="outline-container-org2c284a9" class="outline-2">
+<h2 id="org2c284a9"><span class="section-number-2">1.</span> The Ellas Theme</h2>
+<div class="outline-text-2" id="text-1">
+
+<div id="org6437142" class="figure">
+<p><img src="https://gligan.net/ellas.png" alt="ellas.png" />
+</p>
+</div>
+
+<p>
+<a href="https://gligan.net/ellas-theme.el"><code>https://gligan.net/ellas-theme.el</code></a>
+</p>
+
+<p>
+Ellas is a charming, light, having somewhat of a pastel palette, theme
+with colours inspired by a trip I made to Greece.
+</p>
+
+<p>
+This is the first theme I have made from scratch. My eye says that the
+contrast of Ellas is enough &#x2013;not great&#x2013; but very usable and not
+eye-straining, which is one of my main concerns; I hate when pure
+<code>#000000</code> black fights directly with <code>#ffffff</code> white. I think I have done
+a god job. Still, you are not me. If you think I should improve some
+part of this theme, plase let me know.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org28c363b" class="outline-2">
+<h2 id="org28c363b"><span class="section-number-2">2.</span> The Somnus Theme</h2>
+<div class="outline-text-2" id="text-2">
+
+<div id="org2a69cf2" class="figure">
+<p><img src="https://gligan.net/somnus.png" alt="somnus.png" />
+</p>
+</div>
+
+<p>
+<a href="https://gligan.net/somnus-theme.el"><code>https://gligan.net/somnus-theme.el</code></a>
+</p>
+
+<p>
+Somnus is a calming blue and yellow theme inspired on the idea of
+sleep, of being comfortable. It has more contrast than Monokate,
+though.
+</p>
+
+<p>
+This is my main dark theme. I made it so I have a pair of light and
+dark themes; namely Ellas and Somnus.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org812ff4d" class="outline-2">
+<h2 id="org812ff4d"><span class="section-number-2">3.</span> Monokate theme</h2>
+<div class="outline-text-2" id="text-3">
+
+<div id="org7cf9010" class="figure">
+<p><img src="https://gligan.net/monokate.png" alt="monokate.png" />
+</p>
+</div>
+
+<p>
+<a href="https://gligan.net/monokate-theme.el"><code>https://gligan.net/monokate-theme.el</code></a>
+</p>
+
+<p>
+Long ago I used Sublime Text as my main code editor &#x2013; it is still a
+pretty good program; but, shamefully, it is proprietary software, and
+that is not in keeping with my ideals. At that time I discovered a
+"repository" of themes called <a href="https://colorsublime.github.io/">Colorsublime</a>, which I thought and still
+think has a great selection of themes. The one I used was
+<a href="https://colorsublime.github.io/themes/MonoKate/">Monokate</a>. When I finally switched to Emacs I was in need of a theme
+like Monokate. Fortunately, I didn't found any, so I wrote this port.
+</p>
+
+<p>
+Please note that this port I've made is not a 100% replica of
+Colorsublime's Monokate because I felt the need to add more colors to
+make the theme more complete. However, I believe that the <i>vibes</i> of the
+original Monokate are kept with this port.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer><span class="footer-left"><span class="footer-message">Ένα, δύο, τρία... Θεωρία και πράξη</span></span> <span class="footer-right"><span class="footer-copyright">&copy; 2024</span> <span class="footer-author">Ronaldo Gligan</span></span><br><span class="footer-license">All content on this website, unless otherwise stated, is licensed under the terms of the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license (<code>CC BY 4.0</code>)</a>.</span></footer>
+</div>
+</body>
+</html>

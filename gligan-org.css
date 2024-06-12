@@ -1,0 +1,281 @@
+
+/* CSS stylesheet for Org files exported to HTML.
+   This source file is public domain: use it however you want without the need to
+   There is no warranty whatsoever.
+   Colours based on the Emacs Ellas Theme: https://gligan.net/emacs-themes */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://gligan.net/fonts/iosevka-comfy-motion.css');
+
+html {
+  font-family: "IBM Plex Serif", serif;
+}
+
+body {
+  background: #f1e7de;
+}
+
+#content, #postamble  {
+  margin: 0 auto;
+  padding: 25px 50px;
+  background: #f8ede4;
+  position: relative;
+}
+
+code, pre, tt {
+  font-family: "Iosevka Comfy Motion", "Iosevka", "IBM Plex Mono", monospace;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+#content pre {
+  border-top: 1px solid #d3c3b6;
+  border-bottom: 1px solid #d3c3b6;
+  width: 100%;
+  padding: 10px 0;
+  font-weight: 400;
+}
+
+/* Main content */
+
+#content {
+  margin: 0 auto;
+}
+
+
+#preamble, #postamble {
+  padding: 50px;
+  margin: 0 auto;
+}
+
+/* Preamble */
+
+#preamble {
+  background: linear-gradient(#f1e7de, #f8ede4);
+}
+
+#preamble #site-name {
+  float: left;
+  font-style: italic;
+  font-size: 120%;
+}
+
+#preamble a {
+  float: right;
+}
+
+/* Postamble */
+
+#postamble {
+  background: linear-gradient(#f8ede4, #f1e7de) !important;
+}
+
+/* Two columns */
+@media only screen and (min-width: 1200px) {
+  #preamble, #content, #postamble {
+    max-width: 1200px;
+  }
+
+  #table-of-contents, .margin {
+    float: right;
+    padding: 0;
+    padding-left: 20px;
+    max-width: 300px;
+  }
+
+  #table-of-contents {
+    width: 100%;
+    margin-top: -0.5em;
+  }
+
+  #table-of-contents h2 {
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 0 !important;
+  }
+
+  #table-of-contents li {
+    list-style-type: none;
+  }
+
+  #table-of-contents ul {
+    margin-top: 0 !important;
+  }
+
+  #table-of-contents #text-table-of-contents > ul {
+    padding-left: 0;
+  }
+
+  #table-of-contents li {
+    padding-bottom: 5px;
+  }
+
+  #content .outline-2, #content .outline-3, #content .outline-4,
+  #content .outline-5, #content .outline-6,
+  #content > *:not(#table-of-contents) {
+    max-width: 800px;
+  }
+}
+
+/* Emulating Org-mode tabulations for sections and some blocks */
+
+.outline-2, .outline-3, .outline-4, .outline-5, .outline-6,
+.note, .warning {
+  padding-left: 20px;
+  border-left: 1px solid #d3c3b6;
+}
+
+.section-number-2, .section-number-3, .section-number-4,
+.section-number-5, .section-number-6,
+.note::before, .warning::before {
+  background: #d3c3b6;
+  margin-left: -20px;
+  padding: 0 10px !important;
+}
+
+.section-number-2, .section-number-3, .section-number-4,
+.section-number-5, .section-number-6 {
+  cursor: pointer;
+}
+
+.section-number-2 pre, .section-number-3 pre, .section-number-4 pre,
+.section-number-5 pre, .section-number-6 pre,
+.note::before, .warning::before {
+  margin-left: -20px;
+  padding-left: 20px;
+}
+
+.section-number-2::before, .section-number-3::before, .section-number-4::before,
+.section-number-5::before, .section-number-6::before {
+  content: "▾";
+  color: #d3c3b6;
+  position: absolute;
+  font-size: 15px;
+  margin-top: 0.3ex;
+  left: 20px;
+  padding-right: 10px;
+}
+
+.section-collapsed::before {
+  content: "▸" !important;
+  color: #c24639;
+}
+
+
+/* Titles */
+
+#content h1, #content h2, #content h3 {
+  font-weight: 500;
+}
+
+#content h4, #content h5, #content h6 {
+  font-weight: 600px;
+}
+
+h1.title {
+  font-weight: 400 !important;
+}
+
+#content h2 {
+  margin-top: 50px;
+}
+
+#content h3 {
+  margin-top: 25px;
+}
+
+/* Code sources */
+
+code {
+  color: #074a96;
+}
+
+/* Links */
+
+a, a:link {
+  color: #665f18;
+  text-decoration: none;
+}
+
+a:active, a:focus, a:hover {
+  color: #c24639;
+  text-decoration: underline;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+}
+
+/* Separators */
+
+#content hr {
+  max-width: 800px;
+  margin-left: 0;
+  border: 0;
+  border-top: 1px solid #d3c3b6;
+}
+
+/* Org mode special markup */
+
+.todo, .TODO {
+  background: #c24639;
+  color: white;
+  font-family: "Iosevka Comfy Motion", "Iosevka", "IBM Plex Mono", monospace;
+  font-size: 80%;
+  margin-top: 0.2em;
+  float: right;
+  padding: 0 5px;
+}
+
+/* Custom blocks */
+
+.note::before { content: "Note"; }
+.warning::before { content: "Warning"; }
+
+/* Lists, tables, and descriptions */
+
+dt {
+  font-weight: 500;
+}
+
+dd {
+  padding-bottom: 10px;
+}
+
+dd > p:first-child { margin-top: 0; }
+dd > p:last-child { margin-bottom: 0; }
+
+/* Toggling sections */
+
+.org-section-hidden {
+  display: none;
+}
+
+.org-section-title-hidden::after {
+  content: "...";
+}
+
+/* Footer */
+
+footer .footer-right  {
+  float: right;
+}
+
+footer .footer-right span {
+  padding-left: 10px;
+  opacity: 0.6;
+}
+
+footer .footer-license {
+  display: block;
+  padding-top: 20px;
+}
+
+.notice, footer .footer-license {
+  font-size: 80%;
+  opacity: 0.8;
+}

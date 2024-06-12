@@ -1,0 +1,995 @@
+                ________________________________________
+
+                 RONALDO'S EMACS LITERATE CONFIGURATION
+
+                             Ronaldo Gligan
+                ________________________________________
+
+
+                               2024-06-12
+
+
+Table of Contents
+_________________
+
+.. 1. Reference table
+.. 2. GC trick
+1. Personal
+.. 1. Elisp interactive functions
+..... 1. Insert today's date
+..... 2. Open a terminal emulator
+2. Packages
+3. General Emacs changes
+.. 1. Early
+.. 2. TODO Main window properties
+.. 3. Fonts
+..... 1. Font set-up for Org-mode
+.. 4. Themes
+4. Packages for languages
+.. 1. TODO LSP server (`lsp-mode')
+.. 2. TODO Completion (`corfu')
+5. Languages
+.. 1. C
+.. 2. Haskell
+.. 3. OCaml
+.. 4. Zig
+.. 5. Nim
+.. 6. Fish
+.. 7. CSS
+6. Org mode
+.. 1. `org-journal'
+.. 2. Skeletons for `org-mode'
+.. 3. Org modern (`org-modern')
+.. 4. Zen mode (`olivetti')
+.. 5. Proportional fonts (`mixed-pitch')
+.. 6. Exporting
+..... 1. to LaTeX
+7. Nicities
+.. 1. Update copyright notice on file save
+.. 2. Save the session
+.. 3. Auto close and colorise parentheses, brackets, et cet. (`electric-pair-mode')
+.. 4. Ligatures
+.. 5. TODO, NOTE, FIXME, BUG, ... (`hl-todo')
+.. 6. Better `M-x' completion (`vertico' & co.)
+.. 7. Search everything (`consult')
+.. 8. Icons with `dired' integration (`nerd-icons')
+.. 9. Custom modeline (`doom-modeline')
+.. 10. Show possible key bindings (`which-key')
+.. 11. Fold code (`yafolding')
+.. 12. Transpose windows (`transpose-frame')
+.. 13. Switch case of identifiers (`string-inflection')
+.. 14. Transpose lines
+
+
+<https://gligan.net/ellas.png>
+
+Peruse the table of contents to find whatever you may find of interest
+instead of reading the whole page sequentially. There is also a
+[reference table] containing all of custom key bindings.
+
+This text assumes that you are using a Red Hat GNU/Linux distribution
+with certain tools installed. When problems or requirements arise, be
+smart and search efficiently to solve your problems if your setup isn't
+like mine.
+
+Finally, if you have any questions or suggestions, please [contact me
+through email].
+
+
+[reference table] See section 0.1
+
+[contact me through email]
+<mailto:ronaldogligan@outlook.com?subject=Question or Suggestion about
+your Emacs literate configuration>
+
+
+0.1 Reference table
+~~~~~~~~~~~~~~~~~~~
+
+   Custom key binding  Defined  Function                                                           
+  -------------------------------------------------------------------------------------------------
+   `M-g t t'           [here]   Toggle between themes `gligan/dark-theme' and `gligan/light-theme' 
+   `M-g e'             [here]   Open a terminal emulator. Order: `vterm', `eshell', `term'         
+   `M-g d'             [here]   Input the current date                                             
+   `M-g j j'           [here]   Insert a new journal entry                                         
+   `M-g j s'           [here]   Search through my journal entries                                  
+   `M-g o'             [here]   Open buffer, recent file, bookmark, ...                            
+   `M-g s'             [here]   Search for a string in open buffers                                
+   `M-g t w'           [here]   Transpose windows                                                  
+   `M-s M-s'           [here]   Change casing of an indentifier                                    
+
+
+[here] See section 3.4
+
+[here] See section 1.1.2
+
+[here] See section 1.1.1
+
+[here] See section 6.1
+
+[here] See section 7.7
+
+[here] See section 7.12
+
+[here] See section 7.13
+
+
+0.2 GC trick
+~~~~~~~~~~~~
+
+  This trick is pretty old. With the aim of optimising startup time, I
+  increased the garbage collection threshold --i.e. the amount of bytes
+  allocated between two collections-- to 64 megabytes (Emacs' default is
+  8 megabytes). I arrived at this number by trial and error --finding
+  the sweet spot is just a matter of trying a number, increasing or
+  decreasing it and seeing what works, repeating this process a few
+  times and you get your number (this is basically Newton's method).
+
+  ,----
+  | (setq gc-cons-threshold (* 64 1024 1024)
+  |       gc-cons-percentage 0.5)
+  | 
+  | (setq read-process-output-max (* 3 1024 1024)) ;; 3mb
+  `----
+
+  You should find the number to put in `gc-cons-threshold' through the
+  method described above by yourself. I haven't touched
+  `gc-cons-percentage', but you could; it could give you better start-up
+  times.
+
+  Having an astronimically large `gc-cons-threshold' wouldn't be of any
+  help. Worse, it would probably slow down Emacs as garbage collection
+  would take longer. Be advised!
+
+
+1 Personal
+==========
+
+1.1 Elisp interactive functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.1.1 Insert today's date
+-------------------------
+
+  I find that I often need to write today's date, and although I prefer
+  the European date format (`DD-MM-YYYY'), the `YYYY-MM-DD' ISO 8601
+  format is much more convenient because it sorts itself and is easier
+  to manipulate. (Please don't ever mention to me the sick `MM-DD-YYYY'
+  format, why?)
+
+  ,----
+  | (defun gligan/today ()
+  |   "Insert today's date as YYYY-MM-DD"
+  |   (interactive) 
+  |   (insert (format-time-string "%Y-%m-%d")))
+  | 
+  | (global-set-key (kbd "M-g d") 'gligan/today)
+  `----
+
+
+1.1.2 Open a terminal emulator
+------------------------------
+
+  ,----
+  | (defun gligan/open-terminal-emulator ()
+  |   "Tries to open the first one available: vterm, eshell, term"
+  |   (interactive)
+  |   (cond
+  |    ((package-installed-p 'vterm)
+  |     (vterm))
+  |    ((package-installed-p 'eshell)
+  |     (eshell))
+  |    (t
+  |     (term))))
+  | 
+  | (global-set-key (kbd "M-g e") 'gligan/open-terminal-emulator)
+  `----
+
+
+2 Packages
+==========
+
+  For managing installed packages, auto-download and configure them I
+  make use of `use-package'. For Emacs `< 29', `use-package' has to be
+  installed separately as it does not come by default.
+
+  ,----
+  | (require 'package)
+  `----
+
+  Emacs comes with [GNU ELPA] by default: a curated package repository
+  containing, well, not many packages. What I'm doing below is pretty
+  standard: I'm adding the larger [MELPA] repository so that I can
+  install more packages I might want or need. Just be aware of what
+  you're installing and you should be fine.
+
+  ,----
+  | (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  `----
+
+  Do not forget to initialise:
+
+  ,----
+  | (package-initialize)
+  `----
+
+
+[GNU ELPA] <https://elpa.gnu.org/>
+
+[MELPA] <https://melpa.org/>
+
+
+3 General Emacs changes
+=======================
+
+3.1 Early
+~~~~~~~~~
+
+  Emacs has the ability to run Elisp code /before/ the Emacs window --or
+  TUI-- is initialised. Not all code can run this way, however. This
+  portion of code should be placed in `~/.emacs.d/early-init.el' in most
+  cases.
+
+  ,----
+  | ;; Title
+  | (setq frame-title-format "%b - Emacs")
+  | 
+  | ;; Minimal window without buttons or scrollbars
+  | (menu-bar-mode -1)
+  | (tool-bar-mode -1)
+  | (scroll-bar-mode -1)
+  | 
+  | ;; Maximised at start up
+  | ;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+  | ;; Fullscreen at start up
+  | ;; (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
+  | 
+  | ;; No window decorations -- good for tiling window managers or minimal
+  | ;; configs
+  | ;; (add-to-list 'default-frame-alist '(undecorated . t))
+  `----
+
+  Running code early can reduce the startup time of Emacs. For example,
+  in the snippet above, we're disabling the menu, tool and scrollbar
+  modes before they're even loaded. I'm pretty sure this won't affect
+  our init times negatively.
+
+
+3.2 TODO Main window properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Like many pop songs, here's my verse for this section:
+  - I want a semi-transparent window to see my beautiful backgrounds
+  - I want tabs as spaces, as 2 spaces
+  - I want the cursor to be a little bar, not a block
+  - I want automatic saving of files and backup files just in case.
+  - I want a message telling me how long Emacs took to load
+  - I don't want line numbers
+  - I don't want startup or scratch buffer messages
+
+  This code basically does the all of the above:
+
+  ,----
+  | ;; Window transparency
+  | (set-frame-parameter (selected-frame) 'alpha-background 95)
+  | 
+  | ;; Use two spaces
+  | (setq-default tab-width 2)
+  | (setq-default indent-tabs-mode nil)
+  | (delete-selection-mode 1)
+  | 
+  | (global-subword-mode)
+  | 
+  | ;; Use a small bar as a cursor
+  | (setq-default cursor-type 'bar)
+  | 
+  | ;; I don't like line numbers
+  | (setq display-line-numbers-type nil)
+  | 
+  | ;; No welcome message; no scratch buffer message
+  | (setq inhibit-startup-message t)
+  | (setq initial-scratch-message nil)
+  | 
+  | ;; C is more suitable as a default mode to me
+  | (setq initial-major-mode 'c-mode)
+  | 
+  | ;; Auto-save & back up files
+  | (setq auto-save-default t
+  |       make-backup-files t)
+  | 
+  | (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+  | 
+  | (defun display-startup-echo-area-message ()
+  |   (message "%s with %d collections"
+  |        (format "%.2f seconds"
+  |                (float-time
+  |                 (time-subtract after-init-time before-init-time)))
+  |        gcs-done))  
+  `----
+
+
+3.3 Fonts
+~~~~~~~~~
+
+  There are as many programming fonts as there are minutes in a day,
+  really. [This] is a nice site for choosing one. I use [Iosevka Comfy],
+  a modified version of Iosevka by Protesilaos Stavrou, which I really
+  like.
+
+  The following variables define the fonts I use through all of this
+  configuration.
+
+  ,----
+  | (setq gligan/fixed-pitch-font "Iosevka Comfy Motion"
+  |       gligan/mixed-pitch-font "Iosevka Comfy Motion Duo"
+  |       gligan/default-font-size 130)
+  `----
+
+  I don't want Emacs panicking if the fonts I'm setting are not
+  available. For that reason, I define `gligan/set-font-when-available'
+  as a sort of middleman.
+
+  ,----
+  | (defun gligan/set-font-when-available (face font height)
+  |   (if (member font (font-family-list))
+  |       (set-face-attribute face nil
+  |                           :family font
+  |                           :height height)
+  |     (message (concat font " not available"))))
+  | 
+  | (gligan/set-font-when-available 'default
+  |                                 gligan/fixed-pitch-font
+  |                                 gligan/default-font-size)
+  | (gligan/set-font-when-available 'fixed-pitch
+  |                                 gligan/fixed-pitch-font
+  |                                 gligan/default-font-size)
+  | (gligan/set-font-when-available 'variable-pitch
+  |                                 gligan/mixed-pitch-font
+  |                                 gligan/default-font-size)
+  `----
+
+
+[This] <https://www.programmingfonts.org/>
+
+[Iosevka Comfy] <https://github.com/protesilaos/iosevka-comfy>
+
+3.3.1 Font set-up for Org-mode
+------------------------------
+
+  I want titles in Org-mode to be bigger than their surrounding
+  paragraph text. Through the `gligan/org-mode-font-setup' function I
+  make that possible.
+
+  ,----
+  | (defun gligan/org-mode-font-setup ()
+  |   ;; These numbers below define the proportions of the org mode
+  |   ;; headers in contrast to the paragraph text.
+  |   (dolist (face '((org-document-title . 1.8)
+  |                   (org-level-1        . 1.3)
+  |                   (org-level-2        . 1.2)
+  |                   (org-level-3        . 1.1)))
+  |     (set-face-attribute (car face) nil
+  |                         :font gligan/mixed-pitch-font
+  |                         :weight 'regular
+  |                         :height (cdr face))))
+  `----
+
+  Note that [here] I set up this function as a Org-mode hook.
+
+
+[here] See section 6
+
+
+3.4 Themes
+~~~~~~~~~~
+
+  First, if I have a theme installed, I'll treat it as safe; I'm willing
+  to risk my files! Nah, that's just a joke. In practice, most themes
+  are /respectable/ in the sense that people, perhaphs you too, can look
+  at their source, so there is a public judgement in between -- this is,
+  in fact, one of the blessings of libre software.
+
+  ,----
+  | ;; Declare all themes as safe. That way, Emacs won't ask the user if
+  | ;; it's okay to load a theme
+  | (setq custom-safe-themes t)
+  `----
+
+  My main Emacs theme is Monokate; a port that I made of the homonymous
+  theme from Sublime Text. Monokate is a dark, Monokai-like theme that
+  presents just the right amount of contrast; it is neither too mushy
+  nor eye-straining white text on a black background -- it is what I
+  desired for my Emacs, so I ported it.
+
+  The same sort of features Monokate has I desire for a white theme for
+  when I'm outside or sun rays hit my monitor. For that reason I've
+  developed a white theme of my own: Ellas. Ellas is a warm theme
+  inspired by a less-than-one-week trip I've made to Athens and
+  Santorini. It is nice to look at, but that is my opinion. See [my
+  Emacs themes page] for screenshots and download instructions.
+
+  Other honourable mentions for themes are the [`ef-themes' collection]
+  by Protesilaos Stavrou, an Emacs personality, especially the greenish
+  `ef-cyprus' theme and perhaps the collection of [themes from Doom
+  Emacs].
+
+  I've put all the rest of the code in this section into my early-init
+  file and it works.
+
+  Everything nowadays has theme toggling; why shouldn't Emacs too? These
+  two variables designate my dark and light theme inside all of this
+  configuration.
+
+  ,----
+  | (setq gligan/dark-theme  'somnus)       ; 'monokate, 'somnus
+  | (setq gligan/light-theme 'ellas)
+  `----
+
+  Here I have defined the `gligan/toggle-theme' function, that I can run
+  with `M-g t t' or with `M-x gligan/toggle-theme RET'.
+
+  ,----
+  | (defun gligan/toggle-theme ()
+  |   "Switch between Gligan's dark and light themes"
+  |   (interactive)
+  |   (disable-theme gligan/current-theme)
+  |   (setq next-theme (if (equal gligan/current-theme gligan/light-theme)
+  |                        gligan/dark-theme
+  |                      gligan/light-theme))
+  |   (setq gligan/current-theme next-theme)
+  |   (load-theme next-theme t))
+  | 
+  | (global-set-key (kbd "M-g t t") 'gligan/toggle-theme)
+  `----
+
+  I'm not doing anything fancy: I have two variables that dictate when
+  the light theme should be and if the time when Emacs was open lies
+  between those two hours, then the light theme is set.
+
+  ,----
+  | ;; We start with the dark theme
+  | (setq gligan/current-theme gligan/dark-theme)
+  | 
+  | ;; Between these two hours, when opening Emacs, the light theme should be the default
+  | (defvar gligan/light-theme-hour-start (string-to-number (getenv "GLIGAN_DAY_START")))
+  | (defvar gligan/light-theme-hour-end   (string-to-number (getenv "GLIGAN_DAY_END")))
+  | 
+  | ;; Switch to light theme if we're between the bounds defined above
+  | (let ((hour (string-to-number (substring (current-time-string) 11 13))))  
+  |   (if (and
+  |        (<= gligan/light-theme-hour-start hour)
+  |        (>  gligan/light-theme-hour-end   hour))
+  |     (gligan/toggle-theme)
+  |     (load-theme gligan/current-theme t)))
+  `----
+
+
+[my Emacs themes page] <https://gligan.net/emacs-themes>
+
+[`ef-themes' collection] <https://github.com/protesilaos/ef-themes>
+
+[themes from Doom Emacs]
+<https://github.com/doomemacs/themes/tree/screenshots>
+
+
+4 Packages for languages
+========================
+
+4.1 TODO LSP server (`lsp-mode')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package lsp-mode
+  |   :ensure t
+  |   :hook ((c-mode                        ; Alphabetically ordered
+  |         haskell-mode
+  |         nim-mode
+  |         python-mode
+  |         rust-mode
+  |         tuareg-mode
+  |         zig-mode)
+  |          . lsp-deferred)
+  |   :config
+  |   (setq lsp-headerline-breadcrumb-enable nil
+  |         lsp-response-timeout 1))        ; in seconds, makes everything snappier
+  | 
+  | (use-package lsp-ui
+  |   :ensure t)
+  `----
+
+
+4.2 TODO Completion (`corfu')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package corfu
+  |   :ensure t
+  |   :custom
+  |   (corfu-cycle t)
+  |   (corfu-auto nil)
+  |   :init
+  |   (global-corfu-mode)
+  |   :config
+  |   (setq-local corfu-auto        t
+  |               corfu-auto-delay  0
+  |               corfu-auto-prefix 1))
+  `----
+
+
+5 Languages
+===========
+
+5.1 C
+~~~~~
+
+  ,----
+  | (use-package irony-eldoc
+  |   :ensure t
+  |   :defer t)
+  `----
+
+
+5.2 Haskell
+~~~~~~~~~~~
+
+  ,----
+  | (use-package haskell-mode
+  |   :ensure t
+  |   :defer t
+  |   :config)
+  `----
+
+
+5.3 OCaml
+~~~~~~~~~
+
+  ,----
+  | (use-package tuareg
+  |   :ensure t
+  |   :defer t)
+  | 
+  | (use-package dune
+  |   :ensure t
+  |   :defer t)
+  | 
+  | (use-package merlin
+  |   :ensure t
+  |   :defer t
+  |   :config
+  |   (add-hook 'tuareg-mode-hook #'merlin-mode)
+  |   (setq merlin-error-after-save nil))
+  | 
+  | (use-package merlin-eldoc
+  |   :ensure t
+  |   :defer t
+  |   :hook (tuareg . merlin-eldoc-setup))
+  | 
+  | (use-package utop
+  |   :ensure t
+  |   :defer t
+  |   :config
+  |   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+  `----
+
+
+5.4 Zig
+~~~~~~~
+
+  ,----
+  | (use-package zig-mode
+  |   :ensure t
+  |   :defer t)
+  `----
+
+
+5.5 Nim
+~~~~~~~
+
+  ,----
+  | (use-package nim-mode
+  |   :ensure t
+  |   :defer t)
+  `----
+
+
+5.6 Fish
+~~~~~~~~
+
+  ,----
+  | (use-package fish-mode
+  |   :config
+  |   (setq fish-indent-offset 2))
+  `----
+
+
+5.7 CSS
+~~~~~~~
+
+  ,----
+  | (use-package css-mode
+  |   :config
+  |   (setq css-indent-offset 2))
+  `----
+
+
+6 Org mode
+==========
+
+  ,----
+  | (defun gligan/tangle-only-org ()
+  |   (when (equal major-mode 'org-mode)
+  |     (org-babel-tangle)))
+  | 
+  | (use-package org
+  |   :hook ((org-mode   . gligan/org-mode-font-setup)
+  |          (after-save . gligan/tangle-only-org)) ; Auto tangle on save
+  |                                                 ; only in Org buffers
+  |   :config
+  |   (setq org-directory "~/Documents/Org/")
+  | 
+  |   (setq org-hide-emphasis-markers t)
+  |   (setq org-startup-folded 'fold)
+  |   (setq org-startup-indented t)
+  | 
+  |   (setq org-confirm-babel-evaluate nil)
+  | 
+  |   (setq org-preview-latex-default-process 'dvipng))
+  `----
+
+
+6.1 `org-journal'
+~~~~~~~~~~~~~~~~~
+
+  `org-journal' is a nice way to have a journal. I have set up two
+  keybindings; one for creating a new journal entry and another for
+  searching for substrings in my journals.
+
+  One of the nice things about it, compared to other apps like Notion,
+  Apple Notes, Google Keep or most other note/journal apps, is that my
+  entries are kept on my machine and they're plain text; nothing
+  proprietary. I can export them to other formats if I need to and I can
+  easily read them as plain text if I don't have Emacs. It is also very
+  nicely implemented in Emacs.
+
+  ,----
+  | (use-package org-journal
+  |   :ensure t
+  |   :bind (("M-g j j" . 'org-journal-new-entry)
+  |          ("M-g j s" . 'org-journal-search-forever))
+  |   :config
+  |   (setq org-journal-dir "~/Documents/Org/Journal/"
+  |         org-journal-date-format "%A, %d %B %Y")) ; e.g. "Friday, 8 March 2024")
+  `----
+
+
+6.2 Skeletons for `org-mode'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  A skeleton is a template for documents. For my blog, I wrote a very
+  simple skeleton called `org-header-skeleton'.  Each skeleton can be
+  invoked by its name from the `M-x' menu, or it can even be bound to a
+  keybinding when in `org-mode'. It is up to you.
+
+  ,----
+  | (define-skeleton org-header-skeleton
+  |   "Header for my org files, mainly for blog posts"
+  |   nil
+  |   "#+title: " (skeleton-read "Document title: ") "\n"
+  |   "#+author: " user-full-name "\n"
+  |   ;; "#+EMAIL: " user-mail-address "\n"
+  |   "#+date: " (format-time-string "%Y-%m-%d") "\n"
+  |   "#+setupfile: blog.config")
+  `----
+
+  Note that skeletons are not restricted to Org mode. For example,
+  `org-header-skeleton' could be used in `c-mode', for example, even
+  though it makes no sense. This means that skeletons are mode
+  independent.
+
+
+6.3 Org modern (`org-modern')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  The `org-modern' package gives Org documents a really nice look: it
+  replaces the header asterisks with nice Unicode characters, blocks get
+  a UI rather than a textual look, et cet. You should have a look at the
+  [`org-modern' repository].
+
+  ,----
+  | (use-package org-modern
+  |   :ensure t
+  |   :defer t
+  |   :hook (org-mode . org-modern-mode))
+  `----
+
+
+[`org-modern' repository] <https://github.com/minad/org-modern>
+
+
+6.4 Zen mode (`olivetti')
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package olivetti
+  |   :ensure t
+  |   :defer t
+  |   ;; :hook (org-mode . olivetti-mode)
+  |   )
+  `----
+
+
+6.5 Proportional fonts (`mixed-pitch')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package mixed-pitch
+  |   :ensure t
+  |   :hook (text-mode . mixed-pitch-mode))
+  `----
+
+
+6.6 Exporting
+~~~~~~~~~~~~~
+
+6.6.1 to LaTeX
+--------------
+
+* 6.6.1.1 Syntax highlighting with `minted'
+
+  Minted is a LaTeX package that adds syntax highlighting to code
+  blocks.
+  ,----
+  | (setq org-latex-src-block-backend 'minted
+  |       org-latex-packages-alist '(("" "minted"))
+  |       org-latex-pdf-process
+  |       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+  |         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+  `----
+
+
+7 Nicities
+==========
+
+  The following sections configure packages that, whilst not necessary,
+  make the /Emacs experience/ much better.
+
+
+7.1 Update copyright notice on file save
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  When working on some projects, there is a copyright notice in every
+  file. When you edit the file, the copyright notice should also be
+  updated if the year has changed. To do so, we can hook
+  `copyright-update' to before saving the file
+
+  ,----
+  | (setq copyright-query nil)              ; Don't ask
+  | (add-hook 'before-save-hook #'copyright-update)
+  `----
+
+
+7.2 Save the session
+~~~~~~~~~~~~~~~~~~~~
+
+  When using `consult' (see [here]), there is no need to restore the
+  session, as I can search the recently opened files and bookmarks. It
+  also doubles the startup time of Emacs.
+
+  ,----
+  | ;; (desktop-save-mode 1)
+  `----
+
+
+[here] See section 7.7
+
+
+7.3 Auto close and colorise parentheses, brackets, et cet. (`electric-pair-mode')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Having auto-closing parentheses and coloured pairs of them is a must
+  for some. I have put this section under "Nicities" because I can
+  program without it, although the experience is not pleasant.
+
+  As far as I know, `electric-pair-mode' comes with Emacs. What is does
+  is it autocompletes parentheses: you insert `(' and it adds `)' so
+  that `(| ===> (|)', where the bar is the cursor. It does the same with
+  other pairs of characters like brackets or quotes.
+
+  ,----
+  | (electric-pair-mode 1)
+  `----
+
+  Some languages, especially Lisps, make a heavy use of parentheses to
+  denote scope, and so it can be hard to keep track of parenthesis
+  mismatch. With colours, you don't have to count them, just see the
+  rainbow pattern.
+
+  ,----
+  | (use-package rainbow-delimiters
+  |   :ensure t
+  |   :defer t
+  |   :hook (prog-mode . rainbow-delimiters-mode))
+  `----
+
+
+7.4 Ligatures
+~~~~~~~~~~~~~
+
+  With the [font I'm using], not all but most of the ligatures below
+  work. As far as I know, all Iosevka and Cascadia Code ligatures are
+  included in this list.
+
+  ,----
+  | (use-package ligature
+  |   :ensure t
+  |   :hook (after-init . global-ligature-mode)
+  |   :config
+  |   (ligature-set-ligatures
+  |    't
+  |    '("!!" "!!." "!=" "!==" "#!" "##" "###" "####" "#(" "#:" "#=" "#?" "#[" "#_" "#_(" "#{" "$>" "%%" "&&" "(*" "*)" "**" "***" "*/" "*>" "++" "+++" "+:" "+>" "--" "---" "--->" "-->" "-:" "-<" "-<<" "->" "->>" "-|" "-~" ".-" ".." "..." "..<" ".=" ".?" "/*" "//" "///" "/=" "/==" "/>" ":+" ":-" "://" "::" ":::" "::=" ":<" ":=" ":>" ";;" "<!--" "<!---" "<$" "<$>" "<*" "<******>" "<*>" "<+" "<+>" "<-" "<--" "<---" "<---->" "<--->" "<-->" "<-<" "<->" "</" "</>" "<:" "<<" "<<-" "<<<" "<<=" "<=" "<=<" "<==" "<===" "<====>" "<===>" "<==>" "<=>" "<>" "<|" "<|>" "<||" "<|||" "<~" "<~>" "<~~" "=!=" "=/=" "=:" "=:=" "=<<" "==" "===" "===>" "==>" "=>" "=>>" ">-" ">->" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "?." "?:" "?=" "??" "[|" "\\\\" "]#" "^=" "__" "_|_" "www" "{|" "|-" "|=" "|>" "|]" "||" "||=" "||>" "|||>" "|}" "~-" "~=" "~>" "~@" "~~" "~~>")))
+  `----
+
+
+[font I'm using] See section 3.3
+
+
+7.5 TODO, NOTE, FIXME, BUG, ... (`hl-todo')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package hl-todo
+  |   :defer t
+  |   :ensure t
+  |   :hook (prog-mode . hl-todo-mode))
+  `----
+
+
+7.6 Better `M-x' completion (`vertico' & co.)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package vertico
+  |   :ensure t
+  |   :config
+  |   (setq vertico-cycle t)
+  |   (vertico-mode))
+  | 
+  | (use-package savehist
+  |   :ensure t
+  |   :config
+  |   (savehist-mode))
+  | 
+  | (use-package orderless
+  |   :ensure t
+  |   :config
+  |   (setq completion-styles '(orderless flex)
+  |         completion-category-overrides '((eglot (styles . (orderless flex))))))
+  | 
+  | (use-package marginalia
+  |   :ensure t
+  |   :config
+  |   (marginalia-mode))
+  `----
+
+
+7.7 Search everything (`consult')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Preview files, and search open buffers, recently opened files,
+  bookmarks, ... all in one place
+
+  ,----
+  | (use-package consult
+  |   :ensure t
+  |   :bind (("M-g o" . 'consult-recent-file)
+  |          ("M-g s" . 'consult-line-multi)
+  |          ("M-g m" . 'consult-man))
+  |   :config
+  |   (recentf-mode))
+  `----
+
+
+7.8 Icons with `dired' integration (`nerd-icons')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package nerd-icons
+  |   :ensure t)
+  | 
+  | (use-package nerd-icons-dired
+  |   :ensure t
+  |   :hook (dired-mode . nerd-icons-dired-mode))
+  `----
+
+
+7.9 Custom modeline (`doom-modeline')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  The default mode line is not bad; it does the job of showing the
+  status of the buffer. If you want something more, `doom-modeline'
+  might be good. It is more full-featured than `simple-modeline'
+  ([link]), which is more minimalistic and is what I was using before.
+
+  The only thing I change from Doom's modeline is the right bar that it
+  has, I find it annoying, so I remove it.
+
+  ,----
+  | (use-package doom-modeline
+  |   :ensure t
+  |   :hook (after-init . doom-modeline-mode)
+  |   :config
+  |   (setq doom-modeline-bar-width 0)
+  |   (column-number-mode 1))
+  `----
+
+  Another interesting alternative is `mini-echo-mode' ([link]), which
+  collapses the modeline and minibuffer into a single line.
+
+
+[link] <https://github.com/gexplorer/simple-modeline>
+
+[link] <https://github.com/liuyinz/mini-echo.el>
+
+
+7.10 Show possible key bindings (`which-key')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  `which-key' implements a menu that appears after a certain amount of
+  time when sa half-pressed keybinding is entered, showing all the
+  possible /routes/ or functions you can perform from there.
+
+  ,----
+  | (use-package which-key
+  |   :ensure t
+  |   :hook (after-init . which-key-mode))
+  `----
+
+
+7.11 Fold code (`yafolding')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Being able to fold regions of code is a feature that is quintessential
+  for any modern source code editor. `yafolding' figures out the fold
+  regions through indentation, so it is language agnostic. I do not
+  customise the key bindings or any other setting -- they are perfect
+  right out of the box for me. Below I leave the default key bindings:
+
+   `C-RET'    Folds the current scope 
+   `C-S-RET'  Folds the parent        
+   `C-M-RET'  Folds the entire buffer 
+
+  ,----
+  | (use-package yafolding
+  |   :ensure t
+  |   :hook (prog-mode . yafolding-mode))
+  `----
+
+
+7.12 Transpose windows (`transpose-frame')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  I don't like the name of this package, but it works.
+
+  ,----
+  | (use-package transpose-frame
+  |   :bind ("M-g t w" . transpose-frame))
+  `----
+
+
+7.13 Switch case of identifiers (`string-inflection')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package string-inflection
+  |   :bind ("M-s M-s" . string-inflection-all-cycle))
+  `----
+
+
+7.14 Transpose lines
+~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package move-text
+  |   :config
+  |   (move-text-default-bindings))
+  `----

@@ -1,0 +1,127 @@
+                            ________________
+
+                              EMACS THEMES
+
+                             Ronaldo Gligan
+                            ________________
+
+
+                               2024-03-30
+
+
+Table of Contents
+_________________
+
+1. The Ellas Theme
+2. The Somnus Theme
+3. Monokate theme
+
+
+This page contains a collection of Emacs themes that I've developed or
+ported from other editors (specifically Monokate, see below).
+
+I have a very straightforward approach to making themes: I start with
+nothing and build up, I use my themes while coding or writing and what
+irritates me, I fix. The source code of the themes I present below is
+very simple to comprehend and, if you want to modify or use any of my
+themes as a template, you can easily do so.
+
+I have to say that none of my themes have any kind of versioning: they
+are taken directly from what I use for my Emacs. If you want to get the
+latest version, use the links to the Emacs Lisp file for each theme to
+do so -- I intend to make those URLs static, so you can fetch them
+periodically.
+
+If, for any reason, you have a question or suggestion, you can [contact
+me through email].
+
+------------------------------------------------------------------------
+
+You may want to have available on your system all of my themes, but
+they're not in any official package repository like Melpa. You can
+obtain all of my Emacs themes through this command:
+
+,----
+| export EMACS_THEMES_DIR=$HOME/.emacs.d/ && curl -s https://gligan.net/emacs-themes.sh | sh
+`----
+
+If you have your Emacs themes in a different folder, change
+`EMACS_THEMES_DIR' accordingly -- you should know what you're doing if
+you have a custom themes folder.
+
+------------------------------------------------------------------------
+
+
+[contact me through email]
+<mailto:ronaldogligan@outlook.com?subject=Question or Suggestion about
+one of your Emacs themes>
+
+
+1 The Ellas Theme
+=================
+
+  <https://gligan.net/ellas.png>
+
+  [`https://gligan.net/ellas-theme.el']
+
+  Ellas is a charming, light, having somewhat of a pastel palette, theme
+  with colours inspired by a trip I made to Greece.
+
+  This is the first theme I have made from scratch. My eye says that the
+  contrast of Ellas is enough --not great-- but very usable and not
+  eye-straining, which is one of my main concerns; I hate when pure
+  `#000000' black fights directly with `#ffffff' white. I think I have
+  done a god job. Still, you are not me. If you think I should improve
+  some part of this theme, plase let me know.
+
+
+[`https://gligan.net/ellas-theme.el']
+<https://gligan.net/ellas-theme.el>
+
+
+2 The Somnus Theme
+==================
+
+  <https://gligan.net/somnus.png>
+
+  [`https://gligan.net/somnus-theme.el']
+
+  Somnus is a calming blue and yellow theme inspired on the idea of
+  sleep, of being comfortable. It has more contrast than Monokate,
+  though.
+
+  This is my main dark theme. I made it so I have a pair of light and
+  dark themes; namely Ellas and Somnus.
+
+
+[`https://gligan.net/somnus-theme.el']
+<https://gligan.net/somnus-theme.el>
+
+
+3 Monokate theme
+================
+
+  <https://gligan.net/monokate.png>
+
+  [`https://gligan.net/monokate-theme.el']
+
+  Long ago I used Sublime Text as my main code editor -- it is still a
+  pretty good program; but, shamefully, it is proprietary software, and
+  that is not in keeping with my ideals. At that time I discovered a
+  "repository" of themes called [Colorsublime], which I thought and
+  still think has a great selection of themes. The one I used was
+  [Monokate]. When I finally switched to Emacs I was in need of a theme
+  like Monokate. Fortunately, I didn't found any, so I wrote this port.
+
+  Please note that this port I've made is not a 100% replica of
+  Colorsublime's Monokate because I felt the need to add more colors to
+  make the theme more complete. However, I believe that the /vibes/ of
+  the original Monokate are kept with this port.
+
+
+[`https://gligan.net/monokate-theme.el']
+<https://gligan.net/monokate-theme.el>
+
+[Colorsublime] <https://colorsublime.github.io/>
+
+[Monokate] <https://colorsublime.github.io/themes/MonoKate/>
