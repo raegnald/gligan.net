@@ -42,14 +42,9 @@ pre {
 
 /* Main content */
 
-#content {
+#preamble, #content, #postamble {
   margin: 0 auto;
-}
-
-
-#preamble, #postamble {
-  padding: 50px;
-  margin: 0 auto;
+  padding: 20px;
 }
 
 /* Preamble */
@@ -142,8 +137,6 @@ pre {
   cursor: pointer;
 }
 
-.section-number-2 pre, .section-number-3 pre, .section-number-4 pre,
-.section-number-5 pre, .section-number-6 pre,
 .note::before, .warning::before {
   margin-left: -20px;
   padding-left: 20px;
