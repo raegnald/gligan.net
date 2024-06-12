@@ -7,7 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://gligan.net/fonts/iosevka-comfy-motion.css');
 
-html {
+html, body {
   font-family: "IBM Plex Serif", serif;
   min-height: 100vh;
   margin: 0;
