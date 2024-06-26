@@ -101,8 +101,7 @@
         zig-mode)
          . lsp-deferred)
   :config
-  (setq lsp-headerline-breadcrumb-enable nil
-        lsp-response-timeout 1))        ; in seconds, makes everything snappier
+  (setq lsp-headerline-breadcrumb-enable nil))
 
 (use-package lsp-ui
   :ensure t)
@@ -113,11 +112,7 @@
   (corfu-cycle t)
   (corfu-auto nil)
   :init
-  (global-corfu-mode)
-  :config
-  (setq-local corfu-auto        t
-              corfu-auto-delay  0
-              corfu-auto-prefix 1))
+  (global-corfu-mode))
 
 (use-package irony-eldoc
   :ensure t

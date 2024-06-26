@@ -3,15 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/" lang="en" xml:lang="en">
 <head>
-<!-- 2024-06-13 Thu 07:01 -->
+<!-- 2024-06-26 Wed 13:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
 <meta name="author" content="Ronaldo Gligan" />
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" type="text/css" href="gligan-org.css" />
-<script src="gligan-fold.js"></script>
-<script src="/home/ronaldo/Documents/Org/gligan-fold.js"></script>
+<link rel="stylesheet" type="text/css" href="/gligan-org.css" />
+<script src="/gligan-fold.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -101,7 +100,7 @@
 </div>
 </div>
 
-<div id="org58091de" class="figure">
+<div id="org9ae5fd5" class="figure">
 <p><img src="https://gligan.net/ellas.png" alt="ellas.png" />
 </p>
 </div>
@@ -112,7 +111,7 @@ instead of reading the whole page sequentially. There is also a
 <a href="#org3846901">reference table</a> containing all of custom key bindings.
 </p>
 
-<div class="note" id="orge017931">
+<div class="note" id="org35a51a2">
 <p>
 This text assumes that you are using a Red Hat GNU/Linux distribution
 with certain tools installed. When problems or requirements arise, be
@@ -648,8 +647,7 @@ between those two hours, then the light theme is set.
         zig-mode<span style="color: #909183;">)</span>
          . lsp-deferred<span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> lsp-headerline-breadcrumb-enable nil
-        lsp-response-timeout 1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>        <span style="color: #6b6757; font-style: italic;">; </span><span style="color: #898442; font-style: italic;">in seconds, makes everything snappier</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> lsp-headerline-breadcrumb-enable nil<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
 <span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">lsp-ui</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t<span style="color: #707183;">)</span>
@@ -668,11 +666,7 @@ between those two hours, then the light theme is set.
   <span style="color: #7388d6;">(</span>corfu-cycle t<span style="color: #7388d6;">)</span>
   <span style="color: #7388d6;">(</span>corfu-auto nil<span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:init</span>
-  <span style="color: #7388d6;">(</span>global-corfu-mode<span style="color: #7388d6;">)</span>
-  <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq-local</span> corfu-auto        t
-              corfu-auto-delay  0
-              corfu-auto-prefix 1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+  <span style="color: #7388d6;">(</span>global-corfu-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>

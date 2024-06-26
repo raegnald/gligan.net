@@ -78,7 +78,7 @@ pre {
   #preamble, #content, #postamble {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px !important;
+    padding: 50px 100px !important;
   }
 
   #table-of-contents, .margin {
@@ -120,6 +120,15 @@ pre {
   #content > *:not(#table-of-contents) {
     max-width: 800px;
   }
+
+  .section-number-2::before, .section-number-3::before, .section-number-4::before,
+  .section-number-5::before, .section-number-6::before {
+    color: #d3c3b6;
+    position: absolute;
+    left: 70px;
+    margin-top: 0.3ex;
+  }
+
 }
 
 /* Emulating Org-mode tabulations for sections and some blocks */
@@ -138,6 +147,14 @@ pre {
   padding: 0 10px !important;
 }
 
+.section-number-2::before, .section-number-3::before, .section-number-4::before,
+.section-number-5::before, .section-number-6::before {
+  content: "▾";
+  font-size: 15px;
+  padding-right: 10px;
+}
+
+
 .section-number-2, .section-number-3, .section-number-4,
 .section-number-5, .section-number-6 {
   cursor: pointer;
@@ -146,17 +163,6 @@ pre {
 .note::before, .warning::before {
   margin-left: -20px;
   padding-left: 20px;
-}
-
-.section-number-2::before, .section-number-3::before, .section-number-4::before,
-.section-number-5::before, .section-number-6::before {
-  content: "▾";
-  color: #d3c3b6;
-  position: absolute;
-  font-size: 15px;
-  margin-top: 0.3ex;
-  left: 20px;
-  padding-right: 10px;
 }
 
 .section-collapsed::before {
