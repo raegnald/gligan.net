@@ -1,110 +1,104 @@
-(setq user-full-name "Ronaldo Gligan"
-      user-mail-address "ronaldogligan@outlook.com")
+(defun display-startup-echo-area-message ()
+  (message "%s seconds with %d collections"
+           (emacs-init-time "%.2f")
+           gcs-done))
 
-(defun gligan/today ()
-  "Insert today's date as YYYY-MM-DD"
-  (interactive) 
-  (insert (format-time-string "%Y-%m-%d")))
-
-(global-set-key (kbd "M-g d") 'gligan/today)
-
-(defun gligan/open-terminal-emulator ()
-  "Tries to open the first one available: vterm, eshell, term"
-  (interactive)
-  (cond
-   ((package-installed-p 'vterm)
-    (vterm))
-   ((package-installed-p 'eshell)
-    (eshell))
-   (t
-    (term))))
-
-(global-set-key (kbd "M-g e") 'gligan/open-terminal-emulator)
-
-;; Window transparency
-(set-frame-parameter (selected-frame) 'alpha-background 95)
-
-;; Use two spaces
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
+
 (delete-selection-mode 1)
 
 (global-subword-mode)
 
-;; Use a small bar as a cursor
+(column-number-mode 1)
+(size-indication-mode)
+
+(setq-default word-wrap t)
+
+(setq confirm-kill-emacs 'y-or-n-p)
+
+(pixel-scroll-precision-mode 1)
+
 (setq-default cursor-type 'bar)
 
-;; I don't like line numbers
-(setq display-line-numbers-type nil)
-
 ;; No welcome message; no scratch buffer message
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
+(setq inhibit-startup-message t
+      inhibit-startup-screen t
+      initial-scratch-message nil)
 
-;; C is more suitable as a default mode to me
-(setq initial-major-mode 'c-mode)
-
-;; Auto-save & back up files
-(setq auto-save-default t
-      make-backup-files t)
-
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-(defun display-startup-echo-area-message ()
-  (message "%s with %d collections"
-       (format "%.2f seconds"
-               (float-time
-                (time-subtract after-init-time before-init-time)))
-       gcs-done))
-
-(setq gligan/fixed-pitch-font "Iosevka Comfy Motion"
-      gligan/mixed-pitch-font "Iosevka Comfy Motion Duo"
-      gligan/default-font-size 130)
-
-(defun gligan/set-font-when-available (face font height)
-  (if (member font (font-family-list))
-      (set-face-attribute face nil
-                          :family font
-                          :height height)
-    (message (concat font " not available"))))
-
-(gligan/set-font-when-available 'default
-                                gligan/fixed-pitch-font
-                                gligan/default-font-size)
-(gligan/set-font-when-available 'fixed-pitch
-                                gligan/fixed-pitch-font
-                                gligan/default-font-size)
-(gligan/set-font-when-available 'variable-pitch
-                                gligan/mixed-pitch-font
-                                gligan/default-font-size)
-
-(defun gligan/org-mode-font-setup ()
-  ;; These numbers below define the proportions of the org mode
-  ;; headers in contrast to the paragraph text.
-  (dolist (face '((org-document-title . 1.8)
-                  (org-level-1        . 1.3)
-                  (org-level-2        . 1.2)
-                  (org-level-3        . 1.1)))
-    (set-face-attribute (car face) nil
-                        :font gligan/mixed-pitch-font
-                        :weight 'regular
-                        :height (cdr face))))
-
-(use-package lsp-mode
+(use-package mixed-pitch
   :ensure t
-  :hook ((c-mode                        ; Alphabetically ordered
-        haskell-mode
-        nim-mode
-        python-mode
-        rust-mode
-        tuareg-mode
-        zig-mode)
-         . lsp-deferred)
-  :config
-  (setq lsp-headerline-breadcrumb-enable nil))
+  :defer 3
+  :defer t
+  :hook (text-mode . mixed-pitch-mode))
 
-(use-package lsp-ui
-  :ensure t)
+(use-package dired
+  ;; :hook (dired-mode-hook . 'dired-hide-details-mode)
+  :config
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (setq dired-hide-details-hide-symlink-targets nil)
+  (setq dired-listing-switches "-lah"))
+
+(global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c x") 'recompile)
+
+(when (equal system-type 'darwin)
+  (set-frame-parameter nil 'ns-transparent-titlebar 't))
+
+(defun gligan/toggle-theme ()
+  "Toggle between the system's light and dark modes"
+  (interactive)
+  ;; Mac OS
+  (when (equal system-type 'darwin)
+    (do-applescript
+     "tell application \"System Events\"
+        tell appearance preferences
+          set dark mode to not dark mode
+        end tell
+      end tell")))
+
+(global-set-key (kbd "M-g t t") 'gligan/toggle-theme)
+
+(use-package auto-dark
+  :ensure t
+  :config
+  (setq auto-dark-light-theme gligan/light-theme)
+  (setq auto-dark-dark-theme gligan/dark-theme)
+
+  (auto-dark-mode t))
+
+(set-face-attribute 'default nil
+                    :family gligan/fixed-pitch-font
+                    :height gligan/fixed-pitch-font-size)
+(set-face-attribute 'fixed-pitch nil
+                    :family gligan/fixed-pitch-font
+                    :height gligan/fixed-pitch-font-size)
+(set-face-attribute 'variable-pitch nil
+                    :family gligan/variable-pitch-font
+                    :height gligan/variable-pitch-font-size)
+
+(use-package ligature
+  :ensure t
+  :hook (after-init . global-ligature-mode)
+  :config
+  (ligature-set-ligatures
+   't
+   '("!!" "!!." "!=" "!==" "#!" "##" "###" "####" "#(" "#:" "#=" "#?" "#[" "#_" "#_(" "#{" "$>" "%%" "&&" "(*" "*)" "**" "***" "*/" "*>" "++" "+++" "+:" "+>" "--" "---" "--->" "-->" "-:" "-<" "-<<" "->" "->>" "-|" "-~" ".-" ".." "..." "..<" ".=" ".?" "/*" "//" "///" "/=" "/==" "/>" ":+" ":-" "://" "::" ":::" "::=" ":<" ":=" ":>" ";;" "<!--" "<!---" "<$" "<$>" "<*" "<******>" "<*>" "<+" "<+>" "<-" "<--" "<---" "<---->" "<--->" "<-->" "<-<" "<->" "</" "</>" "<:" "<<" "<<-" "<<<" "<<=" "<=" "<=<" "<==" "<===" "<====>" "<===>" "<==>" "<=>" "<>" "<|" "<|>" "<||" "<|||" "<~" "<~>" "<~~" "=!=" "=/=" "=:" "=:=" "=<<" "==" "===" "===>" "==>" "=>" "=>>" ">-" ">->" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "?." "?:" "?=" "??" "[|" "\\\\" "]#" "^=" "__" "_|_" "www" "{|" "|-" "|=" "|>" "|]" "||" "||=" "||>" "|||>" "|}" "~-" "~=" "~>" "~@" "~~" "~~>")))
+
+(use-package eglot
+  :ensure t
+  :defer t
+  :hook ((c++-mode
+          c-mode
+          haskell-mode
+          nim-mode
+          python-mode
+          rust-mode
+          tuareg-mode
+          zig-mode)
+         . eglot-ensure)
+  :custom
+  (eglot-autoshutdown t))
 
 (use-package corfu
   :ensure t
@@ -117,11 +111,6 @@
 (use-package irony-eldoc
   :ensure t
   :defer t)
-
-(use-package haskell-mode
-  :ensure t
-  :defer t
-  :config)
 
 (use-package tuareg
   :ensure t
@@ -149,101 +138,71 @@
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
-(use-package zig-mode
-  :ensure t
-  :defer t)
-
-(use-package nim-mode
-  :ensure t
-  :defer t)
-
-(use-package fish-mode
+(use-package sml-mode
   :config
-  (setq fish-indent-offset 2))
+  (setq sml-indent-level 2
+        sml-indent-args  2))
 
-(use-package css-mode
+(use-package zig
+  :defer t
   :config
-  (setq css-indent-offset 2))
+  (setq zig-format-on-save nil))
 
-(defun gligan/tangle-only-org ()
-  (when (equal major-mode 'org-mode)
-    (org-babel-tangle)))
+(setq sh-basic-offset 2)
+
+(setq fish-indent-offset 2)
+
+(setq css-indent-offset 2)
+
+(defun gligan/org-mode-font-setup ()
+  (dolist (face '((org-document-title . 1.8)
+                  (org-level-1        . 1.3)
+                  (org-level-2        . 1.2)
+                  (org-level-3        . 1.1)))
+    (set-face-attribute (car face) nil
+                        :font gligan/variable-pitch-font
+                        :weight 'regular
+                        :height (cdr face))))
 
 (use-package org
-  :hook ((org-mode   . gligan/org-mode-font-setup)
-         (after-save . gligan/tangle-only-org)) ; Auto tangle on save
-                                                ; only in Org buffers
+  :hook (org-mode . gligan/org-mode-font-setup)
   :config
-  (setq org-directory "~/Documents/Org/")
+  (setq org-directory 'gligan/org-documents-folder)
 
-  (setq org-hide-emphasis-markers t)
+  ;; (setq org-hide-emphasis-markers t)
   (setq org-startup-folded 'fold)
   (setq org-startup-indented t)
+  (setq org-highlight-latex-and-related '(latex))
 
-  (setq org-confirm-babel-evaluate nil)
+  (setq org-confirm-babel-evaluate nil))
 
-  (setq org-preview-latex-default-process 'dvipng))
-
-(use-package org-journal
-  :ensure t
-  :bind (("M-g j j" . 'org-journal-new-entry)
-         ("M-g j s" . 'org-journal-search-forever))
+(use-package org-roam
+  ;; :after org
+  :custom
+  (org-roam-directory (file-truename gligan/org-roam-folder))
   :config
-  (setq org-journal-dir "~/Documents/Org/Journal/"
-        org-journal-date-format "%A, %d %B %Y")) ; e.g. "Friday, 8 March 2024")
-
-(define-skeleton org-header-skeleton
-  "Header for my org files, mainly for blog posts"
-  nil
-  "#+title: " (skeleton-read "Document title: ") "\n"
-  "#+author: " user-full-name "\n"
-  ;; "#+EMAIL: " user-mail-address "\n"
-  "#+date: " (format-time-string "%Y-%m-%d") "\n"
-  "#+setupfile: blog.config")
+  (org-roam-db-autosync-mode)
+  :bind (("C-c n f" . org-roam-node-find)
+         ("C-c n r" . org-roam-node-random)		    
+         (:map org-mode-map
+               (("C-c n i" . org-roam-node-insert)
+                ("C-c n o" . org-id-get-create)
+                ("C-c n t" . org-roam-tag-add)
+                ("C-c n a" . org-roam-alias-add)
+                ("C-c n l" . org-roam-buffer-toggle)))))
 
 (use-package org-modern
   :ensure t
   :defer t
   :hook (org-mode . org-modern-mode))
 
-(use-package olivetti
-  :ensure t
-  :defer t
-  ;; :hook (org-mode . olivetti-mode)
-  )
-
-(use-package mixed-pitch
-  :ensure t
-  :hook (text-mode . mixed-pitch-mode))
-
-(setq org-latex-src-block-backend 'minted
-      org-latex-packages-alist '(("" "minted"))
-      org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-(setq copyright-query nil)              ; Don't ask
-(add-hook 'before-save-hook #'copyright-update)
-
 (electric-pair-mode 1)
 
 (use-package rainbow-delimiters
+  :defer 3
   :ensure t
   :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package ligature
-  :ensure t
-  :hook (after-init . global-ligature-mode)
-  :config
-  (ligature-set-ligatures
-   't
-   '("!!" "!!." "!=" "!==" "#!" "##" "###" "####" "#(" "#:" "#=" "#?" "#[" "#_" "#_(" "#{" "$>" "%%" "&&" "(*" "*)" "**" "***" "*/" "*>" "++" "+++" "+:" "+>" "--" "---" "--->" "-->" "-:" "-<" "-<<" "->" "->>" "-|" "-~" ".-" ".." "..." "..<" ".=" ".?" "/*" "//" "///" "/=" "/==" "/>" ":+" ":-" "://" "::" ":::" "::=" ":<" ":=" ":>" ";;" "<!--" "<!---" "<$" "<$>" "<*" "<******>" "<*>" "<+" "<+>" "<-" "<--" "<---" "<---->" "<--->" "<-->" "<-<" "<->" "</" "</>" "<:" "<<" "<<-" "<<<" "<<=" "<=" "<=<" "<==" "<===" "<====>" "<===>" "<==>" "<=>" "<>" "<|" "<|>" "<||" "<|||" "<~" "<~>" "<~~" "=!=" "=/=" "=:" "=:=" "=<<" "==" "===" "===>" "==>" "=>" "=>>" ">-" ">->" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "?." "?:" "?=" "??" "[|" "\\\\" "]#" "^=" "__" "_|_" "www" "{|" "|-" "|=" "|>" "|]" "||" "||=" "||>" "|||>" "|}" "~-" "~=" "~>" "~@" "~~" "~~>")))
-
-(use-package hl-todo
-  :defer t
-  :ensure t
-  :hook (prog-mode . hl-todo-mode))
 
 (use-package vertico
   :ensure t
@@ -267,42 +226,35 @@
   :config
   (marginalia-mode))
 
-(use-package consult
-  :ensure t
-  :bind (("M-g o" . 'consult-recent-file)
-         ("M-g s" . 'consult-line-multi)
-         ("M-g m" . 'consult-man))
-  :config
-  (recentf-mode))
-
 (use-package nerd-icons
+  :defer 2
   :ensure t)
 
 (use-package nerd-icons-dired
+  :defer 2
   :ensure t
   :hook (dired-mode . nerd-icons-dired-mode))
 
-(use-package doom-modeline
+(use-package nerd-icons-corfu
+  :defer 2
   :ensure t
-  :hook (after-init . doom-modeline-mode)
+  :after corfu
   :config
-  (setq doom-modeline-bar-width 0)
-  (column-number-mode 1))
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package which-key
   :ensure t
-  :hook (after-init . which-key-mode))
+  :defer 2
+  :config
+  (which-key-mode))
 
 (use-package yafolding
   :ensure t
+  :defer 8
   :hook (prog-mode . yafolding-mode))
 
-(use-package transpose-frame
-  :bind ("M-g t w" . transpose-frame))
+(use-package pulsar
+  :ensure t
+  :hook (after-init-mode . pulsar-global-mode))
 
-(use-package string-inflection
-  :bind ("M-s M-s" . string-inflection-all-cycle))
-
-(use-package move-text
-  :config
-  (move-text-default-bindings))
+(setq gc-cons-threshold (* 2 1024 1024))
