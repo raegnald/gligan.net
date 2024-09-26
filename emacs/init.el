@@ -8,7 +8,7 @@
 ;;; Code:
 
 ;; The looks
-(load-theme 'leuven-dark t)
+(load-theme 'wombat t)
 (setq-default cursor-type 'bar)
 
 ;; Minimalistic appereance
@@ -29,7 +29,6 @@
 (setq initial-major-mode 'c-mode)
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq use-short-answers t)
-(pixel-scroll-precision-mode 1)
 (column-number-mode 1)
 (size-indication-mode)
 
@@ -42,7 +41,8 @@
   (setq mac-command-modifier       'meta
         mac-option-modifier        'alt
         mac-right-option-modifier  nil
-        mac-pass-control-to-system nil))
+        mac-pass-control-to-system nil)
+  (pixel-scroll-precision-mode 1))
 
 ;; Serif font in text buffers
 (add-hook 'text-mode-hook #'variable-pitch-mode)
