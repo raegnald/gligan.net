@@ -19,7 +19,7 @@
 ;; Font size (expressed in 10 * points per inch)
 (set-face-attribute 'default nil :height 150)
 
-;; Good (better) default behaviour
+;; Better default behaviours
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 (electric-pair-mode)
@@ -30,7 +30,7 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq use-short-answers t)
 (column-number-mode 1)
-(size-indication-mode)
+(size-indication-mode 1)
 
 (setq inhibit-startup-message t
       inhibit-startup-screen t
@@ -56,3 +56,7 @@
 ;; to their "normal" keybindings (those used by virtually all
 ;; programs).
 (cua-mode)
+
+;; Everyone feel how good pixel scrolling is
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
