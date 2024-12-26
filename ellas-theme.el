@@ -1,4 +1,4 @@
-;;; ellas-theme.el-theme.el --- ellas-theme.el
+;;; ellas-theme.el --- A trip to Greece
 ;;; Version: 1.0
 ;;; Commentary:
 ;;; Ellas is an Emacs theme inspired by a trip made to Greece
@@ -10,8 +10,7 @@
       (bleached-silk        "#f6f6f5")
 
       (athens-sculpture-1   "#d3c3b6")
-      (athens-sculpture-2   "#d3c3b6")
-      (athens-sculpture-3   "#f1e7de")
+      (athens-sculpture-2   "#f1e7de")
 
       (warm-grey            "#59574c")
       (street-black         "#2a241f")
@@ -62,29 +61,38 @@
 
    `(fringe ((t (:background ,main-bg))))
 
-   `(mode-line ((t (:foreground ,main-fg :background ,athens-sculpture-1 ))))
-   `(mode-line-inactive ((t (:background ,athens-sculpture-3 ))))
-   `(mode-line-buffer-id ((t (:bold t :color ,ellas-blue ))))
+   `(mode-line-active ((t (:foreground ,main-fg :background ,athens-sculpture-1
+                                       :box (:line-width 1 :color ,athens-sculpture-1)
+                                       ))))
+   `(mode-line-inactive ((t (:background ,athens-sculpture-2
+                                         :box (:line-width 1 :color ,athens-sculpture-1 )
+                                         ;; :overline ,athens-sculpture-1
+                                         ;; :underline ,athens-sculpture-1
+                                         ))))
+   `(mode-line-buffer-id ((t (:foreground ,ellas-blue :bold t ))))
 
    `(vertical-border ((t (:foreground ,athens-sculpture-1 ))))
 
    `(font-lock-builtin-face ((t (:foreground ,tourist-shoes-brown :bold t ))))
+   `(font-lock-preprocessor-face ((t (:foreground ,tourist-shoes-brown :bold t ))))
    `(font-lock-comment-face ((t (:foreground ,olive-green :slant italic ))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,aged-jade :slant italic ))))
    `(font-lock-doc-face ((t (:foreground ,agora-tile-red ))))
-   `(font-lock-punctuation-face ((t (:foreground ,aged-jade )))) ; Seems it's not working
-   `(font-lock-function-name-face ((t (:foreground ,sky-blue-athens ))))
+   `(font-lock-doc-markup-face ((t (:foreground ,aged-jade ))))
+   `(font-lock-punctuation-face ((t (:foreground ,aged-jade ))))
+   `(font-lock-type-face ((t (:foreground ,olive-green-darker ))))
+   `(font-lock-function-name-face ((t (:foreground ,sky-blue-athens :bold t ))))
+   `(font-lock-variable-name-face ((t (:foreground ,sky-blue-athens ))))
    `(font-lock-keyword-face ((t (:foreground ,dark-neon-blue ))))
    `(font-lock-string-face ((t (:foreground ,agora-tile-red ))))
    `(font-lock-escape-face ((t (:foreground ,olive-green ))))
+   `(font-lock-negation-char-face ((t (:foreground ,agora-tile-red ))))
    `(font-lock-number-face ((t (:foreground ,sky-blue-athens ))))
-   `(font-lock-type-face ((t (:foreground ,olive-green-darker ))))
    `(font-lock-constant-face ((t (:foreground ,charming-red ))))
-   `(font-lock-variable-name-face ((t (:foreground ,sky-blue-athens ))))
+   `(font-lock-regexp-face ((t (:foreground ,agora-tile-red ))))
    `(font-lock-warning-face ((t (:foreground ,charming-red :bold t ))))
 
    `(minibuffer-prompt ((t (:foreground ,sky-blue-athens :bold t ))))
-   '(hl-line ((t (:inherit nil :extend t))))
 
    '(italic ((t (:slant italic :underline nil))))
 
@@ -101,15 +109,29 @@
    ;; Org mode
    `(org-code ((t (:foreground ,sky-blue-athens ))))
    `(org-verbatim ((t (:foreground ,olive-green ))))
-   `(org-block ((t (:background ,athens-sculpture-3 ))))
+   `(org-block ((t (:background ,athens-sculpture-2 ))))
 
    ;; Key cast package
    `(keycast-key ((t (:box nil :foreground ,bleached-silk :background ,warm-grey ))))
 
    ;; Corfu package
-   `(corfu-current ((t (:background ,athens-sculpture-2 ))))
+   `(corfu-current ((t (:background ,athens-sculpture-1 ))))
    `(corfu-border ((t (:background ,athens-sculpture-1 ))))
    `(corfu-bar ((t (:background ,tourist-shoes-brown ))))
+
+   ;; Pulsar package
+   `(pulsar-generic ((t (:background ,athens-sculpture-1 ))))
+
+   `(trailing-whitespace ((t (:background ,agora-tile-red ))))
+
+   `(hl-line ((t (:background ,athens-sculpture-2 ))))
+
+   ;; Tab bars
+   `(tab-bar ((t (:background ,main-bg :foreground ,main-fg
+                  :underline ,athens-sculpture-1
+                  :height 1.0))))
+   `(tab-bar-tab ((t (:background ,athens-sculpture-1 :box ,athens-sculpture-1 ))))
+   `(tab-bar-tab-inactive ((t (:background ,main-bg :box nil ))))
    )
 
 

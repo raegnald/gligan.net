@@ -1,34 +1,38 @@
-;;; ellas-theme.el-theme.el --- ellas-theme.el
+;;; somnus-theme.el --- The perfect companion for Emacs at night
 ;;; Version: 1.0
 ;;; Commentary:
-;;; Ellas is an Emacs theme inspired by a trip made to Greece
+;;; A theme to focus and not to strain your eyes during a late night
+;;; software development session.
 ;;; Code:
 
 (let ((main-bg              "#090e13")
       (main-fg              "#dee8f1")
 
-      (modeline-bg          "#24384B")
-      (modeline-bg-incative "#162330")
+      (modeline-bg          "#24384b")
+      (modeline-bg-inactive "#162330")
+      (subtle-difference    "#0c1319")
 
-      (liliac               "#BFB5FF")
+      (light-violet         "#dabdfc")
+      (cold-lips            "#bdbffc")
+      (liliac               "#bfb5ff")
       (pineapple            "#e8d283")
       (champagne            "#e2d7ae")
       (keyword-yellow       "#f1d384")
-
-      (region-blue          "#225487")
       (make-up              "#e2bbae")
       (almost-grey          "#ccc9c9")
       (cotton-candy         "#f5c5d1")
       (autumn               "#ffb951")
+      (meh-blue             "#aac7e0")
+      (region-blue          "#225487")
       (modern-blue          "#b7d0ea")
       (nice-blue            "#9dcdff")
-
+      (link-cyan            "#14e5e5")
       (salmonish            "#ff8660")
       (old-green-wall       "#aad2ae")
-      (almost-black         "#05080a")
-      )
+      (almost-black         "#05080a"))
 
-  (deftheme somnus "A theme to focus and not to strain your eyes during a late night software development session.")
+  (deftheme somnus "A theme to focus and not to strain your eyes during a late night
+software development session.")
 
   (custom-theme-set-faces
    'somnus
@@ -54,33 +58,40 @@
    `(line-number-current-line ((t (:inherit default :foreground ,almost-grey ))))
 
    `(highlight ((t (:background ,modeline-bg))))
-   `(secondary-selection ((t (:background ,modeline-bg-incative ))))
+   `(secondary-selection ((t (:background ,modeline-bg-inactive ))))
 
    `(fringe ((t (:background ,main-bg))))
 
    `(mode-line ((t (:foreground ,main-fg :background ,modeline-bg ))))
-   `(mode-line-inactive ((t (:background ,modeline-bg-incative ))))
+   `(mode-line-inactive ((t (:background ,modeline-bg-inactive ))))
    `(mode-line-buffer-id ((t (:bold t :color ,pineapple ))))
 
    `(vertical-border ((t (:foreground ,modeline-bg ))))
 
-   `(font-lock-builtin-face ((t (:foreground ,liliac :bold t ))))
+   `(trailing-whitespace ((t (:background ,salmonish ))))
+
+   `(font-lock-builtin-face ((t (:foreground ,liliac ))))
+   `(font-lock-preprocessor-face ((t (:foreground ,liliac :bold t ))))
    `(font-lock-comment-face ((t (:foreground ,make-up :slant italic ))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,almost-grey :slant italic ))))
-   ;; `(font-lock-doc-face ((t (:foreground ,agora-tile-red ))))
-   `(font-lock-punctuation-face ((t (:foreground ,modeline-bg-incative )))) ; Seems it's not working
+   `(font-lock-doc-face ((t (:foreground ,cold-lips ))))
+   `(font-lock-doc-markup-face ((t (:foreground ,light-violet ))))
+   `(font-lock-punctuation-face ((t (:foreground ,main-fg ))))
+   `(font-lock-delimiter-face ((t (:foreground ,main-fg ))))
+   `(font-lock-type-face ((t (:foreground ,champagne ))))
    `(font-lock-function-name-face ((t (:foreground ,nice-blue ))))
    `(font-lock-variable-name-face ((t (:foreground ,modern-blue ))))
    `(font-lock-keyword-face ((t (:foreground ,keyword-yellow ))))
    `(font-lock-string-face ((t (:foreground ,cotton-candy ))))
-   ;; `(font-lock-escape-face ((t (:foreground ,olive-green ))))
+   `(font-lock-escape-face ((t (:foreground ,old-green-wall ))))
+   `(font-lock-negation-char-face ((t (:foreground ,autumn ))))
    `(font-lock-number-face ((t (:foreground ,autumn ))))
    `(font-lock-constant-face ((t (:foreground ,autumn ))))
-   `(font-lock-type-face ((t (:foreground ,champagne ))))
-   ;; `(font-lock-warning-face ((t (:foreground ,charming-red :bold t ))))
+   `(font-lock-regexp-face ((t (:foreground ,cotton-candy ))))
+   `(font-lock-warning-face ((t (:foreground ,salmonish :bold t ))))
 
-   ;; `(minibuffer-prompt ((t (:foreground ,sky-blue-athens :bold t ))))
-   ;; '(hl-line ((t (:inherit nil :extend t))))
+   `(minibuffer-prompt ((t (:foreground ,nice-blue :bold t ))))
+   `(hl-line ((t (:background ,subtle-difference ))))
 
    '(italic ((t (:slant italic :underline nil))))
 
@@ -88,24 +99,28 @@
    '(match ((t nil)))
    '(show-paren-match ((t (:inverse-video t))))
 
-   ;; ;; Clickable elements
-   ;; `(link ((t (:foreground ,warm-grey :underline t ))))
-   ;; `(custom-button ((t (:foreground ,warm-grey :box (:line-width 3 :style ,warm-grey) :height 0.9 ))))
-   ;; `(custom-button-mouse ((t (:foreground ,bleached-silk :box (:line-width 3 :style ,bleached-silk) :height 0.9 ))))
-   ;; `(custom-button-mouse ((t (:foreground ,bleached-silk :box (:line-width 3 :style ,bleached-silk) :height 0.9 ))))
+   ;; Clickable elements
+   `(link ((t (:foreground ,link-cyan :underline t ))))
+   `(custom-button ((t (:foreground ,meh-blue :box (:line-width 2) :height 0.9 ))))
+   `(custom-button-mouse ((t (:foreground ,meh-blue :box (:line-width 2) :height 0.9 ))))
 
-   ;; ;; Org mode
-   ;; `(org-code ((t (:foreground ,sky-blue-athens ))))
-   ;; `(org-verbatim ((t (:foreground ,olive-green ))))
-   ;; `(org-block ((t (:background ,athens-sculpture-3 ))))
+   ;; Org mode
+   `(org-code ((t (:foreground ,modern-blue ))))
+   `(org-verbatim ((t (:foreground ,modern-blue ))))
+   `(org-block ((t (:background ,subtle-difference ))))
 
-   ;; ;; Key cast package
-   ;; `(keycast-key ((t (:box nil :foreground ,bleached-silk :background ,warm-grey ))))
+   ;; Key cast package
+   `(keycast-key ((t (:box nil :foreground ,main-bg :background ,champagne ))))
 
-   ;; ;; Corfu package
-   ;; `(corfu-current ((t (:background ,athens-sculpture-2 ))))
-   ;; `(corfu-border ((t (:background ,athens-sculpture-1 ))))
-   ;; `(corfu-bar ((t (:background ,tourist-shoes-brown ))))
+   ;; Pulsar package
+   `(pulsar-generic ((t (:background ,autumn ))))
+
+   ;; Tab bars
+   `(tab-bar ((t (:background ,main-bg :foreground ,main-fg
+                  ;; :underline ,modeline-bg
+                  :height 1.0))))
+   `(tab-bar-tab ((t (:background ,modeline-bg :box ,modeline-bg ))))
+   `(tab-bar-tab-inactive ((t (:background ,main-bg :box nil ))))
    )
 
 

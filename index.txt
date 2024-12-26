@@ -1,33 +1,4 @@
-Welcome to my blog: a place where I write about topics that I find
-interesting and think should be shared — it also serves to me as a way
-to learn to express myself more eloquently.
-
-
-Works
-=====
-
-  [Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson para hallar $f_\textrm{máx}$]
-        En castellano. Introducción a las redes de flujo y el problema
-        del flujo máximo.
-
-  ----------------------------------------------------------------------
-
-
-[Estudio sobre las redes de flujo s–t y el algoritmo de Ford–Fulkerson
-para hallar $f_\textrm{máx}$] <./redes-de-flujo.pdf>
-
-Emacs
-~~~~~
-
-  Emacs is undoubtedly a way of life for some --haven't you heard about
-  the frivolous Church of Emacs or the Editor Wars?--, for me it is a
-  never-ending game of exploration. These are some of the things I've
-  done along the way:
-
-  - Take a look at my [Emacs literate config file].
-  - Check out the [Emacs themes I've made].
+Take a look at my [Emacs literate config file].
 
 
 [Emacs literate config file] <./emacs-config.org>
-
-[Emacs themes I've made] <./emacs-themes.org>

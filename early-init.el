@@ -3,20 +3,26 @@
 
 (setq read-process-output-max (* 3 1024 1024))
 
-(setq gligan/light-theme 'ellas
-      gligan/dark-theme 'somnus
+(defconst gligan/light-theme 'ellas)
+(defconst gligan/dark-theme 'somnus)
 
-      gligan/fixed-pitch-font "Iosevka Comfy Motion"
-      gligan/variable-pitch-font (if (equal system-type 'darwin)
-                                     "Inter"
-                                   "Iosevka Comfy Motion Duo")
-      gligan/fixed-pitch-font-size 130
-      gligan/variable-pitch-font-size 160
+(defconst gligan/fixed-pitch-font "Iosevka Comfy Motion")
+(defconst gligan/variable-pitch-font
+  (if (eq system-type 'darwin)
+      "Inter"
+    "Iosevka Comfy Motion Duo"))
 
-      gligan/scratch-buffer-mode 'c-mode
+(defconst gligan/fixed-pitch-font-size 130)
+(defconst gligan/variable-pitch-font-size 160)
 
-      gligan/org-documents-folder "~/Documents/Org/"
-      gligan/org-roam-folder (concat gligan/org-documents-folder "Notes/"))
+(defconst gligan/scratch-buffer-mode 'c-mode)
+
+(defconst gligan/org-documents-folder "~/Documents/Org/")
+(defconst gligan/org-roam-folder
+  (concat gligan/org-documents-folder "Notes/"))
+
+(defconst gligan/c-compiler
+  (if (eq system-type 'darwin) "clang" "gcc"))
 
 (setq user-full-name "Ronaldo Gligan"
       user-mail-address "ronaldogligan@outlook.com")
@@ -34,9 +40,12 @@
   (setq mac-command-modifier       'meta
         mac-option-modifier        'alt
         mac-right-option-modifier  nil
+        ns-function-modifier       'hyper
         mac-pass-control-to-system nil))
 
-(when (not (equal system-type 'darwin))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(when (not (eq system-type 'darwin))
   (menu-bar-mode -1))
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -51,3 +60,8 @@
 (setq kill-buffer-delete-autosave-files t)
 
 (setq resize-mini-windows 'grow-only)
+
+(setq custom-safe-themes t)
+
+(when (eq system-type 'darwin)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar  . t)))
