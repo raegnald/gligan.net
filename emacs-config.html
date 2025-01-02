@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/" lang="en" xml:lang="en">
 <head>
-<!-- 2024-12-26 Thu 20:15 -->
+<!-- 2025-01-02 Thu 15:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ronaldo's Emacs literate configuration</title>
@@ -37,10 +37,15 @@
 <li><a href="#org6f07d13">5. Theming and Emacs aesthetics</a>
 <ul>
 <li><a href="#org390069f">5.1. Blend title bar &amp; frame opacity on MacOS</a></li>
-<li><a href="#org6eca59d">5.2. Dark mode based on OS settings and custom toggle</a></li>
+<li><a href="#org6eca59d">5.2. Dark mode based on OS settings and custom toggle</a>
+<ul>
+<li><a href="#orgf02fdc3">5.2.1. Switching MacOS's theme</a></li>
+</ul>
+</li>
 <li><a href="#org7df30d9">5.3. Custom fonts</a>
 <ul>
-<li><a href="#org4bf6039">5.3.1. Font ligatures</a></li>
+<li><a href="#orge8b58cd">5.3.1. Custom mode line font</a></li>
+<li><a href="#org4bf6039">5.3.2. Font ligatures</a></li>
 </ul>
 </li>
 </ul>
@@ -62,7 +67,13 @@
 <li><a href="#orgab9f698">7.7. CSS</a></li>
 </ul>
 </li>
-<li><a href="#orged9b808">8. Org mode</a></li>
+<li><a href="#orged9b808">8. Org mode</a>
+<ul>
+<li><a href="#orgdcd6e13">8.1. Centering and auto-filling content</a></li>
+<li><a href="#org9084e79">8.2. Nice Org aesthetics</a></li>
+<li><a href="#orge402a9c">8.3. Org Roam</a></li>
+</ul>
+</li>
 <li><a href="#orgd2c032c">9. Activating disabled modes</a></li>
 <li><a href="#orgb79b914">10. Nicities</a>
 <ul>
@@ -74,6 +85,7 @@
 <li><a href="#orgb569127">10.6. Flash current line in buffer on buffer change</a></li>
 <li><a href="#org0b53f39">10.7. Duplicate lines keeping the column position intact (with <code>C-c d</code>)</a></li>
 <li><a href="#orgbc649e2">10.8. Colorise ANSI escape codes in compilation buffer</a></li>
+<li><a href="#org96fc514">10.9. Enlarge region with <code>moc</code> (Master of ceremonies)</a></li>
 </ul>
 </li>
 <li><a href="#org226ad98">11. Gligan's custom functionality</a>
@@ -85,7 +97,7 @@
 </div>
 </div>
 
-<div id="org0fd2a57" class="figure">
+<div id="org1c79dd0" class="figure">
 <p><img src="https://gligan.net/ellas.png" alt="ellas.png" />
 </p>
 </div>
@@ -94,26 +106,27 @@
 <h2 id="orge8ac8e4"><span class="section-number-2">1.</span> Constants <a id="org1c7e269"></a></h2>
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/light-theme</span> 'ellas<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/dark-theme</span> 'somnus<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/light-theme</span> 'ellas<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/dark-theme</span> 'somnus<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/fixed-pitch-font</span> <span style="color: #b45952;">"Iosevka Comfy Motion"</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/variable-pitch-font</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">if</span> <span style="color: #b0b1a3;">(</span>eq system-type 'darwin<span style="color: #b0b1a3;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/fixed-pitch-font</span> <span style="color: #b45952;">"Iosevka Comfy Motion"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/variable-pitch-font</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">if</span> <span style="color: #909183;">(</span>eq system-type 'darwin<span style="color: #909183;">)</span>
       <span style="color: #b45952;">"Inter"</span>
-    <span style="color: #b45952;">"Iosevka Comfy Motion Duo"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #b45952;">"Iosevka Comfy Motion Duo"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/semi-fixed-pitch-font</span> <span style="color: #b45952;">"Iosevka Comfy Motion Duo"</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/fixed-pitch-font-size</span> 130<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/variable-pitch-font-size</span> 160<span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/fixed-pitch-font-size</span> 130<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/variable-pitch-font-size</span> 160<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/scratch-buffer-mode</span> 'c-mode<span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/scratch-buffer-mode</span> 'c-mode<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/org-documents-folder</span> <span style="color: #b45952;">"~/Documents/Org/"</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/org-roam-folder</span>
-  <span style="color: #93a8c6;">(</span>concat gligan/org-documents-folder <span style="color: #b45952;">"Notes/"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/org-documents-folder</span> <span style="color: #b45952;">"~/Documents/Org/"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/org-roam-folder</span>
+  <span style="color: #7388d6;">(</span>concat gligan/org-documents-folder <span style="color: #b45952;">"Notes/"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/c-compiler</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">if</span> <span style="color: #b0b1a3;">(</span>eq system-type 'darwin<span style="color: #b0b1a3;">)</span> <span style="color: #b45952;">"clang"</span> <span style="color: #b45952;">"gcc"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">defconst</span> <span style="color: #074a96;">gligan/c-compiler</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">if</span> <span style="color: #909183;">(</span>eq system-type 'darwin<span style="color: #909183;">)</span> <span style="color: #b45952;">"clang"</span> <span style="color: #b45952;">"gcc"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -124,9 +137,9 @@
 <h2 id="orgc8bbd5e"><span class="section-number-2">2.</span> <code>use-package</code> and MELPA</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">require</span> '<span style="color: #c24639;">package</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>add-to-list 'package-archives '<span style="color: #93a8c6;">(</span><span style="color: #b45952;">"melpa"</span> . <span style="color: #b45952;">"https://melpa.org/packages/"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>package-initialize<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">require</span> '<span style="color: #c24639;">package</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>add-to-list 'package-archives '<span style="color: #7388d6;">(</span><span style="color: #b45952;">"melpa"</span> . <span style="color: #b45952;">"https://melpa.org/packages/"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>package-initialize<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -141,8 +154,8 @@
 Use 2 spaces as indentation
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq-default</span> tab-width 2<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq-default</span> indent-tabs-mode nil<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq-default</span> tab-width 2<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">setq-default</span> indent-tabs-mode nil<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -150,7 +163,7 @@ Use 2 spaces as indentation
 Delete the active region when inserting text
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>delete-selection-mode 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>delete-selection-mode 1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -158,7 +171,7 @@ Delete the active region when inserting text
 Make word-editing commands work with word components (subwords)
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>global-subword-mode<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>global-subword-mode<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -166,8 +179,8 @@ Make word-editing commands work with word components (subwords)
 Display the column number and buffer size in the modeline
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>column-number-mode 1<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>size-indication-mode 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>column-number-mode 1<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>size-indication-mode 1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -175,7 +188,7 @@ Display the column number and buffer size in the modeline
 Enable word wrapping
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq-default</span> word-wrap t<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq-default</span> word-wrap t<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -183,7 +196,20 @@ Enable word wrapping
 Different default mode for the scratch buffer
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> initial-major-mode gligan/scratch-buffer-mode<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> initial-major-mode gligan/scratch-buffer-mode<span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+Create a new buffer for Emacs Lisp code (my replacement for the
+<code>*scratch*</code> buffer)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">let</span> <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>elisp-buffer <span style="color: #709870;">(</span>generate-new-buffer <span style="color: #b45952;">"*elisp*"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">with-current-buffer</span> elisp-buffer
+    <span style="color: #909183;">(</span>emacs-lisp-mode<span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>rainbow-delimiters-mode<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -191,7 +217,7 @@ Different default mode for the scratch buffer
 Don't close Emacs by accident
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> confirm-kill-emacs 'y-or-n-p<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> confirm-kill-emacs 'y-or-n-p<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -199,8 +225,8 @@ Don't close Emacs by accident
 Dates should be formatted as <code>DD/MM/YYYY</code> and weeks start on Monday.
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> calendar-date-style 'european<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> calendar-week-start-day 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> calendar-date-style 'european<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> calendar-week-start-day 1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -208,7 +234,7 @@ Dates should be formatted as <code>DD/MM/YYYY</code> and weeks start on Monday.
 Pixel scrolling instead of line scrolling
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>pixel-scroll-precision-mode 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>pixel-scroll-precision-mode 1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -216,9 +242,9 @@ Pixel scrolling instead of line scrolling
 Display trailing whitespace (only in programming modes)
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>add-hook 'prog-mode-hook
-          <span style="color: #93a8c6;">(</span><span style="color: #001e86;">lambda</span> <span style="color: #b0b1a3;">()</span>
-            <span style="color: #b0b1a3;">(</span><span style="color: #001e86;">setq</span> show-trailing-whitespace t<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>add-hook 'prog-mode-hook
+          <span style="color: #7388d6;">(</span><span style="color: #001e86;">lambda</span> <span style="color: #909183;">()</span>
+            <span style="color: #909183;">(</span><span style="color: #001e86;">setq</span> show-trailing-whitespace t<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 </ol>
@@ -232,12 +258,12 @@ Use modifier keys as if the Mac keyboard were a standard one.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">when</span> <span style="color: #93a8c6;">(</span>eq system-type 'darwin<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> mac-command-modifier       'meta
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">when</span> <span style="color: #7388d6;">(</span>eq system-type 'darwin<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> mac-command-modifier       'meta
         mac-option-modifier        'alt
         mac-right-option-modifier  nil
         ns-function-modifier       'hyper
-        mac-pass-control-to-system nil<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+        mac-pass-control-to-system nil<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -253,7 +279,7 @@ Use modifier keys as if the Mac keyboard were a standard one.
 Start all frames maximised
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>add-to-list 'default-frame-alist '<span style="color: #93a8c6;">(</span>fullscreen . maximized<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>add-to-list 'default-frame-alist '<span style="color: #7388d6;">(</span>fullscreen . maximized<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -261,10 +287,10 @@ Start all frames maximised
 Minimal window without buttons or scrollbars
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">when</span> <span style="color: #93a8c6;">(</span>not <span style="color: #b0b1a3;">(</span>eq system-type 'darwin<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>menu-bar-mode -1<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>tool-bar-mode -1<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>scroll-bar-mode -1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">when</span> <span style="color: #7388d6;">(</span>not <span style="color: #909183;">(</span>eq system-type 'darwin<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>menu-bar-mode -1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>tool-bar-mode -1<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>scroll-bar-mode -1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -272,7 +298,7 @@ Minimal window without buttons or scrollbars
 Prefer short answers ("y or n") instead of "yes or no"
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> use-short-answers t<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> use-short-answers t<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -280,12 +306,12 @@ Prefer short answers ("y or n") instead of "yes or no"
 Backup files
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> backup-directory-alist
-      `<span style="color: #93a8c6;">(</span><span style="color: #b45952;">"."</span> . ,<span style="color: #b0b1a3;">(</span>expand-file-name <span style="color: #b45952;">"backup"</span> user-emacs-directory<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> auto-save-default t
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> backup-directory-alist
+      `<span style="color: #7388d6;">(</span><span style="color: #b45952;">"."</span> . ,<span style="color: #909183;">(</span>expand-file-name <span style="color: #b45952;">"backup"</span> user-emacs-directory<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> auto-save-default t
       create-lockfiles nil
-      make-backup-files nil<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> kill-buffer-delete-autosave-files t<span style="color: #8c8c8c;">)</span>
+      make-backup-files nil<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> kill-buffer-delete-autosave-files t<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -293,12 +319,12 @@ Backup files
 Visual hacks
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> frame-resize-pixelwise t<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> frame-resize-pixelwise t<span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> resize-mini-windows 'grow-only<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> resize-mini-windows 'grow-only<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -306,7 +332,7 @@ Visual hacks
 Use a thin cursor instead of a block
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq-default</span> cursor-type 'bar<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq-default</span> cursor-type 'bar<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -316,8 +342,8 @@ idea so that your eyes don't get lost in the vast sea of code in
 all the buffers you have opened.
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> global-hl-line-sticky-flag t<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>global-hl-line-mode 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> global-hl-line-sticky-flag t<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>global-hl-line-mode 1<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -327,9 +353,9 @@ buffer does not contain a "helpful" elisp comment.
 </p>
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #6b6757; font-style: italic;">;; </span><span style="color: #898442; font-style: italic;">No welcome message; no scratch buffer message</span>
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> inhibit-startup-message t
+<span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> inhibit-startup-message t
       inhibit-startup-screen t
-      initial-scratch-message nil<span style="color: #8c8c8c;">)</span>
+      initial-scratch-message nil<span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
@@ -337,7 +363,7 @@ buffer does not contain a "helpful" elisp comment.
 Use the proportional font to display text buffers
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>add-hook 'text-mode-hook #'variable-pitch-mode<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>add-hook 'text-mode-hook #'variable-pitch-mode<span style="color: #707183;">)</span>
 </pre>
 </div>
 <p>
@@ -346,23 +372,26 @@ proportional, and oftentimes I have block codes. <code>mixed-pitch</code> solves
 that:
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">mixed-pitch</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">mixed-pitch</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 3
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>text-mode . mixed-pitch-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>text-mode . mixed-pitch-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
+</ol>
 
+
+<ol class="org-ol">
 <li><p>
 Decluttering dired mode and showing human-readable file sizes
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">dired</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">dired</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>add-hook 'dired-mode-hook 'dired-hide-details-mode<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> dired-hide-details-hide-symlink-targets nil<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> dired-listing-switches <span style="color: #b45952;">"-lah"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>add-hook 'dired-mode-hook 'dired-hide-details-mode<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> dired-hide-details-hide-symlink-targets nil<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> dired-listing-switches <span style="color: #b45952;">"-lah"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 </ol>
@@ -376,13 +405,13 @@ Decluttering dired mode and showing human-readable file sizes
 Bind <code>compile</code> and <code>recompile</code> commands to unused key bindings
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"C-c c"</span><span style="color: #93a8c6;">)</span> 'compile<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"C-c x"</span><span style="color: #93a8c6;">)</span> 'recompile<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"C-c c"</span><span style="color: #7388d6;">)</span> 'compile<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"C-c x"</span><span style="color: #7388d6;">)</span> 'recompile<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"C-c C"</span><span style="color: #93a8c6;">)</span>
-                <span style="color: #93a8c6;">(</span><span style="color: #001e86;">lambda</span> <span style="color: #b0b1a3;">()</span>
-                  <span style="color: #b0b1a3;">(</span><span style="color: #001e86;">interactive</span><span style="color: #b0b1a3;">)</span>
-                  <span style="color: #b0b1a3;">(</span>compile <span style="color: #97b098;">(</span>read-string <span style="color: #b45952;">"Interactive compile command: "</span><span style="color: #97b098;">)</span> t<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"C-c C"</span><span style="color: #7388d6;">)</span>
+                <span style="color: #7388d6;">(</span><span style="color: #001e86;">lambda</span> <span style="color: #909183;">()</span>
+                  <span style="color: #909183;">(</span><span style="color: #001e86;">interactive</span><span style="color: #909183;">)</span>
+                  <span style="color: #909183;">(</span>compile <span style="color: #709870;">(</span>read-string <span style="color: #b45952;">"Interactive compile command: "</span><span style="color: #709870;">)</span> t<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 </ol>
@@ -400,7 +429,17 @@ you every time you load a theme wether to consider it safe or not):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> custom-safe-themes t<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> custom-safe-themes t<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Whenever I change the theme I may want to run some code along with
+it. That is why I create a hook:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defvar</span> <span style="color: #074a96;">gligan/after-theme-toggle-hook</span> nil<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -409,8 +448,8 @@ you every time you load a theme wether to consider it safe or not):
 <h3 id="org390069f"><span class="section-number-3">5.1.</span> Blend title bar &amp; frame opacity on MacOS</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">when</span> <span style="color: #93a8c6;">(</span>eq system-type 'darwin<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>add-to-list 'default-frame-alist '<span style="color: #b0b1a3;">(</span>ns-transparent-titlebar  . t<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">when</span> <span style="color: #7388d6;">(</span>eq system-type 'darwin<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>add-to-list 'default-frame-alist '<span style="color: #909183;">(</span>ns-transparent-titlebar  . t<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -421,27 +460,30 @@ you every time you load a theme wether to consider it safe or not):
 <h3 id="org6eca59d"><span class="section-number-3">5.2.</span> Dark mode based on OS settings and custom toggle</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-The function <code>(gligan-toggle-theme)</code> takes care of switching the
-system theme.
+The function <code>gligan/toggle-theme</code> takes care of switching the system
+theme.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/toggle-theme</span> <span style="color: #93a8c6;">()</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/toggle-theme</span> <span style="color: #7388d6;">()</span>
   <span style="color: #b45952;">"Toggle between the system's light and dark modes"</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #93a8c6;">)</span>
-  <span style="color: #6b6757; font-style: italic;">;; </span><span style="color: #898442; font-style: italic;">Mac OS</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">when</span> <span style="color: #b0b1a3;">(</span>eq system-type 'darwin<span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span>do-applescript
-     <span style="color: #b45952;">"tell application \"System Events\"</span>
-<span style="color: #b45952;">        tell appearance preferences</span>
-<span style="color: #b45952;">          set dark mode to not dark mode</span>
-<span style="color: #b45952;">        end tell</span>
-<span style="color: #b45952;">      end tell"</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #7388d6;">)</span>
+  <span style="color: #6b6757; font-style: italic;">;; </span><span style="color: #898442; font-style: italic;">Toggling the theme</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">cond</span>
+   <span style="color: #909183;">(</span><span style="color: #709870;">(</span>custom-theme-enabled-p gligan/light-theme<span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span><span style="color: #001e86;">progn</span> <span style="color: #907373;">(</span>disable-theme gligan/light-theme<span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>load-theme gligan/dark-theme<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span><span style="color: #709870;">(</span>custom-theme-enabled-p gligan/dark-theme<span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span><span style="color: #001e86;">progn</span> <span style="color: #907373;">(</span>disable-theme gligan/dark-theme<span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>load-theme gligan/light-theme<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>t <span style="color: #709870;">(</span>load-theme gligan/light-theme<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #6b6757; font-style: italic;">;; </span><span style="color: #898442; font-style: italic;">Hooks</span>
+  <span style="color: #7388d6;">(</span>run-hooks 'gligan/after-theme-toggle-hook<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"M-g t t"</span><span style="color: #93a8c6;">)</span> 'gligan/toggle-theme<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"M-g t t"</span><span style="color: #7388d6;">)</span> 'gligan/toggle-theme<span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -451,38 +493,78 @@ in sync with the OS.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">auto-dark</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">auto-dark</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> auto-dark-light-theme gligan/light-theme<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> auto-dark-dark-theme gligan/dark-theme<span style="color: #93a8c6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> auto-dark-light-theme gligan/light-theme<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> auto-dark-dark-theme gligan/dark-theme<span style="color: #7388d6;">)</span>
 
-  <span style="color: #93a8c6;">(</span>auto-dark-mode t<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>auto-dark-mode t<span style="color: #7388d6;">)</span>
+
+  <span style="color: #7388d6;">(</span>add-hook 'auto-dark-dark-mode-hook  'gligan/set-modeline-font<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>add-hook 'auto-dark-light-mode-hook 'gligan/set-modeline-font<span style="color: #7388d6;">)</span>
+  <span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgf02fdc3" class="outline-4">
+<h4 id="orgf02fdc3"><span class="section-number-4">5.2.1.</span> Switching MacOS's theme</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span>add-hook 'gligan/after-theme-toggle-hook
+          '<span style="color: #7388d6;">(</span>lambda <span style="color: #909183;">()</span>
+             <span style="color: #909183;">(</span><span style="color: #001e86;">when</span> <span style="color: #709870;">(</span>eq system-type 'darwin<span style="color: #709870;">)</span>
+               <span style="color: #709870;">(</span>do-applescript
+                <span style="color: #b45952;">"tell application \"System Events\"</span>
+<span style="color: #b45952;">                   tell appearance preferences</span>
+<span style="color: #b45952;">                     set dark mode to not dark mode</span>
+<span style="color: #b45952;">                   end tell</span>
+<span style="color: #b45952;">                 end tell"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
+</div>
+
 
 <div id="outline-container-org7df30d9" class="outline-3">
 <h3 id="org7df30d9"><span class="section-number-3">5.3.</span> Custom fonts</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>set-face-attribute 'default nil
+<pre class="src src-elisp"><span style="color: #707183;">(</span>set-face-attribute 'default nil
                     <span style="color: #3c2a19; font-weight: bold;">:family</span> gligan/fixed-pitch-font
-                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/fixed-pitch-font-size<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>set-face-attribute 'fixed-pitch nil
+                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/fixed-pitch-font-size<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>set-face-attribute 'fixed-pitch nil
                     <span style="color: #3c2a19; font-weight: bold;">:family</span> gligan/fixed-pitch-font
-                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/fixed-pitch-font-size<span style="color: #8c8c8c;">)</span>
-<span style="color: #8c8c8c;">(</span>set-face-attribute 'variable-pitch nil
+                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/fixed-pitch-font-size<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>set-face-attribute 'variable-pitch nil
                     <span style="color: #3c2a19; font-weight: bold;">:family</span> gligan/variable-pitch-font
-                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/variable-pitch-font-size<span style="color: #8c8c8c;">)</span>
+                    <span style="color: #3c2a19; font-weight: bold;">:height</span> gligan/variable-pitch-font-size<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org4bf6039" class="outline-4">
-<h4 id="org4bf6039"><span class="section-number-4">5.3.1.</span> Font ligatures</h4>
+<div id="outline-container-orge8b58cd" class="outline-4">
+<h4 id="orge8b58cd"><span class="section-number-4">5.3.1.</span> Custom mode line font</h4>
 <div class="outline-text-4" id="text-5-3-1">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/set-modeline-font</span> <span style="color: #7388d6;">()</span>
+  <span style="color: #7388d6;">(</span>set-face-attribute 'mode-line-active <span style="color: #909183;">(</span>selected-frame<span style="color: #909183;">)</span>
+                      <span style="color: #3c2a19; font-weight: bold;">:font</span> gligan/semi-fixed-pitch-font<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>set-face-attribute 'mode-line-inactive <span style="color: #909183;">(</span>selected-frame<span style="color: #909183;">)</span>
+                      <span style="color: #3c2a19; font-weight: bold;">:font</span> gligan/semi-fixed-pitch-font<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>add-hook 'gligan/after-theme-toggle-hook
+          'gligan/set-modeline-font<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4bf6039" class="outline-4">
+<h4 id="org4bf6039"><span class="section-number-4">5.3.2.</span> Font ligatures</h4>
+<div class="outline-text-4" id="text-5-3-2">
 <p>
 With the <a href="#org1c7e269">font I'm using</a>, ot all but most of the ligatures below
 work. As far as I know, all Iosevka and Cascadia Code ligatures are
@@ -490,13 +572,13 @@ included in this list.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">ligature</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">ligature</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>after-init . global-ligature-mode<span style="color: #93a8c6;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>after-init . global-ligature-mode<span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>ligature-set-ligatures
+  <span style="color: #7388d6;">(</span>ligature-set-ligatures
    't
-   '<span style="color: #b0b1a3;">(</span><span style="color: #b45952;">"!!"</span> <span style="color: #b45952;">"!!."</span> <span style="color: #b45952;">"!="</span> <span style="color: #b45952;">"!=="</span> <span style="color: #b45952;">"#!"</span> <span style="color: #b45952;">"##"</span> <span style="color: #b45952;">"###"</span> <span style="color: #b45952;">"####"</span> <span style="color: #b45952;">"#("</span> <span style="color: #b45952;">"#:"</span> <span style="color: #b45952;">"#="</span> <span style="color: #b45952;">"#?"</span> <span style="color: #b45952;">"#["</span> <span style="color: #b45952;">"#_"</span> <span style="color: #b45952;">"#_("</span> <span style="color: #b45952;">"#{"</span> <span style="color: #b45952;">"$&gt;"</span> <span style="color: #b45952;">"%%"</span> <span style="color: #b45952;">"&amp;&amp;"</span> <span style="color: #b45952;">"(*"</span> <span style="color: #b45952;">"*)"</span> <span style="color: #b45952;">"**"</span> <span style="color: #b45952;">"***"</span> <span style="color: #b45952;">"*/"</span> <span style="color: #b45952;">"*&gt;"</span> <span style="color: #b45952;">"++"</span> <span style="color: #b45952;">"+++"</span> <span style="color: #b45952;">"+:"</span> <span style="color: #b45952;">"+&gt;"</span> <span style="color: #b45952;">"--"</span> <span style="color: #b45952;">"---"</span> <span style="color: #b45952;">"---&gt;"</span> <span style="color: #b45952;">"--&gt;"</span> <span style="color: #b45952;">"-:"</span> <span style="color: #b45952;">"-&lt;"</span> <span style="color: #b45952;">"-&lt;&lt;"</span> <span style="color: #b45952;">"-&gt;"</span> <span style="color: #b45952;">"-&gt;&gt;"</span> <span style="color: #b45952;">"-|"</span> <span style="color: #b45952;">"-~"</span> <span style="color: #b45952;">".-"</span> <span style="color: #b45952;">".."</span> <span style="color: #b45952;">"..."</span> <span style="color: #b45952;">"..&lt;"</span> <span style="color: #b45952;">".="</span> <span style="color: #b45952;">".?"</span> <span style="color: #b45952;">"/*"</span> <span style="color: #b45952;">"//"</span> <span style="color: #b45952;">"///"</span> <span style="color: #b45952;">"/="</span> <span style="color: #b45952;">"/=="</span> <span style="color: #b45952;">"/&gt;"</span> <span style="color: #b45952;">":+"</span> <span style="color: #b45952;">":-"</span> <span style="color: #b45952;">"://"</span> <span style="color: #b45952;">"::"</span> <span style="color: #b45952;">":::"</span> <span style="color: #b45952;">"::="</span> <span style="color: #b45952;">":&lt;"</span> <span style="color: #b45952;">":="</span> <span style="color: #b45952;">":&gt;"</span> <span style="color: #b45952;">";;"</span> <span style="color: #b45952;">"&lt;!--"</span> <span style="color: #b45952;">"&lt;!---"</span> <span style="color: #b45952;">"&lt;$"</span> <span style="color: #b45952;">"&lt;$&gt;"</span> <span style="color: #b45952;">"&lt;*"</span> <span style="color: #b45952;">"&lt;******&gt;"</span> <span style="color: #b45952;">"&lt;*&gt;"</span> <span style="color: #b45952;">"&lt;+"</span> <span style="color: #b45952;">"&lt;+&gt;"</span> <span style="color: #b45952;">"&lt;-"</span> <span style="color: #b45952;">"&lt;--"</span> <span style="color: #b45952;">"&lt;---"</span> <span style="color: #b45952;">"&lt;----&gt;"</span> <span style="color: #b45952;">"&lt;---&gt;"</span> <span style="color: #b45952;">"&lt;--&gt;"</span> <span style="color: #b45952;">"&lt;-&lt;"</span> <span style="color: #b45952;">"&lt;-&gt;"</span> <span style="color: #b45952;">"&lt;/"</span> <span style="color: #b45952;">"&lt;/&gt;"</span> <span style="color: #b45952;">"&lt;:"</span> <span style="color: #b45952;">"&lt;&lt;"</span> <span style="color: #b45952;">"&lt;&lt;-"</span> <span style="color: #b45952;">"&lt;&lt;&lt;"</span> <span style="color: #b45952;">"&lt;&lt;="</span> <span style="color: #b45952;">"&lt;="</span> <span style="color: #b45952;">"&lt;=&lt;"</span> <span style="color: #b45952;">"&lt;=="</span> <span style="color: #b45952;">"&lt;==="</span> <span style="color: #b45952;">"&lt;====&gt;"</span> <span style="color: #b45952;">"&lt;===&gt;"</span> <span style="color: #b45952;">"&lt;==&gt;"</span> <span style="color: #b45952;">"&lt;=&gt;"</span> <span style="color: #b45952;">"&lt;&gt;"</span> <span style="color: #b45952;">"&lt;|"</span> <span style="color: #b45952;">"&lt;|&gt;"</span> <span style="color: #b45952;">"&lt;||"</span> <span style="color: #b45952;">"&lt;|||"</span> <span style="color: #b45952;">"&lt;~"</span> <span style="color: #b45952;">"&lt;~&gt;"</span> <span style="color: #b45952;">"&lt;~~"</span> <span style="color: #b45952;">"=!="</span> <span style="color: #b45952;">"=/="</span> <span style="color: #b45952;">"=:"</span> <span style="color: #b45952;">"=:="</span> <span style="color: #b45952;">"=&lt;&lt;"</span> <span style="color: #b45952;">"=="</span> <span style="color: #b45952;">"==="</span> <span style="color: #b45952;">"===&gt;"</span> <span style="color: #b45952;">"==&gt;"</span> <span style="color: #b45952;">"=&gt;"</span> <span style="color: #b45952;">"=&gt;&gt;"</span> <span style="color: #b45952;">"&gt;-"</span> <span style="color: #b45952;">"&gt;-&gt;"</span> <span style="color: #b45952;">"&gt;="</span> <span style="color: #b45952;">"&gt;=&gt;"</span> <span style="color: #b45952;">"&gt;&gt;"</span> <span style="color: #b45952;">"&gt;&gt;-"</span> <span style="color: #b45952;">"&gt;&gt;="</span> <span style="color: #b45952;">"&gt;&gt;&gt;"</span> <span style="color: #b45952;">"?."</span> <span style="color: #b45952;">"?:"</span> <span style="color: #b45952;">"?="</span> <span style="color: #b45952;">"??"</span> <span style="color: #b45952;">"[|"</span> <span style="color: #b45952;">"\\\\"</span> <span style="color: #b45952;">"]#"</span> <span style="color: #b45952;">"^="</span> <span style="color: #b45952;">"__"</span> <span style="color: #b45952;">"_|_"</span> <span style="color: #b45952;">"www"</span> <span style="color: #b45952;">"{|"</span> <span style="color: #b45952;">"|-"</span> <span style="color: #b45952;">"|="</span> <span style="color: #b45952;">"|&gt;"</span> <span style="color: #b45952;">"|]"</span> <span style="color: #b45952;">"||"</span> <span style="color: #b45952;">"||="</span> <span style="color: #b45952;">"||&gt;"</span> <span style="color: #b45952;">"|||&gt;"</span> <span style="color: #b45952;">"|}"</span> <span style="color: #b45952;">"~-"</span> <span style="color: #b45952;">"~="</span> <span style="color: #b45952;">"~&gt;"</span> <span style="color: #b45952;">"~@"</span> <span style="color: #b45952;">"~~"</span> <span style="color: #b45952;">"~~&gt;"</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+   '<span style="color: #909183;">(</span><span style="color: #b45952;">"!!"</span> <span style="color: #b45952;">"!!."</span> <span style="color: #b45952;">"!="</span> <span style="color: #b45952;">"!=="</span> <span style="color: #b45952;">"#!"</span> <span style="color: #b45952;">"##"</span> <span style="color: #b45952;">"###"</span> <span style="color: #b45952;">"####"</span> <span style="color: #b45952;">"#("</span> <span style="color: #b45952;">"#:"</span> <span style="color: #b45952;">"#="</span> <span style="color: #b45952;">"#?"</span> <span style="color: #b45952;">"#["</span> <span style="color: #b45952;">"#_"</span> <span style="color: #b45952;">"#_("</span> <span style="color: #b45952;">"#{"</span> <span style="color: #b45952;">"$&gt;"</span> <span style="color: #b45952;">"%%"</span> <span style="color: #b45952;">"&amp;&amp;"</span> <span style="color: #b45952;">"(*"</span> <span style="color: #b45952;">"*)"</span> <span style="color: #b45952;">"**"</span> <span style="color: #b45952;">"***"</span> <span style="color: #b45952;">"*/"</span> <span style="color: #b45952;">"*&gt;"</span> <span style="color: #b45952;">"++"</span> <span style="color: #b45952;">"+++"</span> <span style="color: #b45952;">"+:"</span> <span style="color: #b45952;">"+&gt;"</span> <span style="color: #b45952;">"--"</span> <span style="color: #b45952;">"---"</span> <span style="color: #b45952;">"---&gt;"</span> <span style="color: #b45952;">"--&gt;"</span> <span style="color: #b45952;">"-:"</span> <span style="color: #b45952;">"-&lt;"</span> <span style="color: #b45952;">"-&lt;&lt;"</span> <span style="color: #b45952;">"-&gt;"</span> <span style="color: #b45952;">"-&gt;&gt;"</span> <span style="color: #b45952;">"-|"</span> <span style="color: #b45952;">"-~"</span> <span style="color: #b45952;">".-"</span> <span style="color: #b45952;">".."</span> <span style="color: #b45952;">"..."</span> <span style="color: #b45952;">"..&lt;"</span> <span style="color: #b45952;">".="</span> <span style="color: #b45952;">".?"</span> <span style="color: #b45952;">"/*"</span> <span style="color: #b45952;">"//"</span> <span style="color: #b45952;">"///"</span> <span style="color: #b45952;">"/="</span> <span style="color: #b45952;">"/=="</span> <span style="color: #b45952;">"/&gt;"</span> <span style="color: #b45952;">":+"</span> <span style="color: #b45952;">":-"</span> <span style="color: #b45952;">"://"</span> <span style="color: #b45952;">"::"</span> <span style="color: #b45952;">":::"</span> <span style="color: #b45952;">"::="</span> <span style="color: #b45952;">":&lt;"</span> <span style="color: #b45952;">":="</span> <span style="color: #b45952;">":&gt;"</span> <span style="color: #b45952;">";;"</span> <span style="color: #b45952;">"&lt;!--"</span> <span style="color: #b45952;">"&lt;!---"</span> <span style="color: #b45952;">"&lt;$"</span> <span style="color: #b45952;">"&lt;$&gt;"</span> <span style="color: #b45952;">"&lt;*"</span> <span style="color: #b45952;">"&lt;******&gt;"</span> <span style="color: #b45952;">"&lt;*&gt;"</span> <span style="color: #b45952;">"&lt;+"</span> <span style="color: #b45952;">"&lt;+&gt;"</span> <span style="color: #b45952;">"&lt;-"</span> <span style="color: #b45952;">"&lt;--"</span> <span style="color: #b45952;">"&lt;---"</span> <span style="color: #b45952;">"&lt;----&gt;"</span> <span style="color: #b45952;">"&lt;---&gt;"</span> <span style="color: #b45952;">"&lt;--&gt;"</span> <span style="color: #b45952;">"&lt;-&lt;"</span> <span style="color: #b45952;">"&lt;-&gt;"</span> <span style="color: #b45952;">"&lt;/"</span> <span style="color: #b45952;">"&lt;/&gt;"</span> <span style="color: #b45952;">"&lt;:"</span> <span style="color: #b45952;">"&lt;&lt;"</span> <span style="color: #b45952;">"&lt;&lt;-"</span> <span style="color: #b45952;">"&lt;&lt;&lt;"</span> <span style="color: #b45952;">"&lt;&lt;="</span> <span style="color: #b45952;">"&lt;="</span> <span style="color: #b45952;">"&lt;=&lt;"</span> <span style="color: #b45952;">"&lt;=="</span> <span style="color: #b45952;">"&lt;==="</span> <span style="color: #b45952;">"&lt;====&gt;"</span> <span style="color: #b45952;">"&lt;===&gt;"</span> <span style="color: #b45952;">"&lt;==&gt;"</span> <span style="color: #b45952;">"&lt;=&gt;"</span> <span style="color: #b45952;">"&lt;&gt;"</span> <span style="color: #b45952;">"&lt;|"</span> <span style="color: #b45952;">"&lt;|&gt;"</span> <span style="color: #b45952;">"&lt;||"</span> <span style="color: #b45952;">"&lt;|||"</span> <span style="color: #b45952;">"&lt;~"</span> <span style="color: #b45952;">"&lt;~&gt;"</span> <span style="color: #b45952;">"&lt;~~"</span> <span style="color: #b45952;">"=!="</span> <span style="color: #b45952;">"=/="</span> <span style="color: #b45952;">"=:"</span> <span style="color: #b45952;">"=:="</span> <span style="color: #b45952;">"=&lt;&lt;"</span> <span style="color: #b45952;">"=="</span> <span style="color: #b45952;">"==="</span> <span style="color: #b45952;">"===&gt;"</span> <span style="color: #b45952;">"==&gt;"</span> <span style="color: #b45952;">"=&gt;"</span> <span style="color: #b45952;">"=&gt;&gt;"</span> <span style="color: #b45952;">"&gt;-"</span> <span style="color: #b45952;">"&gt;-&gt;"</span> <span style="color: #b45952;">"&gt;="</span> <span style="color: #b45952;">"&gt;=&gt;"</span> <span style="color: #b45952;">"&gt;&gt;"</span> <span style="color: #b45952;">"&gt;&gt;-"</span> <span style="color: #b45952;">"&gt;&gt;="</span> <span style="color: #b45952;">"&gt;&gt;&gt;"</span> <span style="color: #b45952;">"?."</span> <span style="color: #b45952;">"?:"</span> <span style="color: #b45952;">"?="</span> <span style="color: #b45952;">"??"</span> <span style="color: #b45952;">"[|"</span> <span style="color: #b45952;">"\\\\"</span> <span style="color: #b45952;">"]#"</span> <span style="color: #b45952;">"^="</span> <span style="color: #b45952;">"__"</span> <span style="color: #b45952;">"_|_"</span> <span style="color: #b45952;">"www"</span> <span style="color: #b45952;">"{|"</span> <span style="color: #b45952;">"|-"</span> <span style="color: #b45952;">"|="</span> <span style="color: #b45952;">"|&gt;"</span> <span style="color: #b45952;">"|]"</span> <span style="color: #b45952;">"||"</span> <span style="color: #b45952;">"||="</span> <span style="color: #b45952;">"||&gt;"</span> <span style="color: #b45952;">"|||&gt;"</span> <span style="color: #b45952;">"|}"</span> <span style="color: #b45952;">"~-"</span> <span style="color: #b45952;">"~="</span> <span style="color: #b45952;">"~&gt;"</span> <span style="color: #b45952;">"~@"</span> <span style="color: #b45952;">"~~"</span> <span style="color: #b45952;">"~~&gt;"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -521,20 +603,20 @@ but it is slower and it does not come with Emacs.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">eglot</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">eglot</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>c++-mode
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>c++-mode
           c-mode
           haskell-mode
           nim-mode
           python-mode
           rust-mode
           tuareg-mode
-          zig-mode<span style="color: #b0b1a3;">)</span>
-         . eglot-ensure<span style="color: #93a8c6;">)</span>
+          zig-mode<span style="color: #909183;">)</span>
+         . eglot-ensure<span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:custom</span>
-  <span style="color: #93a8c6;">(</span>eglot-autoshutdown t<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>eglot-autoshutdown t<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -548,7 +630,7 @@ Fedora I had to install the following:
 LSP features on C are achieved with <code>clangd</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #8c8c8c;">(</span>sudo<span style="color: #8c8c8c;">)</span> dnf install clang-tools-extra
+<pre class="src src-shell"><span style="color: #707183;">(</span>sudo<span style="color: #707183;">)</span> dnf install clang-tools-extra
 </pre>
 </div></li>
 <li>Haskell has <code>haskell-language-server</code>, that can be installed with
@@ -584,13 +666,13 @@ the compiler.</li>
 <h3 id="orga44480c"><span class="section-number-3">6.2.</span> Completion with <code>corfu</code></h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">corfu</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">corfu</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:custom</span>
-  <span style="color: #93a8c6;">(</span>corfu-cycle t<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>corfu-auto nil<span style="color: #93a8c6;">)</span>
+  <span style="color: #7388d6;">(</span>corfu-cycle t<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>corfu-auto nil<span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:init</span>
-  <span style="color: #93a8c6;">(</span>global-corfu-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>global-corfu-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -616,25 +698,25 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="org56dd3dc"><span class="section-number-3">7.2.</span> OCaml</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">tuareg</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">tuareg</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:defer</span> t<span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:defer</span> t<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">dune</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">dune</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:defer</span> t<span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:defer</span> t<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">merlin</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">merlin</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>add-hook 'tuareg-mode-hook #'merlin-mode<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> merlin-error-after-save nil<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>add-hook 'tuareg-mode-hook #'merlin-mode<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> merlin-error-after-save nil<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">merlin-eldoc</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">merlin-eldoc</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>tuareg . merlin-eldoc-setup<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>tuareg . merlin-eldoc-setup<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
 </pre>
 </div>
@@ -645,10 +727,10 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="org5e89034"><span class="section-number-3">7.3.</span> SML</h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">sml-mode</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">sml-mode</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> sml-indent-level 2
-        sml-indent-args  2<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> sml-indent-level 2
+        sml-indent-args  2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -658,11 +740,11 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="org4962280"><span class="section-number-3">7.4.</span> Zig</h3>
 <div class="outline-text-3" id="text-7-4">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">zig-mode</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">zig-mode</span>
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> zig-format-on-save nil<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>zig-format-on-save-mode -1<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> zig-format-on-save nil<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>zig-format-on-save-mode -1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -672,7 +754,7 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="org450b9c3"><span class="section-number-3">7.5.</span> Shell mode</h3>
 <div class="outline-text-3" id="text-7-5">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> sh-basic-offset 2<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> sh-basic-offset 2<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -682,7 +764,7 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="org3c76ba2"><span class="section-number-3">7.6.</span> Fish</h3>
 <div class="outline-text-3" id="text-7-6">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> fish-indent-offset 2<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> fish-indent-offset 2<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -692,7 +774,7 @@ Guess the C style that is being used on every opened buffer:
 <h3 id="orgab9f698"><span class="section-number-3">7.7.</span> CSS</h3>
 <div class="outline-text-3" id="text-7-7">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">setq</span> css-indent-offset 2<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">setq</span> css-indent-offset 2<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -711,67 +793,100 @@ contrast to the paragraph text.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/org-mode-font-setup</span> <span style="color: #93a8c6;">()</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">dolist</span> <span style="color: #b0b1a3;">(</span>face '<span style="color: #97b098;">(</span><span style="color: #aebed8;">(</span>org-document-title . 1.8<span style="color: #aebed8;">)</span>
-                  <span style="color: #aebed8;">(</span>org-level-1        . 1.3<span style="color: #aebed8;">)</span>
-                  <span style="color: #aebed8;">(</span>org-level-2        . 1.2<span style="color: #aebed8;">)</span>
-                  <span style="color: #aebed8;">(</span>org-level-3        . 1.1<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span>set-face-attribute <span style="color: #97b098;">(</span>car face<span style="color: #97b098;">)</span> nil
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/org-mode-font-setup</span> <span style="color: #7388d6;">()</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">dolist</span> <span style="color: #909183;">(</span>face '<span style="color: #709870;">(</span><span style="color: #907373;">(</span>org-document-title . 1.8<span style="color: #907373;">)</span>
+                  <span style="color: #907373;">(</span>org-level-1        . 1.3<span style="color: #907373;">)</span>
+                  <span style="color: #907373;">(</span>org-level-2        . 1.2<span style="color: #907373;">)</span>
+                  <span style="color: #907373;">(</span>org-level-3        . 1.1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>set-face-attribute <span style="color: #709870;">(</span>car face<span style="color: #709870;">)</span> nil
                         <span style="color: #3c2a19; font-weight: bold;">:font</span> gligan/variable-pitch-font
                         <span style="color: #3c2a19; font-weight: bold;">:weight</span> 'regular
-                        <span style="color: #3c2a19; font-weight: bold;">:height</span> <span style="color: #97b098;">(</span>cdr face<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+                        <span style="color: #3c2a19; font-weight: bold;">:height</span> <span style="color: #709870;">(</span>cdr face<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org</span>
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>org-mode . gligan/org-mode-font-setup<span style="color: #93a8c6;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>org-mode . gligan/org-mode-font-setup<span style="color: #909183;">)</span>
+         <span style="color: #909183;">(</span>org-mode . olivetti-mode<span style="color: #909183;">)</span>
+         <span style="color: #909183;">(</span>org-mode . auto-fill-mode<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> org-directory 'gligan/org-documents-folder<span style="color: #93a8c6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> org-directory 'gligan/org-documents-folder<span style="color: #7388d6;">)</span>
 
-  <span style="color: #6b6757; font-style: italic;">;; </span><span style="color: #898442; font-style: italic;">(setq org-hide-emphasis-markers t)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> org-startup-folded 'fold<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> org-startup-indented t<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> org-highlight-latex-and-related '<span style="color: #b0b1a3;">(</span>latex<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-startup-folded 'fold
+        org-startup-indented t
+        org-highlight-latex-and-related '<span style="color: #909183;">(</span>latex<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
 
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> org-confirm-babel-evaluate nil<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0<span style="color: #7388d6;">)</span>
 
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> org-confirm-babel-evaluate nil<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
-
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org-roam</span>
-  <span style="color: #3c2a19; font-weight: bold;">:custom</span>
-  <span style="color: #93a8c6;">(</span>org-roam-directory <span style="color: #b0b1a3;">(</span>file-truename gligan/org-roam-folder<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
-  <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>org-roam-db-autosync-mode<span style="color: #93a8c6;">)</span>
-  <span style="color: #3c2a19; font-weight: bold;">:bind</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #b45952;">"C-c n f"</span> . org-roam-node-find<span style="color: #b0b1a3;">)</span>
-         <span style="color: #b0b1a3;">(</span><span style="color: #b45952;">"C-c n r"</span> . org-roam-node-random<span style="color: #b0b1a3;">)</span>
-         <span style="color: #b0b1a3;">(</span><span style="color: #3c2a19; font-weight: bold;">:map</span> org-mode-map
-               <span style="color: #97b098;">(</span><span style="color: #aebed8;">(</span><span style="color: #b45952;">"C-c n i"</span> . org-roam-node-insert<span style="color: #aebed8;">)</span>
-                <span style="color: #aebed8;">(</span><span style="color: #b45952;">"C-c n o"</span> . org-id-get-create<span style="color: #aebed8;">)</span>
-                <span style="color: #aebed8;">(</span><span style="color: #b45952;">"C-c n t"</span> . org-roam-tag-add<span style="color: #aebed8;">)</span>
-                <span style="color: #aebed8;">(</span><span style="color: #b45952;">"C-c n a"</span> . org-roam-alias-add<span style="color: #aebed8;">)</span>
-                <span style="color: #aebed8;">(</span><span style="color: #b45952;">"C-c n l"</span> . org-roam-buffer-toggle<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-</pre>
 </div>
 
+<div id="outline-container-orgdcd6e13" class="outline-3">
+<h3 id="orgdcd6e13"><span class="section-number-3">8.1.</span> Centering and auto-filling content</h3>
+<div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org-modern</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">olivetti</span>
+  <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9084e79" class="outline-3">
+<h3 id="org9084e79"><span class="section-number-3">8.2.</span> Nice Org aesthetics</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org-modern</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>org-mode . org-modern-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>org-mode . org-modern-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
+
+<div id="outline-container-orge402a9c" class="outline-3">
+<h3 id="orge402a9c"><span class="section-number-3">8.3.</span> Org Roam</h3>
+<div class="outline-text-3" id="text-8-3">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">org-roam</span>
+  <span style="color: #3c2a19; font-weight: bold;">:custom</span>
+  <span style="color: #7388d6;">(</span>org-roam-directory <span style="color: #909183;">(</span>file-truename gligan/org-roam-folder<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:config</span>
+  <span style="color: #7388d6;">(</span>org-roam-db-autosync-mode<span style="color: #7388d6;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:bind</span> <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #b45952;">"C-c n f"</span> . org-roam-node-find<span style="color: #909183;">)</span>
+         <span style="color: #909183;">(</span><span style="color: #b45952;">"C-c n r"</span> . org-roam-node-random<span style="color: #909183;">)</span>
+         <span style="color: #909183;">(</span><span style="color: #3c2a19; font-weight: bold;">:map</span> org-mode-map
+               <span style="color: #709870;">(</span><span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n i"</span> . org-roam-node-insert<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n o"</span> . org-id-get-create<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n t"</span> . org-roam-tag-add<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n a"</span> . org-roam-alias-add<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n l"</span> . org-roam-buffer-toggle<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span><span style="color: #b45952;">"C-c n d"</span> . org-roam-dailies-capture-today<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Optionally install the package <code>org-roam-ui</code> to visualise your nodes and
+links between them in a local browser page.
+</p>
+</div>
+</div>
+</div>
+
 
 
 <div id="outline-container-orgd2c032c" class="outline-2">
 <h2 id="orgd2c032c"><span class="section-number-2">9.</span> Activating disabled modes</h2>
 <div class="outline-text-2" id="text-9">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>put 'narrow-to-region 'disabled nil<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>put 'narrow-to-region 'disabled nil<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -786,16 +901,16 @@ contrast to the paragraph text.
 <h3 id="orgd312247"><span class="section-number-3">10.1.</span> Automatically close and colorise bracket pairs</h3>
 <div class="outline-text-3" id="text-10-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>electric-pair-mode 1<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>electric-pair-mode 1<span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">rainbow-delimiters</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">rainbow-delimiters</span>
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 3
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>prog-mode . rainbow-delimiters-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>prog-mode . rainbow-delimiters-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -805,27 +920,27 @@ contrast to the paragraph text.
 <h3 id="org6af8c66"><span class="section-number-3">10.2.</span> Better <code>M-x</code> completion</h3>
 <div class="outline-text-3" id="text-10-2">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">vertico</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">vertico</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> vertico-cycle t<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>vertico-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> vertico-cycle t<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>vertico-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">savehist</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">savehist</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>savehist-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>savehist-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">orderless</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">orderless</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">setq</span> completion-styles '<span style="color: #b0b1a3;">(</span>orderless flex<span style="color: #b0b1a3;">)</span>
-        completion-category-overrides '<span style="color: #b0b1a3;">(</span><span style="color: #97b098;">(</span>eglot <span style="color: #aebed8;">(</span>styles . <span style="color: #b0b0b3;">(</span>orderless flex<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">setq</span> completion-styles '<span style="color: #909183;">(</span>orderless flex<span style="color: #909183;">)</span>
+        completion-category-overrides '<span style="color: #909183;">(</span><span style="color: #709870;">(</span>eglot <span style="color: #907373;">(</span>styles . <span style="color: #6276ba;">(</span>orderless flex<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">marginalia</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">marginalia</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>marginalia-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>marginalia-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -835,21 +950,21 @@ contrast to the paragraph text.
 <h3 id="org14ace71"><span class="section-number-3">10.3.</span> Icons with <code>dired</code> and <code>corfu</code> integration (<code>nerd-icons</code>)</h3>
 <div class="outline-text-3" id="text-10-3">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons</span>
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 2
-  <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t<span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t<span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons-dired</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons-dired</span>
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 2
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>dired-mode . nerd-icons-dired-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>dired-mode . nerd-icons-dired-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons-corfu</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">nerd-icons-corfu</span>
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 2
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:after</span> corfu
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -865,11 +980,11 @@ possible <i>routes</i> or functions you can perform from there.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">which-key</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">which-key</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 2
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span>which-key-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>which-key-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -913,10 +1028,10 @@ right out of the box for me. Below I leave the default key bindings:
 </table>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">yafolding</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">yafolding</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
   <span style="color: #3c2a19; font-weight: bold;">:defer</span> 8
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>prog-mode . yafolding-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>prog-mode . yafolding-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -926,9 +1041,9 @@ right out of the box for me. Below I leave the default key bindings:
 <h3 id="orgb569127"><span class="section-number-3">10.6.</span> Flash current line in buffer on buffer change</h3>
 <div class="outline-text-3" id="text-10-6">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">pulsar</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">pulsar</span>
   <span style="color: #3c2a19; font-weight: bold;">:ensure</span> t
-  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #93a8c6;">(</span>after-init-mode . pulsar-global-mode<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:hook</span> <span style="color: #7388d6;">(</span>after-init-mode . pulsar-global-mode<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -938,16 +1053,16 @@ right out of the box for me. Below I leave the default key bindings:
 <h3 id="org0b53f39"><span class="section-number-3">10.7.</span> Duplicate lines keeping the column position intact (with <code>C-c d</code>)</h3>
 <div class="outline-text-3" id="text-10-7">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/dup-line</span> <span style="color: #93a8c6;">()</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>duplicate-line<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>next-line<span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span>backward-word<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/dup-line</span> <span style="color: #7388d6;">()</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>duplicate-line<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>next-line<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>backward-word<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"C-c d"</span><span style="color: #93a8c6;">)</span> 'gligan/dup-line<span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"C-c d"</span><span style="color: #7388d6;">)</span> 'gligan/dup-line<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -957,25 +1072,50 @@ right out of the box for me. Below I leave the default key bindings:
 <h3 id="orgbc649e2"><span class="section-number-3">10.8.</span> Colorise ANSI escape codes in compilation buffer</h3>
 <div class="outline-text-3" id="text-10-8">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/colorise-compilation</span> <span style="color: #93a8c6;">()</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">let</span> <span style="color: #b0b1a3;">(</span><span style="color: #97b098;">(</span>inhibit-read-only t<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span>ansi-color-apply-on-region compilation-filter-start <span style="color: #97b098;">(</span>point<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/colorise-compilation</span> <span style="color: #7388d6;">()</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>inhibit-read-only t<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>ansi-color-apply-on-region compilation-filter-start <span style="color: #709870;">(</span>point<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">ansi-color</span>
+<span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">ansi-color</span>
   <span style="color: #3c2a19; font-weight: bold;">:config</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/colorise-compilation</span> <span style="color: #b0b1a3;">()</span>
-    <span style="color: #b0b1a3;">(</span><span style="color: #001e86;">let</span> <span style="color: #97b098;">(</span><span style="color: #aebed8;">(</span>inhibit-read-only t<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-      <span style="color: #97b098;">(</span>ansi-color-apply-on-region
-       compilation-filter-start <span style="color: #aebed8;">(</span>point<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/colorise-compilation</span> <span style="color: #909183;">()</span>
+    <span style="color: #909183;">(</span><span style="color: #001e86;">let</span> <span style="color: #709870;">(</span><span style="color: #907373;">(</span>inhibit-read-only t<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>ansi-color-apply-on-region
+       compilation-filter-start <span style="color: #907373;">(</span>point<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
 
-  <span style="color: #93a8c6;">(</span>add-hook 'compilation-filter-hook
-            #'gligan/colorise-compilation<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span>add-hook 'compilation-filter-hook
+            #'gligan/colorise-compilation<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96fc514" class="outline-3">
+<h3 id="org96fc514"><span class="section-number-3">10.9.</span> Enlarge region with <code>moc</code> (Master of ceremonies)</h3>
+<div class="outline-text-3" id="text-10-9">
+<p>
+I don't like it when doing <code>moc-focus</code> I see the currently highlighted
+<code>hl-line</code> and the parentheses matched. I disable them.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">use-package</span> <span style="color: #c24639;">moc</span>
+  <span style="color: #3c2a19; font-weight: bold;">:bind</span> <span style="color: #7388d6;">(</span><span style="color: #b45952;">"C-c m"</span> . moc-focus<span style="color: #7388d6;">)</span>
+  <span style="color: #3c2a19; font-weight: bold;">:config</span>
+
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">push</span> '<span style="color: #909183;">(</span>remove-hl-line
+          . <span style="color: #709870;">(</span><span style="color: #907373;">(</span>hl-line . <span style="color: #6276ba;">(</span><span style="color: #3c2a19; font-weight: bold;">:background</span>
+                         <span style="color: #858580;">(</span>face-attribute 'default <span style="color: #3c2a19; font-weight: bold;">:background</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>show-paren-match . <span style="color: #6276ba;">(</span><span style="color: #3c2a19; font-weight: bold;">:inverse-video</span> nil<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+        moc-face-remap-presets<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>add-hook 'moc-focus-mode-hook
+            <span style="color: #909183;">(</span><span style="color: #001e86;">lambda</span> <span style="color: #709870;">()</span>
+              <span style="color: #709870;">(</span>moc-face-remap 'remove-hl-line<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
-
 
 
 <div id="outline-container-org226ad98" class="outline-2">
@@ -986,29 +1126,29 @@ right out of the box for me. Below I leave the default key bindings:
 <h3 id="org704f55e"><span class="section-number-3">11.1.</span> Running a program interactively <code>gligan/run-program</code></h3>
 <div class="outline-text-3" id="text-11-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #8c8c8c;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/run-program</span> <span style="color: #93a8c6;">()</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #001e86;">defun</span> <span style="color: #074a96; font-weight: bold;">gligan/run-program</span> <span style="color: #7388d6;">()</span>
   <span style="color: #b45952;">"Compiles and runs the program generated by the source code of the</span>
 <span style="color: #b45952;">current buffer"</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #93a8c6;">)</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #001e86;">let*</span> <span style="color: #b0b1a3;">(</span><span style="color: #97b098;">(</span>ext <span style="color: #aebed8;">(</span>file-name-extension <span style="color: #b0b0b3;">(</span>buffer-name<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-         <span style="color: #97b098;">(</span>comp
-          <span style="color: #aebed8;">(</span><span style="color: #001e86;">cond</span>
-           <span style="color: #b0b0b3;">(</span><span style="color: #90a890;">(</span>string= ext <span style="color: #b45952;">"c"</span><span style="color: #90a890;">)</span>
-            <span style="color: #90a890;">(</span>cons <span style="color: #a2b6da;">(</span>format <span style="color: #b45952;">"%s %s"</span> gligan/c-compiler <span style="color: #9cb6ad;">(</span>buffer-name<span style="color: #9cb6ad;">)</span><span style="color: #a2b6da;">)</span>
-                  <span style="color: #b45952;">"./a.out"</span><span style="color: #90a890;">)</span><span style="color: #b0b0b3;">)</span>
-           <span style="color: #b0b0b3;">(</span>t nil<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-         <span style="color: #97b098;">(</span>comp-cmd <span style="color: #aebed8;">(</span>car comp<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-         <span style="color: #97b098;">(</span>outfile <span style="color: #aebed8;">(</span>cdr comp<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span><span style="color: #001e86;">if</span> comp
-        <span style="color: #97b098;">(</span><span style="color: #001e86;">if</span> <span style="color: #aebed8;">(</span>shell-command comp-cmd<span style="color: #aebed8;">)</span>
-            <span style="color: #aebed8;">(</span><span style="color: #001e86;">progn</span>
-              <span style="color: #b0b0b3;">(</span>split-window-sensibly<span style="color: #b0b0b3;">)</span>
-              <span style="color: #b0b0b3;">(</span>other-window 1<span style="color: #b0b0b3;">)</span>
-              <span style="color: #b0b0b3;">(</span>ansi-term outfile<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
-          <span style="color: #aebed8;">(</span>message <span style="color: #b45952;">"Compilation failed."</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-      <span style="color: #97b098;">(</span>message <span style="color: #b45952;">"Unsupported file extension: %s"</span> ext<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">interactive</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #001e86;">let*</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>ext <span style="color: #907373;">(</span>file-name-extension <span style="color: #6276ba;">(</span>buffer-name<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>comp
+          <span style="color: #907373;">(</span><span style="color: #001e86;">cond</span>
+           <span style="color: #6276ba;">(</span><span style="color: #858580;">(</span>string= ext <span style="color: #b45952;">"c"</span><span style="color: #858580;">)</span>
+            <span style="color: #858580;">(</span>cons <span style="color: #80a880;">(</span>format <span style="color: #b45952;">"%s %s"</span> gligan/c-compiler <span style="color: #887070;">(</span>buffer-name<span style="color: #887070;">)</span><span style="color: #80a880;">)</span>
+                  <span style="color: #b45952;">"./a.out"</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
+           <span style="color: #6276ba;">(</span>t nil<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>comp-cmd <span style="color: #907373;">(</span>car comp<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>outfile <span style="color: #907373;">(</span>cdr comp<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span><span style="color: #001e86;">if</span> comp
+        <span style="color: #709870;">(</span><span style="color: #001e86;">if</span> <span style="color: #907373;">(</span>shell-command comp-cmd<span style="color: #907373;">)</span>
+            <span style="color: #907373;">(</span><span style="color: #001e86;">progn</span>
+              <span style="color: #6276ba;">(</span>split-window-sensibly<span style="color: #6276ba;">)</span>
+              <span style="color: #6276ba;">(</span>other-window 1<span style="color: #6276ba;">)</span>
+              <span style="color: #6276ba;">(</span>ansi-term outfile<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>message <span style="color: #b45952;">"Compilation failed."</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>message <span style="color: #b45952;">"Unsupported file extension: %s"</span> ext<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8c8c8c;">(</span>global-set-key <span style="color: #93a8c6;">(</span>kbd <span style="color: #b45952;">"C-c C-x"</span><span style="color: #93a8c6;">)</span> 'gligan/run-program<span style="color: #8c8c8c;">)</span>
+<span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #b45952;">"C-c C-x"</span><span style="color: #7388d6;">)</span> 'gligan/run-program<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -1016,7 +1156,7 @@ right out of the box for me. Below I leave the default key bindings:
 </div>
 </div>
 <div id="postamble" class="status">
-<footer><span class="footer-left"><span class="footer-message">Would you give me the pointer to your heart?</span></span> <span class="footer-right"><span class="footer-copyright">&copy; 2024</span> <span class="footer-author">Ronaldo Gligan</span></span><br><span class="footer-license">All content on this website, unless otherwise stated, is licensed under the terms of the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license (<code>CC BY 4.0</code>)</a>.</span></footer>
+<footer><span class="footer-left"><span class="footer-message">Would you give me the pointer to your heart?</span></span> <span class="footer-right"><span class="footer-copyright">&copy; 2025</span> <span class="footer-author">Ronaldo Gligan</span></span><br><span class="footer-license">All content on this website, unless otherwise stated, is licensed under the terms of the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license (<code>CC BY 4.0</code>)</a>.</span></footer>
 </div>
 </body>
 </html>

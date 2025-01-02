@@ -21,8 +21,10 @@ _________________
 5. Theming and Emacs aesthetics
 .. 1. Blend title bar & frame opacity on MacOS
 .. 2. Dark mode based on OS settings and custom toggle
+..... 1. Switching MacOS's theme
 .. 3. Custom fonts
-..... 1. Font ligatures
+..... 1. Custom mode line font
+..... 2. Font ligatures
 6. LSP and completion
 .. 1. The `eglot' LSP client
 .. 2. Completion with `corfu'
@@ -35,6 +37,9 @@ _________________
 .. 6. Fish
 .. 7. CSS
 8. Org mode
+.. 1. Centering and auto-filling content
+.. 2. Nice Org aesthetics
+.. 3. Org Roam
 9. Activating disabled modes
 10. Nicities
 .. 1. Automatically close and colorise bracket pairs
@@ -45,6 +50,7 @@ _________________
 .. 6. Flash current line in buffer on buffer change
 .. 7. Duplicate lines keeping the column position intact (with `C-c d')
 .. 8. Colorise ANSI escape codes in compilation buffer
+.. 9. Enlarge region with `moc' (Master of ceremonies)
 11. Gligan's custom functionality
 .. 1. Running a program interactively `gligan/run-program'
 
@@ -64,6 +70,7 @@ _________________
   |   (if (eq system-type 'darwin)
   |       "Inter"
   |     "Iosevka Comfy Motion Duo"))
+  | (defconst gligan/semi-fixed-pitch-font "Iosevka Comfy Motion Duo")
   | 
   | (defconst gligan/fixed-pitch-font-size 130)
   | (defconst gligan/variable-pitch-font-size 160)
@@ -124,24 +131,34 @@ _________________
      | (setq initial-major-mode gligan/scratch-buffer-mode)
      `----
 
-  7) Don't close Emacs by accident
+  7) Create a new buffer for Emacs Lisp code (my replacement for the
+     `*scratch*' buffer)
+
+     ,----
+     | (let ((elisp-buffer (generate-new-buffer "*elisp*")))
+     |   (with-current-buffer elisp-buffer
+     |     (emacs-lisp-mode)
+     |     (rainbow-delimiters-mode)))
+     `----
+
+  8) Don't close Emacs by accident
      ,----
      | (setq confirm-kill-emacs 'y-or-n-p)
      `----
 
-  8) Dates should be formatted as `DD/MM/YYYY' and weeks start on
+  9) Dates should be formatted as `DD/MM/YYYY' and weeks start on
      Monday.
      ,----
      | (setq calendar-date-style 'european)
      | (setq calendar-week-start-day 1)
      `----
 
-  9) Pixel scrolling instead of line scrolling
-     ,----
-     | (pixel-scroll-precision-mode 1)
-     `----
+  10) Pixel scrolling instead of line scrolling
+      ,----
+      | (pixel-scroll-precision-mode 1)
+      `----
 
-  10) Display trailing whitespace (only in programming modes)
+  11) Display trailing whitespace (only in programming modes)
       ,----
       | (add-hook 'prog-mode-hook
       |           (lambda ()
@@ -241,14 +258,15 @@ _________________
      |   :hook (text-mode . mixed-pitch-mode))
      `----
 
-  10. Decluttering dired mode and showing human-readable file sizes
-      ,----
-      | (use-package dired
-      |   :config
-      |   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-      |   (setq dired-hide-details-hide-symlink-targets nil)
-      |   (setq dired-listing-switches "-lah"))
-      `----
+
+  1. Decluttering dired mode and showing human-readable file sizes
+     ,----
+     | (use-package dired
+     |   :config
+     |   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+     |   (setq dired-hide-details-hide-symlink-targets nil)
+     |   (setq dired-listing-switches "-lah"))
+     `----
 
 
 4.1 Ergonomics
@@ -276,6 +294,13 @@ _________________
   | (setq custom-safe-themes t)
   `----
 
+  Whenever I change the theme I may want to run some code along with
+  it. That is why I create a hook:
+
+  ,----
+  | (defvar gligan/after-theme-toggle-hook nil)
+  `----
+
 
 5.1 Blend title bar & frame opacity on MacOS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -289,21 +314,24 @@ _________________
 5.2 Dark mode based on OS settings and custom toggle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  The function `(gligan-toggle-theme)' takes care of switching the
-  system theme.
+  The function `gligan/toggle-theme' takes care of switching the system
+  theme.
 
   ,----
   | (defun gligan/toggle-theme ()
   |   "Toggle between the system's light and dark modes"
   |   (interactive)
-  |   ;; Mac OS
-  |   (when (eq system-type 'darwin)
-  |     (do-applescript
-  |      "tell application \"System Events\"
-  |         tell appearance preferences
-  |           set dark mode to not dark mode
-  |         end tell
-  |       end tell")))
+  |   ;; Toggling the theme
+  |   (cond
+  |    ((custom-theme-enabled-p gligan/light-theme)
+  |     (progn (disable-theme gligan/light-theme)
+  |            (load-theme gligan/dark-theme)))
+  |    ((custom-theme-enabled-p gligan/dark-theme)
+  |     (progn (disable-theme gligan/dark-theme)
+  |            (load-theme gligan/light-theme)))
+  |    (t (load-theme gligan/light-theme)))
+  |   ;; Hooks
+  |   (run-hooks 'gligan/after-theme-toggle-hook))
   `----
 
   ,----
@@ -320,7 +348,27 @@ _________________
   |   (setq auto-dark-light-theme gligan/light-theme)
   |   (setq auto-dark-dark-theme gligan/dark-theme)
   | 
-  |   (auto-dark-mode t))
+  |   (auto-dark-mode t)
+  | 
+  |   (add-hook 'auto-dark-dark-mode-hook  'gligan/set-modeline-font)
+  |   (add-hook 'auto-dark-light-mode-hook 'gligan/set-modeline-font)
+  |   )
+  `----
+
+
+5.2.1 Switching MacOS's theme
+-----------------------------
+
+  ,----
+  | (add-hook 'gligan/after-theme-toggle-hook
+  |           '(lambda ()
+  |              (when (eq system-type 'darwin)
+  |                (do-applescript
+  |                 "tell application \"System Events\"
+  |                    tell appearance preferences
+  |                      set dark mode to not dark mode
+  |                    end tell
+  |                  end tell"))))
   `----
 
 
@@ -340,7 +388,22 @@ _________________
   `----
 
 
-5.3.1 Font ligatures
+5.3.1 Custom mode line font
+---------------------------
+
+  ,----
+  | (defun gligan/set-modeline-font ()
+  |   (set-face-attribute 'mode-line-active (selected-frame)
+  |                       :font gligan/semi-fixed-pitch-font)
+  |   (set-face-attribute 'mode-line-inactive (selected-frame)
+  |                       :font gligan/semi-fixed-pitch-font))
+  | 
+  | (add-hook 'gligan/after-theme-toggle-hook
+  |           'gligan/set-modeline-font)
+  `----
+
+
+5.3.2 Font ligatures
 --------------------
 
   With the [font I'm using], ot all but most of the ligatures below
@@ -537,18 +600,47 @@ _________________
 
   ,----
   | (use-package org
-  |   :hook (org-mode . gligan/org-mode-font-setup)
+  |   :hook ((org-mode . gligan/org-mode-font-setup)
+  |          (org-mode . olivetti-mode)
+  |          (org-mode . auto-fill-mode))
   |   :config
   |   (setq org-directory 'gligan/org-documents-folder)
   | 
-  |   ;; (setq org-hide-emphasis-markers t)
-  |   (setq org-startup-folded 'fold)
-  |   (setq org-startup-indented t)
-  |   (setq org-highlight-latex-and-related '(latex))
+  |   (setq org-hide-emphasis-markers t
+  |         org-pretty-entities t
+  |         org-startup-folded 'fold
+  |         org-startup-indented t
+  |         org-highlight-latex-and-related '(latex))
+  | 
+  |   (setq org-src-tab-acts-natively t
+  |         org-edit-src-content-indentation 0)
   | 
   |   (setq org-confirm-babel-evaluate nil))
-  | 
   `----
+
+
+8.1 Centering and auto-filling content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package olivetti
+  |   :ensure t)
+  `----
+
+
+8.2 Nice Org aesthetics
+~~~~~~~~~~~~~~~~~~~~~~~
+
+  ,----
+  | (use-package org-modern
+  |   :ensure t
+  |   :defer t
+  |   :hook (org-mode . org-modern-mode))
+  `----
+
+
+8.3 Org Roam
+~~~~~~~~~~~~
 
   ,----
   | (use-package org-roam
@@ -563,15 +655,12 @@ _________________
   |                 ("C-c n o" . org-id-get-create)
   |                 ("C-c n t" . org-roam-tag-add)
   |                 ("C-c n a" . org-roam-alias-add)
-  |                 ("C-c n l" . org-roam-buffer-toggle)))))
+  |                 ("C-c n l" . org-roam-buffer-toggle)
+  |                 ("C-c n d" . org-roam-dailies-capture-today)))))
   `----
 
-  ,----
-  | (use-package org-modern
-  |   :ensure t
-  |   :defer t
-  |   :hook (org-mode . org-modern-mode))
-  `----
+  Optionally install the package `org-roam-ui' to visualise your nodes
+  and links between them in a local browser page.
 
 
 9 Activating disabled modes
@@ -731,6 +820,28 @@ _________________
   | 
   |   (add-hook 'compilation-filter-hook
   |             #'gligan/colorise-compilation))
+  `----
+
+
+10.9 Enlarge region with `moc' (Master of ceremonies)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  I don't like it when doing `moc-focus' I see the currently highlighted
+  `hl-line' and the parentheses matched. I disable them.
+
+  ,----
+  | (use-package moc
+  |   :bind ("C-c m" . moc-focus)
+  |   :config
+  | 
+  |   (push '(remove-hl-line
+  |           . ((hl-line . (:background
+  |                          (face-attribute 'default :background)))
+  |              (show-paren-match . (:inverse-video nil))))
+  |         moc-face-remap-presets)
+  |   (add-hook 'moc-focus-mode-hook
+  |             (lambda ()
+  |               (moc-face-remap 'remove-hl-line))))
   `----
 
 

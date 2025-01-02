@@ -29,7 +29,8 @@
       (dark-neon-blue       "#001e86")
       (sky-blue-athens      "#074a96")
       (nice-light-blue      "#497fc1")
-     )
+
+      (modeline-padding 3))
 
   (deftheme ellas "A trip to Greece")
 
@@ -62,10 +63,10 @@
    `(fringe ((t (:background ,main-bg))))
 
    `(mode-line-active ((t (:foreground ,main-fg :background ,athens-sculpture-1
-                                       :box (:line-width 1 :color ,athens-sculpture-1)
+                                       :box (:line-width ,modeline-padding :color ,athens-sculpture-1 :style nil)
                                        ))))
    `(mode-line-inactive ((t (:background ,athens-sculpture-2
-                                         :box (:line-width 1 :color ,athens-sculpture-1 )
+                                         :box (:line-width ,modeline-padding :color ,athens-sculpture-2 :style nil)
                                          ;; :overline ,athens-sculpture-1
                                          ;; :underline ,athens-sculpture-1
                                          ))))

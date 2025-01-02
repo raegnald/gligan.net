@@ -29,7 +29,9 @@
       (link-cyan            "#14e5e5")
       (salmonish            "#ff8660")
       (old-green-wall       "#aad2ae")
-      (almost-black         "#05080a"))
+      (almost-black         "#05080a")
+
+      (modeline-padding 3))
 
   (deftheme somnus "A theme to focus and not to strain your eyes during a late night
 software development session.")
@@ -57,14 +59,16 @@ software development session.")
    `(line-number ((t (:inherit default :foreground ,almost-grey ))))
    `(line-number-current-line ((t (:inherit default :foreground ,almost-grey ))))
 
-   `(highlight ((t (:background ,modeline-bg))))
+   `(highlight ((t (:background ,modeline-bg ))))
    `(secondary-selection ((t (:background ,modeline-bg-inactive ))))
 
    `(fringe ((t (:background ,main-bg))))
 
-   `(mode-line ((t (:foreground ,main-fg :background ,modeline-bg ))))
-   `(mode-line-inactive ((t (:background ,modeline-bg-inactive ))))
-   `(mode-line-buffer-id ((t (:bold t :color ,pineapple ))))
+   `(mode-line ((t (:foreground ,main-fg :background ,modeline-bg
+                    :box (:line-width ,modeline-padding :color ,modeline-bg :style nil) ))))
+   `(mode-line-inactive ((t (:background ,modeline-bg-inactive
+                             :box (:line-width ,modeline-padding :color ,modeline-bg-inactive :style nil)))))
+   `(mode-line-buffer-id ((t (:bold t :foreground ,main-fg ))))
 
    `(vertical-border ((t (:foreground ,modeline-bg ))))
 
